@@ -14,7 +14,7 @@ public class RoleMember {
 
     private String id;	// UUID
 
-    private Role role;	// 角色ID
+    private String roleId;	// 角色ID
 
-    private User user;	// 成员ID
+    private String userId;	// 成员ID
 }

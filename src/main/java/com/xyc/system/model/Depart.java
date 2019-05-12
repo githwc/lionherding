@@ -25,6 +25,8 @@ public class Depart {
 
     private String shortName;			// 部门简称
 
+    private String managerId;           //负责人ID
+
     private String managerName;			// 负责人
 
     private String telephone;			// 电话
@@ -41,9 +43,9 @@ public class Depart {
 
     private int adminLevel;				// 行政等级
 
-    private int state;					// 状态
+    private int state;					// 状态(0.有效 1.删除 )
 
-    private String creatorId;			// 创建人标识（UUID）
+    private String createId;			// 创建人标识（UUID）
 
     private String createName;	        // 创建人姓名
 

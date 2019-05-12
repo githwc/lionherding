@@ -22,9 +22,9 @@ public class User {
 
     private String nickName;		// 用户昵称
 
-    private String loginName;		// 登陆名称
+    private String loginName;		// 登录名称
 
-    private String password;		// 登陆密码
+    private String password;		// 登录密码
 
     private int jobs;				// 职务或岗位
 
@@ -67,5 +67,7 @@ public class User {
     private int state = 0;			// 用户状态 (1：有效、0：注销)
 
     private String remark;			// 备注说明
+
+    private String deptId;          //部门Id
 
 }
