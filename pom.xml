@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--pom文件的模型版本：当前仅有的可以被maven2&3同时支持的pom版本，不可缺-->
+    <modelVersion>4.0.0</modelVersion>
+    <!--父项目：
+        它的父项目是spring-boot-dependencies来真正管理springboot应用里的所有依赖版本；
+    -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
+		<relativePath/>
+	</parent>
+
+    <!-- 基本设置：
+        groupId：com.公司名.项目名
+        artifactId：功能模块名
+        version：版本号
+        packaging:项目打包的后缀，默认jar，war是web项目发布用的
+            附：groupid+artifactid+version:项目在仓库中的坐标
+    -->
+	<groupId>com.lh</groupId>
+	<artifactId>lionherding</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <!--基本属性-->
+	<properties>
+		<java.version>1.8</java.version>
+        <lombok.version>1.16.4</lombok.version>
+        <jackson.version>2.8.1</jackson.version>
+        <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.5</thymeleaf-layout-dialect.version>
+	</properties>
+
+	<dependencies>
+        <!--spring-boot中的web场景启动器；导入web模块正常运行所依赖的组件;
+            springboot 将所有的功能场景都抽象出来，做成一个个的starters(启动器)，只需要在项目里边引入这些starter
+            相关场景的所有依赖都会导入进来。
+        -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+        <!--thymeleaf场景启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!--配置文件处理器：用于编写yml时的提示信息-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--引入bootstrap-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!--lombok jar -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- Jackson jar -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
+                  常见的编码解码工具Base64、MD5、Hex、SHA1、DES等-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <!--将应用打包成一个可执行的jar包-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
