@@ -22,9 +22,9 @@ import java.util.Date;
  * @Datetime 2019-05-31 10:58
  */
 @Service
-public class UserLogService {
+public class SystemLogService {
 
-	private static Logger logger = LogManager.getLogger(UserLogService.class);
+	private static Logger logger = LogManager.getLogger(SystemLogService.class);
 	
 	public final static int OPTYPE_CREATE = 0;
 	public final static int OPTYPE_DELETE = 1;

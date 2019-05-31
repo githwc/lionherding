@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LogAspect {
 	
 	@Autowired
-	private UserLogService service;
+	private SystemLogService service;
 	
     /**
      * @Description:标注为后置通知，当目标方法执行成功后执行该函数
@@ -37,7 +37,7 @@ public class LogAspect {
 	@AfterReturning("(within(com.lh..*) || within(org.framework.plugins..*)) && @annotation(log)")
 	public void addLogSuccess(JoinPoint jp, WriteLog log) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		service.write(request, log.mName(), log.optype(), UserLogService.OPSTATE_SUCCESS);
+		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_SUCCESS);
 	}
 	
     /**
@@ -49,7 +49,7 @@ public class LogAspect {
 	@AfterThrowing(pointcut="(within(com.lh..*) || within(org.framework.plugins..*)) && @annotation(log)", throwing="ex")
 	public void addLog(JoinPoint jp, WriteLog log, Exception ex) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		service.write(request, log.mName(), log.optype(), UserLogService.OPSTATE_FAILURE, ex);
+		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_FAILURE, ex);
 	}
 	
 }

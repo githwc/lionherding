@@ -1,6 +1,6 @@
 package com.lh.modules.action;
 
-import com.lh.system.log.UserLogService;
+import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ public class TestAction {
 
     @ResponseBody
     @RequestMapping("/hello")
-    @WriteLog(mName = "测试", optype = UserLogService.OPTYPE_READ)
+    @WriteLog(mName = "测试", optype = SystemLogService.OPTYPE_READ)
     public String hello(){
         return "d";
     }
