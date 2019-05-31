@@ -1,5 +1,7 @@
 package com.lh.system.model;
 
+import lombok.Data;
+
 /**
  * 功能描述：Model - 角色成员管理  SYS_RoleMember
  * <p>
@@ -10,6 +12,7 @@ package com.lh.system.model;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-10 17:02
  */
+@Data
 public class RoleMember {
 
     private String id;	// UUID

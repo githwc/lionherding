@@ -1,5 +1,7 @@
 package com.lh.system.model;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -12,6 +14,7 @@ import java.util.Date;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-10 16:57
  */
+@Data
 public class Role {
 
     private String id;			// UUID

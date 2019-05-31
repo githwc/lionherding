@@ -20,8 +20,8 @@
 
         <!-- java 实体类 -->
         <javaModelGenerator
-                targetPackage="com.lh.temp"
-                targetProject="E:\workspace\lionherding\src\main\java\com\lh\temp">
+                targetPackage="com.lh.config"
+                targetProject="E:\workspace\lionherding\src\main\java\com\lh">
             <!-- 设置是否将生成的实体类放在targetPackage包中 -->
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -29,20 +29,20 @@
 
         <!-- Mapper XML 文件-->
         <sqlMapGenerator
-                targetPackage="com.lh.temp"
-                targetProject="E:\workspace\lionherding\src\main\java\com\lh\temp">
+                targetPackage="mapper.system"
+                targetProject="E:\workspace\lionherding\src\main\resources\mapper">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <!-- Mapper接口的生成配置 -->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.lh.temp"
-                             targetProject="E:\workspace\lionherding\src\main\java\com\lh\temp">
+                             targetPackage="com.lh.system.mapper"
+                             targetProject="E:\workspace\lionherding\src\main\java\com\lh\system\mapper">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="a_user" domainObjectName="User"
+        <table tableName="sys_Rolemember" domainObjectName="RoleMember"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
