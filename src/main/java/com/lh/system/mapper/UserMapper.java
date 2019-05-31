@@ -1,8 +1,9 @@
 package com.lh.system.mapper;
 
-
 import com.lh.system.model.User;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(String id);
 

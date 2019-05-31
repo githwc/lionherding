@@ -1,10 +1,12 @@
 package com.lh.system.log;
 
+import com.lh.system.mapper.LogMapper;
 import com.lh.system.model.Log;
 import com.lh.system.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.framework.core.utils.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,9 @@ public class SystemLogService {
 	public final static int OPSTATE_SUCCESS = 0;
 	public final static int OPSTATE_FAILURE = 1;
 
+	@Autowired
+    private LogMapper logMapper;
+
 	/**
 	 * @Description:写系统日志(原始方法)
      * @Date: 2019/5/31 11:14
@@ -48,19 +53,20 @@ public class SystemLogService {
 		user = user!=null ? user : new User();
 		Log log = new Log();
 		log.setId(CommonUtil.getUUID());
-		log.setLoginName(user.getLoginName());
-		log.setUserId(user.getId());
-		log.setUserName(user.getName());
-		log.setIpAdress(user.getIpAddress());
+		// log.setLoginName(user.getLoginName());
+		// log.setUserId(user.getId());
+		// log.setUserName(user.getName());
+		// log.setIpAdress(user.getIpAddress());
 		log.setFunctionId(operate);
 		log.setOpDate(new Date());
 		log.setOpType(opType);
-		String tmpDesc = "";
-		for(int i=0; i<describe.length; i++){
-			tmpDesc += describe[i] + (i<describe.length-1?"\r\n":"");
-		}
-		log.setDesc(tmpDesc);
-		return true;
+		// String tmpDesc = "";
+		// for(int i=0; i<describe.length; i++){
+		// 	tmpDesc += describe[i] + (i<describe.length-1?"\r\n":"");
+		// }
+		// log.setDesc(tmpDesc);
+        int result = logMapper.insert(log);
+        return result >0 ? true : false;
 	}
 	
 	/**

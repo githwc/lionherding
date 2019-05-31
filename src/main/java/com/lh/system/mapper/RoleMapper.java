@@ -1,7 +1,9 @@
 package com.lh.system.mapper;
 
 import com.lh.system.model.Role;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);
 
