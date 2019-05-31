@@ -1,4 +1,4 @@
-package org.framework.core.dao;
+package com.lh.system.dao;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ import java.util.UUID;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-31 14:15
  */
-public class DaoFactory implements DaoApi{
+public class DaoFactory implements DaoApi {
 
     @Override
     public synchronized String getUUID() {

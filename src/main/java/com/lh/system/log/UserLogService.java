@@ -4,9 +4,9 @@ import com.lh.system.model.Log;
 import com.lh.system.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.framework.core.dao.DaoApi;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.framework.core.utils.CommonUtil;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -34,9 +34,6 @@ public class UserLogService {
 	public final static int OPSTATE_SUCCESS = 0;
 	public final static int OPSTATE_FAILURE = 1;
 
-	@Autowired
-    private DaoApi dao;
-
 	/**
 	 * @Description:写系统日志(原始方法)
      * @Date: 2019/5/31 11:14
@@ -50,7 +47,7 @@ public class UserLogService {
 	public boolean write(User user, String operate, int opType, String... describe) {
 		user = user!=null ? user : new User();
 		Log log = new Log();
-		log.setId(dao.getUUID());
+		log.setId(CommonUtil.getUUID());
 		log.setLoginName(user.getLoginName());
 		log.setUserId(user.getId());
 		log.setUserName(user.getName());

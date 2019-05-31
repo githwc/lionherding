@@ -22,7 +22,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Object user = httpServletRequest.getSession().getAttribute("loginUser");
-        System.out.println("===LionHerding===值=" + new Date() + "," + "当前类=LoginHandlerInterceptor.preHandle()");
         if(user == null){//未登录，返回到登录页面
             httpServletRequest.setAttribute("msg","没有权限请先登录！");
             //转发

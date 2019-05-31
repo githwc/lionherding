@@ -1,4 +1,4 @@
-package org.framework.core.dao;
+package com.lh.system.dao;
 
 /**
  * 功能描述：Interface - DAO data layer operation
@@ -11,6 +11,7 @@ package org.framework.core.dao;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-31 11:39
  */
+
 public interface DaoApi {
 
     /**
