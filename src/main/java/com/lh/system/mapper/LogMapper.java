@@ -1,10 +1,9 @@
 package com.lh.system.mapper;
 
 import com.lh.system.model.Log;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-@Mapper
+@Repository
 public interface LogMapper {
     int deleteByPrimaryKey(String id);
 
