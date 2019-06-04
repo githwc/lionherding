@@ -41,7 +41,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="sys_user" domainObjectName="User"
+        <table tableName="sys_rolemember" domainObjectName="RoleMember"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
