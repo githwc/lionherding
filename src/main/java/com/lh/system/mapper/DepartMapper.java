@@ -1,9 +1,7 @@
 package com.lh.system.mapper;
 
 import com.lh.system.model.Depart;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface DepartMapper {
     int deleteByPrimaryKey(String id);
 

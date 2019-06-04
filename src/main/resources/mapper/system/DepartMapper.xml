@@ -3,29 +3,29 @@
 <mapper namespace="com.lh.system.mapper.DepartMapper" >
   <resultMap id="BaseResultMap" type="com.lh.system.model.Depart" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="parentid" property="parentId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="shortName" property="shortName" jdbcType="VARCHAR" />
-    <result column="managerId" property="managerId" jdbcType="VARCHAR" />
-    <result column="managerName" property="managerName" jdbcType="VARCHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+    <result column="manager_id" property="managerId" jdbcType="VARCHAR" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="zipcode" property="zIpcode" jdbcType="VARCHAR" />
-    <result column="orgDomain" property="orgDomain" jdbcType="VARCHAR" />
-    <result column="nodetype" property="nodetype" jdbcType="INTEGER" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="org_domain" property="orgDomain" jdbcType="VARCHAR" />
+    <result column="node_type" property="nodeType" jdbcType="INTEGER" />
     <result column="uniquecoding" property="uniquecoding" jdbcType="VARCHAR" />
-    <result column="adminLevel" property="adminLevel" jdbcType="INTEGER" />
+    <result column="admin_level" property="adminLevel" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="createId" property="createId" jdbcType="VARCHAR" />
-    <result column="createName" property="createName" jdbcType="VARCHAR" />
-    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parentid, name, shortName, managerId, managerName, telephone, address, zipcode, 
-    orgDomain, nodetype, uniquecoding, adminLevel, state, createId, createName, createDate, 
-    sort, remark
+    id, parent_id, name, short_name, manager_id, manager_name, telephone, address, zip_code, 
+    org_domain, node_type, uniquecoding, admin_level, state, create_id, create_name, 
+    create_date, sort, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -38,19 +38,19 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.lh.system.model.Depart" >
-    insert into sys_depart (id, parentid, name, 
-      shortName, managerId, managerName, 
-      telephone, address, zipcode, 
-      orgDomain, nodetype, uniquecoding, 
-      adminLevel, state, createId, 
-      createName, createDate, sort, 
+    insert into sys_depart (id, parent_id, name, 
+      short_name, manager_id, manager_name, 
+      telephone, address, zip_code, 
+      org_domain, node_type, uniquecoding, 
+      admin_level, state, create_id, 
+      create_name, create_date, sort, 
       remark)
-    values (#{id,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{shortname,jdbcType=VARCHAR}, #{managerid,jdbcType=VARCHAR}, #{managername,jdbcType=VARCHAR}, 
-      #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, 
-      #{orgdomain,jdbcType=VARCHAR}, #{nodetype,jdbcType=INTEGER}, #{uniquecoding,jdbcType=VARCHAR}, 
-      #{adminlevel,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{createid,jdbcType=VARCHAR}, 
-      #{createname,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{managerId,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, 
+      #{orgDomain,jdbcType=VARCHAR}, #{nodeType,jdbcType=INTEGER}, #{uniquecoding,jdbcType=VARCHAR}, 
+      #{adminLevel,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lh.system.model.Depart" >
@@ -59,20 +59,20 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="parentid != null" >
-        parentid,
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="shortname != null" >
-        shortName,
+      <if test="shortName != null" >
+        short_name,
       </if>
-      <if test="managerid != null" >
-        managerId,
+      <if test="managerId != null" >
+        manager_id,
       </if>
-      <if test="managername != null" >
-        managerName,
+      <if test="managerName != null" >
+        manager_name,
       </if>
       <if test="telephone != null" >
         telephone,
@@ -80,32 +80,32 @@
       <if test="address != null" >
         address,
       </if>
-      <if test="zipcode != null" >
-        zipcode,
+      <if test="zipCode != null" >
+        zip_code,
       </if>
-      <if test="orgdomain != null" >
-        orgDomain,
+      <if test="orgDomain != null" >
+        org_domain,
       </if>
-      <if test="nodetype != null" >
-        nodetype,
+      <if test="nodeType != null" >
+        node_type,
       </if>
       <if test="uniquecoding != null" >
         uniquecoding,
       </if>
-      <if test="adminlevel != null" >
-        adminLevel,
+      <if test="adminLevel != null" >
+        admin_level,
       </if>
       <if test="state != null" >
         state,
       </if>
-      <if test="createid != null" >
-        createId,
+      <if test="createId != null" >
+        create_id,
       </if>
-      <if test="createname != null" >
-        createName,
+      <if test="createName != null" >
+        create_name,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null" >
+        create_date,
       </if>
       <if test="sort != null" >
         sort,
@@ -118,20 +118,20 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="parentid != null" >
-        #{parentid,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="shortname != null" >
-        #{shortname,jdbcType=VARCHAR},
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
       </if>
-      <if test="managerid != null" >
-        #{managerid,jdbcType=VARCHAR},
+      <if test="managerId != null" >
+        #{managerId,jdbcType=VARCHAR},
       </if>
-      <if test="managername != null" >
-        #{managername,jdbcType=VARCHAR},
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
@@ -139,32 +139,32 @@
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="zipcode != null" >
-        #{zipcode,jdbcType=VARCHAR},
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
       </if>
-      <if test="orgdomain != null" >
-        #{orgdomain,jdbcType=VARCHAR},
+      <if test="orgDomain != null" >
+        #{orgDomain,jdbcType=VARCHAR},
       </if>
-      <if test="nodetype != null" >
-        #{nodetype,jdbcType=INTEGER},
+      <if test="nodeType != null" >
+        #{nodeType,jdbcType=INTEGER},
       </if>
       <if test="uniquecoding != null" >
         #{uniquecoding,jdbcType=VARCHAR},
       </if>
-      <if test="adminlevel != null" >
-        #{adminlevel,jdbcType=INTEGER},
+      <if test="adminLevel != null" >
+        #{adminLevel,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
       </if>
-      <if test="createid != null" >
-        #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="sort != null" >
         #{sort,jdbcType=INTEGER},
@@ -177,20 +177,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.model.Depart" >
     update sys_depart
     <set >
-      <if test="parentid != null" >
-        parentid = #{parentid,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="shortname != null" >
-        shortName = #{shortname,jdbcType=VARCHAR},
+      <if test="shortName != null" >
+        short_name = #{shortName,jdbcType=VARCHAR},
       </if>
-      <if test="managerid != null" >
-        managerId = #{managerid,jdbcType=VARCHAR},
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=VARCHAR},
       </if>
-      <if test="managername != null" >
-        managerName = #{managername,jdbcType=VARCHAR},
+      <if test="managerName != null" >
+        manager_name = #{managerName,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null" >
         telephone = #{telephone,jdbcType=VARCHAR},
@@ -198,32 +198,32 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="zipcode != null" >
-        zipcode = #{zipcode,jdbcType=VARCHAR},
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
       </if>
-      <if test="orgdomain != null" >
-        orgDomain = #{orgdomain,jdbcType=VARCHAR},
+      <if test="orgDomain != null" >
+        org_domain = #{orgDomain,jdbcType=VARCHAR},
       </if>
-      <if test="nodetype != null" >
-        nodetype = #{nodetype,jdbcType=INTEGER},
+      <if test="nodeType != null" >
+        node_type = #{nodeType,jdbcType=INTEGER},
       </if>
       <if test="uniquecoding != null" >
         uniquecoding = #{uniquecoding,jdbcType=VARCHAR},
       </if>
-      <if test="adminlevel != null" >
-        adminLevel = #{adminlevel,jdbcType=INTEGER},
+      <if test="adminLevel != null" >
+        admin_level = #{adminLevel,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
-      <if test="createid != null" >
-        createId = #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        createName = #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="sort != null" >
         sort = #{sort,jdbcType=INTEGER},
@@ -236,22 +236,22 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lh.system.model.Depart" >
     update sys_depart
-    set parentid = #{parentid,jdbcType=VARCHAR},
+    set parent_id = #{parentId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      shortName = #{shortname,jdbcType=VARCHAR},
-      managerId = #{managerid,jdbcType=VARCHAR},
-      managerName = #{managername,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      manager_id = #{managerId,jdbcType=VARCHAR},
+      manager_name = #{managerName,jdbcType=VARCHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      zipcode = #{zipcode,jdbcType=VARCHAR},
-      orgDomain = #{orgdomain,jdbcType=VARCHAR},
-      nodetype = #{nodetype,jdbcType=INTEGER},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      org_domain = #{orgDomain,jdbcType=VARCHAR},
+      node_type = #{nodeType,jdbcType=INTEGER},
       uniquecoding = #{uniquecoding,jdbcType=VARCHAR},
-      adminLevel = #{adminlevel,jdbcType=INTEGER},
+      admin_level = #{adminLevel,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
-      createId = #{createid,jdbcType=VARCHAR},
-      createName = #{createname,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
       sort = #{sort,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

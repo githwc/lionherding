@@ -3,16 +3,16 @@
 <mapper namespace="com.lh.system.mapper.RoleMapper" >
   <resultMap id="BaseResultMap" type="com.lh.system.model.Role" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="createId" property="createId" jdbcType="VARCHAR" />
-    <result column="createName" property="createName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, createDate, createId, createName, name, remark, sort, state
+    id, create_date, create_id, create_name, name, remark, sort, state
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -25,11 +25,11 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.lh.system.model.Role" >
-    insert into sys_role (id, createDate, createId, 
-      createName, name, remark, 
+    insert into sys_role (id, create_date, create_id, 
+      create_name, name, remark, 
       sort, state)
-    values (#{id,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{createid,jdbcType=VARCHAR}, 
-      #{createname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{sort,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.lh.system.model.Role" >
@@ -38,14 +38,14 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null" >
+        create_date,
       </if>
-      <if test="createid != null" >
-        createId,
+      <if test="createId != null" >
+        create_id,
       </if>
-      <if test="createname != null" >
-        createName,
+      <if test="createName != null" >
+        create_name,
       </if>
       <if test="name != null" >
         name,
@@ -64,14 +64,14 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createid != null" >
-        #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -90,14 +90,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.model.Role" >
     update sys_role
     <set >
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createid != null" >
-        createId = #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        createName = #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -116,9 +116,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lh.system.model.Role" >
     update sys_role
-    set createDate = #{createdate,jdbcType=TIMESTAMP},
-      createId = #{createid,jdbcType=VARCHAR},
-      createName = #{createname,jdbcType=VARCHAR},
+    set create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},

@@ -1,9 +1,7 @@
 package com.lh.system.mapper;
 
 import com.lh.system.model.Log;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface LogMapper {
     int deleteByPrimaryKey(String id);
 

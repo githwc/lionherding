@@ -4,36 +4,36 @@
   <resultMap id="BaseResultMap" type="com.lh.system.model.User" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="nickName" property="nickName" jdbcType="VARCHAR" />
-    <result column="loginName" property="loginName" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="jobs" property="jobs" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
-    <result column="cardId" property="cardId" jdbcType="VARCHAR" />
-    <result column="mobilePhone" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
-    <result column="shortTel" property="shortTel" jdbcType="VARCHAR" />
+    <result column="short_tel" property="shortTel" jdbcType="VARCHAR" />
     <result column="fax" property="fax" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="ipAddress" property="ipAddress" jdbcType="VARCHAR" />
-    <result column="regDate" property="regDate" jdbcType="TIMESTAMP" />
-    <result column="loginCount" property="loginCount" jdbcType="INTEGER" />
-    <result column="toDayLoginCount" property="toDayLoginCount" jdbcType="INTEGER" />
-    <result column="createId" property="createId" jdbcType="VARCHAR" />
-    <result column="createName" property="createName" jdbcType="VARCHAR" />
-    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="reg_date" property="regDate" jdbcType="TIMESTAMP" />
+    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
+    <result column="to_day_login_count" property="toDayLoginCount" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="departId" property="deptId" jdbcType="VARCHAR" />
+    <result column="depart_id" property="departId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, nickName, loginName, password, jobs, sex, birthday, picture, cardId, mobilePhone, 
-    telephone, shortTel, fax, address, email, ipAddress, regDate, loginCount, toDayLoginCount, 
-    createId, createName, createDate, sort, state, remark, departId
+    id, name, nick_name, login_name, password, jobs, sex, birthday, picture, card_id, 
+    mobile_phone, telephone, short_tel, fax, address, email, ip_address, reg_date, login_count, 
+    to_day_login_count, create_id, create_name, create_date, sort, state, remark, depart_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -46,25 +46,25 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.lh.system.model.User" >
-    insert into sys_user (id, name, nickName, 
-      loginName, password, jobs, 
+    insert into sys_user (id, name, nick_name, 
+      login_name, password, jobs, 
       sex, birthday, picture, 
-      cardId, mobilePhone, telephone, 
-      shortTel, fax, address, 
-      email, ipAddress, regDate, 
-      loginCount, toDayLoginCount, createId, 
-      createName, createDate, sort, 
-      state, remark, departId
+      card_id, mobile_phone, telephone, 
+      short_tel, fax, address, 
+      email, ip_address, reg_date, 
+      login_count, to_day_login_count, create_id, 
+      create_name, create_date, sort, 
+      state, remark, depart_id
       )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{loginname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{jobs,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{jobs,jdbcType=INTEGER}, 
       #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, 
-      #{cardid,jdbcType=VARCHAR}, #{mobilephone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{shorttel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{ipaddress,jdbcType=VARCHAR}, #{regdate,jdbcType=TIMESTAMP}, 
-      #{logincount,jdbcType=INTEGER}, #{todaylogincount,jdbcType=INTEGER}, #{createid,jdbcType=VARCHAR}, 
-      #{createname,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{departid,jdbcType=VARCHAR}
+      #{cardId,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{shortTel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, #{regDate,jdbcType=TIMESTAMP}, 
+      #{loginCount,jdbcType=INTEGER}, #{toDayLoginCount,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.lh.system.model.User" >
@@ -76,11 +76,11 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="nickname != null" >
-        nickName,
+      <if test="nickName != null" >
+        nick_name,
       </if>
-      <if test="loginname != null" >
-        loginName,
+      <if test="loginName != null" >
+        login_name,
       </if>
       <if test="password != null" >
         password,
@@ -97,17 +97,17 @@
       <if test="picture != null" >
         picture,
       </if>
-      <if test="cardid != null" >
-        cardId,
+      <if test="cardId != null" >
+        card_id,
       </if>
-      <if test="mobilephone != null" >
-        mobilePhone,
+      <if test="mobilePhone != null" >
+        mobile_phone,
       </if>
       <if test="telephone != null" >
         telephone,
       </if>
-      <if test="shorttel != null" >
-        shortTel,
+      <if test="shortTel != null" >
+        short_tel,
       </if>
       <if test="fax != null" >
         fax,
@@ -118,26 +118,26 @@
       <if test="email != null" >
         email,
       </if>
-      <if test="ipaddress != null" >
-        ipAddress,
+      <if test="ipAddress != null" >
+        ip_address,
       </if>
-      <if test="regdate != null" >
-        regDate,
+      <if test="regDate != null" >
+        reg_date,
       </if>
-      <if test="logincount != null" >
-        loginCount,
+      <if test="loginCount != null" >
+        login_count,
       </if>
-      <if test="todaylogincount != null" >
-        toDayLoginCount,
+      <if test="toDayLoginCount != null" >
+        to_day_login_count,
       </if>
-      <if test="createid != null" >
-        createId,
+      <if test="createId != null" >
+        create_id,
       </if>
-      <if test="createname != null" >
-        createName,
+      <if test="createName != null" >
+        create_name,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null" >
+        create_date,
       </if>
       <if test="sort != null" >
         sort,
@@ -148,8 +148,8 @@
       <if test="remark != null" >
         remark,
       </if>
-      <if test="departid != null" >
-        departId,
+      <if test="departId != null" >
+        depart_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -159,11 +159,11 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="loginname != null" >
-        #{loginname,jdbcType=VARCHAR},
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
@@ -180,17 +180,17 @@
       <if test="picture != null" >
         #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="cardid != null" >
-        #{cardid,jdbcType=VARCHAR},
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
       </if>
-      <if test="mobilephone != null" >
-        #{mobilephone,jdbcType=VARCHAR},
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="shorttel != null" >
-        #{shorttel,jdbcType=VARCHAR},
+      <if test="shortTel != null" >
+        #{shortTel,jdbcType=VARCHAR},
       </if>
       <if test="fax != null" >
         #{fax,jdbcType=VARCHAR},
@@ -201,26 +201,26 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="ipaddress != null" >
-        #{ipaddress,jdbcType=VARCHAR},
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
       </if>
-      <if test="regdate != null" >
-        #{regdate,jdbcType=TIMESTAMP},
+      <if test="regDate != null" >
+        #{regDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="logincount != null" >
-        #{logincount,jdbcType=INTEGER},
+      <if test="loginCount != null" >
+        #{loginCount,jdbcType=INTEGER},
       </if>
-      <if test="todaylogincount != null" >
-        #{todaylogincount,jdbcType=INTEGER},
+      <if test="toDayLoginCount != null" >
+        #{toDayLoginCount,jdbcType=INTEGER},
       </if>
-      <if test="createid != null" >
-        #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="sort != null" >
         #{sort,jdbcType=INTEGER},
@@ -231,8 +231,8 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="departid != null" >
-        #{departid,jdbcType=VARCHAR},
+      <if test="departId != null" >
+        #{departId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -242,11 +242,11 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        nickName = #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="loginname != null" >
-        loginName = #{loginname,jdbcType=VARCHAR},
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
@@ -263,17 +263,17 @@
       <if test="picture != null" >
         picture = #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="cardid != null" >
-        cardId = #{cardid,jdbcType=VARCHAR},
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
       </if>
-      <if test="mobilephone != null" >
-        mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null" >
         telephone = #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="shorttel != null" >
-        shortTel = #{shorttel,jdbcType=VARCHAR},
+      <if test="shortTel != null" >
+        short_tel = #{shortTel,jdbcType=VARCHAR},
       </if>
       <if test="fax != null" >
         fax = #{fax,jdbcType=VARCHAR},
@@ -284,26 +284,26 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="ipaddress != null" >
-        ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      <if test="ipAddress != null" >
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
       </if>
-      <if test="regdate != null" >
-        regDate = #{regdate,jdbcType=TIMESTAMP},
+      <if test="regDate != null" >
+        reg_date = #{regDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="logincount != null" >
-        loginCount = #{logincount,jdbcType=INTEGER},
+      <if test="loginCount != null" >
+        login_count = #{loginCount,jdbcType=INTEGER},
       </if>
-      <if test="todaylogincount != null" >
-        toDayLoginCount = #{todaylogincount,jdbcType=INTEGER},
+      <if test="toDayLoginCount != null" >
+        to_day_login_count = #{toDayLoginCount,jdbcType=INTEGER},
       </if>
-      <if test="createid != null" >
-        createId = #{createid,jdbcType=VARCHAR},
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
       </if>
-      <if test="createname != null" >
-        createName = #{createname,jdbcType=VARCHAR},
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="sort != null" >
         sort = #{sort,jdbcType=INTEGER},
@@ -314,8 +314,8 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="departid != null" >
-        departId = #{departid,jdbcType=VARCHAR},
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -323,31 +323,31 @@
   <update id="updateByPrimaryKey" parameterType="com.lh.system.model.User" >
     update sys_user
     set name = #{name,jdbcType=VARCHAR},
-      nickName = #{nickname,jdbcType=VARCHAR},
-      loginName = #{loginname,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       jobs = #{jobs,jdbcType=INTEGER},
       sex = #{sex,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=TIMESTAMP},
       picture = #{picture,jdbcType=VARCHAR},
-      cardId = #{cardid,jdbcType=VARCHAR},
-      mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
-      shortTel = #{shorttel,jdbcType=VARCHAR},
+      short_tel = #{shortTel,jdbcType=VARCHAR},
       fax = #{fax,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      ipAddress = #{ipaddress,jdbcType=VARCHAR},
-      regDate = #{regdate,jdbcType=TIMESTAMP},
-      loginCount = #{logincount,jdbcType=INTEGER},
-      toDayLoginCount = #{todaylogincount,jdbcType=INTEGER},
-      createId = #{createid,jdbcType=VARCHAR},
-      createName = #{createname,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      reg_date = #{regDate,jdbcType=TIMESTAMP},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      to_day_login_count = #{toDayLoginCount,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
       sort = #{sort,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
-      departId = #{departid,jdbcType=VARCHAR}
+      depart_id = #{departId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
