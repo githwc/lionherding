@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 功能描述：
+ * 功能描述：数据类型转换工具包
  * <p>
  * <p>版权所有：</p>
  * 未经人许可，不得以任何方式复制或使用本程序任何部分

@@ -27,10 +27,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @MapperScan({"com.lh.system.mapper","com.lh.modules.mapper"})
 @SpringBootApplication
-public class LionherdingApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LionherdingApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 功能描述：读取本机信息
+ * 功能描述：读取本机信息工具包
  * <p>
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -42,11 +42,11 @@ public class LocalHostUtil {
     }
 
     /**
-    * @Description:获取客户端真实IP地址
-    * @Date: 16:34 2019/5/9
-    * @Param: 
-    * @Return: IP Address
-    */
+     * @Description:获取客户端真实IP地址
+     * @Date: 16:34 2019/5/9
+     * @Param:
+     * @Return: IP Address
+     */
     public static String getIpAddress() {
         String hostName = "";
         InetAddress addr = null;
@@ -60,11 +60,11 @@ public class LocalHostUtil {
     }
 
     /**
-    * @Description:根据IP地址获取客户端的MAC
-    * @Date: 16:38 2019/5/9
-    * @Param: inetAddress
-    * @Return: MAC Address
-    */
+     * @Description:根据IP地址获取客户端的MAC
+     * @Date: 16:38 2019/5/9
+     * @Param: inetAddress
+     * @Return: MAC Address
+     */
     public static String getMACAddress(InetAddress inetAddress) throws IOException {
         String strMac = "";
         // Linux System
@@ -106,11 +106,11 @@ public class LocalHostUtil {
     }
 
     /**
-    * @Description:读取本机MAC地址
-    * @Date: 16:40 2019/5/9
-    * @Param: 
-    * @Return: MAC Address
-    */
+     * @Description:读取本机MAC地址
+     * @Date: 16:40 2019/5/9
+     * @Param:
+     * @Return: MAC Address
+     */
     public static String getMACAddress() {
         String strMacAddr = "";
         try {
@@ -122,11 +122,11 @@ public class LocalHostUtil {
     }
 
     /**
-    * @Description:读取本机机器名称
-    * @Date: 16:41 2019/5/9
-    * @Param: 
-    * @Return:  HostName
-    */
+     * @Description:读取本机机器名称
+     * @Date: 16:41 2019/5/9
+     * @Param:
+     * @Return:  HostName
+     */
     public static String getHostName() {
         String ip = "";
         InetAddress addr = null;

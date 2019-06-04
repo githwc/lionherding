@@ -36,7 +36,7 @@ public class SystemLogService {
 	public final static int OPSTATE_SUCCESS = 0;
 	public final static int OPSTATE_FAILURE = 1;
 
-	@Autowired
+    @Autowired
     private LogMapper logMapper;
 
 	/**
@@ -57,9 +57,9 @@ public class SystemLogService {
 		// log.setUserId(user.getId());
 		// log.setUserName(user.getName());
 		// log.setIpAdress(user.getIpAddress());
-		log.setFunctionId(operate);
-		log.setOpDate(new Date());
-		log.setOpType(opType);
+		log.setFunctionid(operate);
+		log.setOpdate(new Date());
+		log.setOptype(opType);
 		// String tmpDesc = "";
 		// for(int i=0; i<describe.length; i++){
 		// 	tmpDesc += describe[i] + (i<describe.length-1?"\r\n":"");
@@ -68,7 +68,7 @@ public class SystemLogService {
         int result = logMapper.insert(log);
         return result >0 ? true : false;
 	}
-	
+
 	/**
 	 * @Description:方法重写：仅仅记录用户系统操作日志，不进行系统文件日志写入
      * @Date: 2019/5/31 11:15
@@ -83,7 +83,7 @@ public class SystemLogService {
         User user = new User();
         return write(user, operate, opType, message);
 	}
-	
+
 	/**
 	 * @Description:方法重写：方法抛出异常情况下调用，不仅仅写入用户操作日志，* 而且还需要将系统异常信息写入到文件日志中
 	 * @param request	: HttpServletRequest

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 功能描述：JAVA日期时间函数包
+ * 功能描述：JAVA日期时间工具包
  * 日期数据获取与转换、
  * 关于时间的相关方法
  * <p>
@@ -596,4 +596,37 @@ public class DateTimeUtil {
         return arr;
     }
 
+
+    //================JS :DateTimeUtil ========================
+    /*一、JS获取当前系列时间
+        var nowDate = new Date();　　实例一个时间对象
+        nowDate.getFullYear();　　　 //获取当前的年
+        nowDate.getMonth()+1;　　　 //获取当前月
+        nowDate.getDate()+1;　　　　//获取当前日
+        nowDate.getHours();　　　　 //获取当前时
+        nowDate.getMinutes();　　　 //获取当前分钟
+        nowDate.getSeconds();　　　 //当前秒
+
+    二、JS获取上一个月的第一天和这个月第一天
+        if($("#startTime").val()==""||$("#endTime").val()==""){
+            var days = new Date();
+            var year = days.getFullYear();
+            var month = days.getMonth();
+            var lastmonth = days.getMonth()+1;
+            var lastyear = days.getFullYear();
+            if(month==0){month=12;
+                year=year-1;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (lastmonth < 10) {
+                lastmonth = "0" + lastmonth;
+            }
+            var firstDay = year + "-" + month + "-" + "01"+" 00:"+"00";//上个月的第一天
+            var lastDay = lastyear + "-" + lastmonth + "-" + "01"+" 00:"+"00";//本月的第一天
+            $('#startTime').val(firstDay);
+            $('#endTime').val(lastDay);
+         */
+    //================JS :DateTimeUtil ========================
 }
