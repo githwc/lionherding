@@ -25,7 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-30
  */
-@MapperScan({"com.lh.system.mapper","com.lh.modules.mapper"})
+// @MapperScan({"com.lh.system.mapper","com.lh.modules.mapper"})
+@MapperScan("com.lh.system.mapper")
 @SpringBootApplication
 public class Application {
 

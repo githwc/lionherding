@@ -1,5 +1,7 @@
 package com.lh.modules.service;
 
+import com.lh.system.model.User;
+
 /**
  * 功能描述：
  * <p>版权所有：</p>
@@ -10,5 +12,7 @@ package com.lh.modules.service;
  * @Datetime: 2019-06-04
  * @Version: 1.0.0
  */
-public class Test {
+public interface Test {
+
+    public User queryByid(String id);
 }

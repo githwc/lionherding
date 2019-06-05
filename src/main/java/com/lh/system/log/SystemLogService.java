@@ -57,14 +57,15 @@ public class SystemLogService {
 		// log.setUserId(user.getId());
 		// log.setUserName(user.getName());
 		// log.setIpAdress(user.getIpAddress());
-		log.setFunctionid(operate);
-		log.setOpdate(new Date());
-		log.setOptype(opType);
+		log.setFunctionId(operate);
+		log.setOpDate(new Date());
+		log.setOpType(opType);
 		// String tmpDesc = "";
 		// for(int i=0; i<describe.length; i++){
 		// 	tmpDesc += describe[i] + (i<describe.length-1?"\r\n":"");
 		// }
 		// log.setDesc(tmpDesc);
+        Log dd = logMapper.selectByPrimaryKey("1");
         int result = logMapper.insert(log);
         return result >0 ? true : false;
 	}
