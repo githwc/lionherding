@@ -1,11 +1,10 @@
-package com.lh.config;
+package com.lh.system.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * 功能描述：进行登录检查
