@@ -13,7 +13,7 @@
     <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
     <result column="org_domain" property="orgDomain" jdbcType="VARCHAR" />
     <result column="node_type" property="nodeType" jdbcType="INTEGER" />
-    <result column="uniquecoding" property="uniquecoding" jdbcType="VARCHAR" />
+    <result column="unique_coding" property="uniqueCoding" jdbcType="VARCHAR" />
     <result column="admin_level" property="adminLevel" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="create_id" property="createId" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, parent_id, name, short_name, manager_id, manager_name, telephone, address, zip_code, 
-    org_domain, node_type, uniquecoding, admin_level, state, create_id, create_name, 
+    org_domain, node_type, unique_coding, admin_level, state, create_id, create_name,
     create_date, sort, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -41,7 +41,7 @@
     insert into sys_depart (id, parent_id, name, 
       short_name, manager_id, manager_name, 
       telephone, address, zip_code, 
-      org_domain, node_type, uniquecoding, 
+      org_domain, node_type, unique_coding,
       admin_level, state, create_id, 
       create_name, create_date, sort, 
       remark)
@@ -90,7 +90,7 @@
         node_type,
       </if>
       <if test="uniquecoding != null" >
-        uniquecoding,
+        unique_coding,
       </if>
       <if test="adminLevel != null" >
         admin_level,
@@ -208,7 +208,7 @@
         node_type = #{nodeType,jdbcType=INTEGER},
       </if>
       <if test="uniquecoding != null" >
-        uniquecoding = #{uniquecoding,jdbcType=VARCHAR},
+        unique_coding = #{uniquecoding,jdbcType=VARCHAR},
       </if>
       <if test="adminLevel != null" >
         admin_level = #{adminLevel,jdbcType=INTEGER},
@@ -246,7 +246,7 @@
       zip_code = #{zipCode,jdbcType=VARCHAR},
       org_domain = #{orgDomain,jdbcType=VARCHAR},
       node_type = #{nodeType,jdbcType=INTEGER},
-      uniquecoding = #{uniquecoding,jdbcType=VARCHAR},
+      unique_coding = #{uniquecoding,jdbcType=VARCHAR},
       admin_level = #{adminLevel,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=VARCHAR},

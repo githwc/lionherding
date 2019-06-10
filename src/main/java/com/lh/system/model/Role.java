@@ -1,85 +1,34 @@
 package com.lh.system.model;
 
+import lombok.Data;
+
 import java.util.Date;
 
+/**
+ * 功能描述：Model-角色管理 sys_Role
+ * <p>
+ * <p>版权所有：</p>
+ * 未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ * @Company: LionHerding
+ * @Author: 牧狮&&紫色年华
+ * @Datetime: 2019-05-10 16:57
+ */
+@Data
 public class Role {
-    private String id;
+    private String id;			// UUID
 
-    private Date createDate;
+    private String name;		// 角色名称
 
-    private String createId;
+    private int state;			// 状态 (0：开放、1：禁止)
 
-    private String createName;
+    private int sort;			// 排序
 
-    private String name;
+    private String remark;		// 备注说明
 
-    private String remark;
+    private String createName;	// 创建人姓名
 
-    private Integer sort;
+    private String createId;	// 创建人标识
 
-    private Integer state;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId == null ? null : createId.trim();
-    }
-
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName == null ? null : createName.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
+    private Date createDate;	// 创建日期
 }
