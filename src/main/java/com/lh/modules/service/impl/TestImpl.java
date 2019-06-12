@@ -4,6 +4,7 @@ import com.lh.modules.service.Test;
 import com.lh.system.mapper.UserMapper;
 import com.lh.system.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,7 +24,9 @@ public class TestImpl implements Test {
     private UserMapper userMapper;
 
     @Override
+    @Cacheable(cacheNames = {"user"})
     public User queryByid(String id) {
-       return userMapper.selectByPrimaryKey(id);
+        System.out.println("===LionHerding===值=" +id  + "," + "当前类=TestImpl.queryByid()");
+        return userMapper.selectByPrimaryKey(id);
     }
 }

@@ -37,7 +37,6 @@ public class TestAction {
     @RequestMapping("/hi")
     public String hi(){
         User user = test.queryByid("123");
-        System.out.println("===LionHerding===值=" + user + "," + "当前类=TestAction.hi()");
         return "23423";
     }
 }
