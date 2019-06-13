@@ -19,15 +19,13 @@ public class Log {
 
     private String loginName;	// 登录名
 
-    private String userName;	// 用户名
-
     private String userId;		// 用户标识
 
     private int opType;			// 操作类型  0:增 1：删  2：改 3：读。
 
     private Date opDate;		// 操作时间
 
-    private String desc;	    // 操作描述
+    private String opDesc;	    // 操作描述
 
     private String ipAdress;	// 操作IP地址
 

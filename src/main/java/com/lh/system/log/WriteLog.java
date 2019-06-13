@@ -23,10 +23,8 @@ import java.lang.annotation.*;
 @Inherited
 public @interface WriteLog {
 
-	public String mName();      //方法名：类名+方法名
+	public String mName();      //方法名
 
 	public int optype();        //操作类型：CRUD
-
-	public String desc() default "";        //描述
 
 }

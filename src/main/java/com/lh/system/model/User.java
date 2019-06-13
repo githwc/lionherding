@@ -1,7 +1,10 @@
 package com.lh.system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -16,6 +19,9 @@ import java.util.Date;
  */
 @Data
 public class User {
+
+    public static final String SESSION_CURRENT_USER = "SYSUSER";
+
     private String id;
 
     private String name;
@@ -69,4 +75,11 @@ public class User {
     private String remark;
 
     private String departId;
+
+    @JsonIgnore
+    @Transient
+    public static User getCurrentUser(HttpServletRequest request) {
+        Object object = request.getSession().getAttribute(SESSION_CURRENT_USER);
+        return object != null ? (User) object : null;
+    }
 }

@@ -2,6 +2,7 @@ package org.framework.core.encoder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * 
@@ -65,5 +66,53 @@ public class MD5 {
         String s = new String(a);
         return s;
     }
-	
+
+    /**
+     * @Description:MD5加盐加密
+     * @Date: 2019/6/13 10:33
+     * @Param:
+     * @Return:
+     * @throws:
+     */
+    public static String getSaltMD5(String password) {
+        // 生成一个16位的随机数
+        Random random = new Random();
+        StringBuilder sBuilder = new StringBuilder(16);
+        sBuilder.append(random.nextInt(99999999)).append(random.nextInt(99999999));
+        if (sBuilder.length() < 16) {
+            for (int i = 0; i < 16 - sBuilder.length(); i++) {
+                sBuilder.append("0");
+            }
+        }
+        // 生成最终的加密盐
+        String Salt = sBuilder.toString();
+        password = encrypt(password + Salt);
+        char[] cs = new char[48];
+        for (int i = 0; i < 48; i += 3) {
+            cs[i] = password.charAt(i / 3 * 2);
+            char c = Salt.charAt(i / 3);
+            cs[i + 1] = c;
+            cs[i + 2] = password.charAt(i / 3 * 2 + 1);
+        }
+        return String.valueOf(cs);
+    }
+
+    /**
+     * @Description:验证加盐后是否和原文一致
+     * @Date: 2019/6/13 10:42
+     * @Param:
+     * @Return:
+     * @throws:
+     */
+    public static boolean compareStrAndSaltMD5(String password, String md5str) {
+        char[] cs1 = new char[32];
+        char[] cs2 = new char[16];
+        for (int i = 0; i < 48; i += 3) {
+            cs1[i / 3 * 2] = md5str.charAt(i);
+            cs1[i / 3 * 2 + 1] = md5str.charAt(i + 2);
+            cs2[i / 3] = md5str.charAt(i + 1);
+        }
+        String Salt = new String(cs2);
+        return encrypt(password + Salt).equals(String.valueOf(cs1));
+    }
 }

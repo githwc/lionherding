@@ -1,5 +1,7 @@
 package com.lh.system.dao;
 
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
 /**
@@ -12,6 +14,7 @@ import java.util.UUID;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-31 14:15
  */
+@Service
 public class DaoFactory implements DaoApi {
 
     @Override

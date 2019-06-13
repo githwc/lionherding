@@ -350,4 +350,17 @@
       depart_id = #{departId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+    <!--自定义SQL-->
+    <!--自定义条件查询-->
+    <select id="findByField" resultType="com.lh.system.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from sys_user
+        <where>
+            <if test="loginName !=null and loginName !=''">
+                and login_name = #{loginName}
+            </if>
+        </where>
+    </select>
 </mapper>

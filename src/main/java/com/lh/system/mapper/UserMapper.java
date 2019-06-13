@@ -1,6 +1,7 @@
 package com.lh.system.mapper;
 
 import com.lh.system.model.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String id);
@@ -14,4 +15,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    //=======================自定义===========
+    User findByField(@Param(value="loginName") String loginName);
 }

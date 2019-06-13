@@ -1,5 +1,10 @@
 package com.lh.system.service;
 
+import com.lh.system.model.User;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 功能描述：
  * <p>
@@ -11,4 +16,23 @@ package com.lh.system.service;
  * @Datetime: 2019-05-31 17:37
  */
 public interface UserService {
+    /**
+     * @Description:用户自行注册
+     * @Date: 2019/6/13 14:06
+     * @Param:
+     * @Return:
+     * @throws:
+     */
+    int register(User user);
+
+    /**
+     * @Description:获取用户信息
+     * @Date: 2019/6/13 16:24
+     * @Param:
+     * @Return:
+     * @throws:
+     */
+    User getUserInfo(String loginName);
+
+    String login(String loginName, String password, HttpServletRequest request, HttpServletResponse response);
 }
