@@ -1,15 +1,14 @@
 package com.lh.system.action;
 
+import com.lh.system.basis.Result;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import com.lh.system.model.User;
 import com.lh.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -24,7 +23,7 @@ import java.util.Map;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-31 17:45
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserAction {
 
@@ -63,7 +62,7 @@ public class UserAction {
      */
     @PostMapping(value = "/login")
     @WriteLog(mName = "登录", optype = SystemLogService.OPTYPE_READ)
-    public String login(@RequestParam("login_loginName")String loginName,
+    public Result<Object> login(@RequestParam("login_loginName")String loginName,
                         @RequestParam("login_password")String password,
                         HttpServletRequest request, HttpServletResponse response
     ){

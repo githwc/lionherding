@@ -1,5 +1,7 @@
 package com.lh.system.service.impl;
 
+import com.lh.system.basis.Result;
+import com.lh.system.basis.ResultCode;
 import com.lh.system.dao.DaoApi;
 import com.lh.system.mapper.UserMapper;
 import com.lh.system.model.User;
@@ -75,22 +77,20 @@ public class UserServiceImpl implements UserService {
      * @throws:
      */
     @Override
-    public String login(String loginName, String password, HttpServletRequest request, HttpServletResponse response) {
+    public Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response) {
         User user = userMapper.findByField(loginName);//查询用户
         if(user!=null){
             //判断用户密码是否一致
             boolean result = MD5.compareStrAndSaltMD5(password,user.getPassword());
             if(result){//保存session
                 HttpSession session = request.getSession();
-                session.setAttribute("user",user);
                 session.setAttribute(User.SESSION_CURRENT_USER, user);
-                System.out.println("当前类:UserServiceImpl.login()==="  );
-                return "redirect:/main.html";
+                return Result.success();
             }else{
-                return "密码输入错误，请核对信息！";
+                return Result.fail(ResultCode.USER_LOGIN_ERROR);
             }
         }else{
-            return "用户不存在，请核对信息！";
+            return Result.fail(ResultCode.USER_LOGIN_ERROR);
         }
     }
 }

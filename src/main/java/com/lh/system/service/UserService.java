@@ -1,5 +1,6 @@
 package com.lh.system.service;
 
+import com.lh.system.basis.Result;
 import com.lh.system.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,5 +35,5 @@ public interface UserService {
      */
     User getUserInfo(String loginName);
 
-    String login(String loginName, String password, HttpServletRequest request, HttpServletResponse response);
+    Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response);
 }
