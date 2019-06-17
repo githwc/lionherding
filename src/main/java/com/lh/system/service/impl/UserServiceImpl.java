@@ -10,6 +10,7 @@ import org.framework.core.encoder.MD5;
 import org.framework.core.utils.LocalHostUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,7 +78,11 @@ public class UserServiceImpl implements UserService {
      * @throws:
      */
     @Override
-    public Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response) {
+    public Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response, String code, Model model) {
+        //验证图片验证码
+        if(!code.equalsIgnoreCase(request.getSession().getAttribute("code").toString())){//图片验证码与session中的验证码不一致
+          return Result.fail(ResultCode.USER_PICTURE_VALIDATE);
+        }
         User user = userMapper.findByField(loginName);//查询用户
         if(user!=null){
             //判断用户密码是否一致
@@ -85,7 +90,7 @@ public class UserServiceImpl implements UserService {
             if(result){//保存session
                 HttpSession session = request.getSession();
                 session.setAttribute(User.SESSION_CURRENT_USER, user);
-                return Result.success();
+                return Result.success(user);
             }else{
                 return Result.fail(ResultCode.USER_LOGIN_ERROR);
             }

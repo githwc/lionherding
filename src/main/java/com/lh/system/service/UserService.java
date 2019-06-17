@@ -2,7 +2,7 @@ package com.lh.system.service;
 
 import com.lh.system.basis.Result;
 import com.lh.system.model.User;
-
+import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,5 +35,5 @@ public interface UserService {
      */
     User getUserInfo(String loginName);
 
-    Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response);
+    Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response, String code, Model model);
 }

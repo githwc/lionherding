@@ -31,7 +31,9 @@ public enum ResultCode {
      */
     USER_LOGIN_ERROR(500201,"登录失败，用户名或密码错误，请重新输入"),
     USER_HAS_EXISTED(500202,"用户已存在，请尝试其他用户名"),
-    USER_NOT_LOGIN(500203,"用户未登录或登录已失效，请重新登录");
+    USER_NOT_LOGIN(500203,"用户未登录或登录已失效，请重新登录"),
+    USER_PICTURE_VALIDATE(500204,"验证码错误，请修正！"),
+    ;
 
     private Integer code;
 
