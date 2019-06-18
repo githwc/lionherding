@@ -2,6 +2,7 @@ package com.lh.system.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,10 @@ import java.util.Date;
  * @Datetime: 2019-05-10 16:57
  */
 @Data
-public class Role {
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;			// UUID
 
     private String name;		// 角色名称

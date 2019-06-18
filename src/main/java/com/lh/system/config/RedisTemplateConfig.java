@@ -11,6 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * 功能描述：Redis配置类
+ *          自定义RedisTemplate,转换成可读性json等
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -19,7 +20,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Datetime: 2019-06-12
  * @Version: 1.0.0
  */
-public class RedisConfig {
+public class RedisTemplateConfig {
 
     @Bean
     @SuppressWarnings("all")

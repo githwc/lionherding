@@ -3,6 +3,8 @@ package com.lh.system.service.impl;
 import com.lh.system.basis.Result;
 import com.lh.system.basis.ResultCode;
 import com.lh.system.dao.DaoApi;
+import com.lh.system.log.SystemLogService;
+import com.lh.system.log.WriteLog;
 import com.lh.system.mapper.UserMapper;
 import com.lh.system.model.User;
 import com.lh.system.service.UserService;
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
      * @throws:
      */
     @Override
+    @WriteLog(mName = "注册用户",optype = SystemLogService.OPTYPE_CREATE)
     public int register(User user) {
         //判断登录名一致性
         //对密码进行MD5加盐加密
@@ -78,6 +81,7 @@ public class UserServiceImpl implements UserService {
      * @throws:
      */
     @Override
+    @WriteLog(mName = "登录用户",optype = SystemLogService.OPTYPE_READ)
     public Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response, String code, Model model) {
         //验证图片验证码
         if(!code.equalsIgnoreCase(request.getSession().getAttribute("code").toString())){//图片验证码与session中的验证码不一致

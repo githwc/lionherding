@@ -1,5 +1,6 @@
 package com.lh.system.action;
 
+import com.lh.system.basis.BasisAction;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -13,5 +14,5 @@ import org.springframework.stereotype.Controller;
  * @Datetime: 2019-05-31 17:46
  */
 @Controller
-public class LogAction {
+public class LogAction extends BasisAction {
 }

@@ -1,5 +1,8 @@
 package com.lh.system.service;
 
+import com.lh.system.model.Depart;
+import java.util.List;
+
 /**
  * 功能描述：
  * <p>
@@ -11,4 +14,6 @@ package com.lh.system.service;
  * @Datetime: 2019-05-31 17:38
  */
 public interface DepartService {
+
+    public List<Depart> departList();
 }

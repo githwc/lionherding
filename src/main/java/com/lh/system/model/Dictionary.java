@@ -2,6 +2,7 @@ package com.lh.system.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Date;
  * @Datetime: 2019-05-10 16:40
  */
 @Data
-public class Dictionary {
+public class Dictionary implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String id;			// UUID
 

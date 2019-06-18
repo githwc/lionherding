@@ -1,5 +1,6 @@
 package com.lh.system.action;
 
+import com.lh.system.basis.BasisAction;
 import com.lh.system.basis.Result;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -25,8 +27,7 @@ import java.util.Map;
  * @Datetime: 2019-05-31 17:45
  */
 @RestController
-@RequestMapping("/user")
-public class UserAction {
+public class UserAction extends BasisAction {
 
     @Autowired
     private UserService userService;
@@ -102,4 +103,13 @@ public class UserAction {
     }
 
 
+    @RequestMapping(value = "/seckill")
+    public Result<Object> login(
+    ){
+        System.out.println("当前类:UserAction.login()===" + new Date());
+        User user = new User();
+        user.setLoginName("23");
+        user.setPassword("23");
+        return Result.success(user);
+    }
 }

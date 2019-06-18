@@ -2,6 +2,7 @@ package com.lh.system.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,10 @@ import java.util.Date;
  */
 
 @Data
-public class Depart {
+public class Depart implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;					// UUID
 
     private String parentId;			// 父级部门ID

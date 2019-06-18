@@ -1,6 +1,9 @@
 package com.lh.system.model;
 
 import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * 功能描述：Model - 角色成员管理  SYS_RoleMember
  * <p>
@@ -12,7 +15,10 @@ import lombok.Data;
  * @Datetime: 2019-05-10 17:02
  */
 @Data
-public class RoleMember {
+public class RoleMember implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;	// UUID
 
     private String roleId;	// 角色ID

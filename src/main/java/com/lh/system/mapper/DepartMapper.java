@@ -2,6 +2,8 @@ package com.lh.system.mapper;
 
 import com.lh.system.model.Depart;
 
+import java.util.List;
+
 public interface DepartMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface DepartMapper {
     int updateByPrimaryKeySelective(Depart record);
 
     int updateByPrimaryKey(Depart record);
+
+    //================自定义SQL==================
+    List<Depart> departList();
 }

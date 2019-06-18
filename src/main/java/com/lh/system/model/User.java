@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Transient;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +19,9 @@ import java.util.Date;
  * @Datetime: 2019-05-10 15:20
  */
 @Data
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public static final String SESSION_CURRENT_USER = "SYSUSER";
 

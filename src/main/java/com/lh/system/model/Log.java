@@ -2,6 +2,7 @@ package com.lh.system.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * 功能描述：日志管理    SYS_Log
@@ -14,7 +15,10 @@ import java.util.Date;
  * @Datetime: 2019-05-10 16:48
  */
 @Data
-public class Log {
+public class Log implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;			// UUID
 
     private String loginName;	// 登录名

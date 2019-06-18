@@ -1,5 +1,7 @@
 package com.lh.system.action;
 
+import com.lh.system.basis.BasisAction;
+
 /**
  * 功能描述：
  * <p>
@@ -10,5 +12,5 @@ package com.lh.system.action;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-31 17:46
  */
-public class DictionaryAction {
+public class DictionaryAction extends BasisAction {
 }
