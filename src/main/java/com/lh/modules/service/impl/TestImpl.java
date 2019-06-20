@@ -26,7 +26,6 @@ public class TestImpl implements Test {
     @Override
     @Cacheable(cacheNames = {"user"})
     public User queryByid(String id) {
-        System.out.println("===LionHerding===值=" +id  + "," + "当前类=TestImpl.queryByid()");
         return userMapper.selectByPrimaryKey(id);
     }
 }

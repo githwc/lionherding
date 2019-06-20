@@ -35,7 +35,9 @@ public class TestAction {
 
     @RequestMapping("/hi")
     public Result<User> hi(){
-        User user = test.queryByid("123");
+        // User user = test.queryByid("123");
+        User user = new User();
+        user.setPassword("123123");
         return Result.success(user);
     }
 }
