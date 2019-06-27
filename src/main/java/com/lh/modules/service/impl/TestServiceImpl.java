@@ -1,6 +1,8 @@
 package com.lh.modules.service.impl;
 
-import com.lh.modules.service.Test;
+import com.lh.modules.mapper.TestMapper;
+import com.lh.modules.model.Test;
+import com.lh.modules.service.TestService;
 import com.lh.system.mapper.UserMapper;
 import com.lh.system.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,22 @@ import org.springframework.stereotype.Service;
  * @Version: 1.0.0
  */
 @Service
-public class TestImpl implements Test {
+public class TestServiceImpl implements TestService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private TestMapper testMapper;
 
     @Override
     @Cacheable(cacheNames = {"user"})
     public User queryByid(String id) {
         return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Test getInfo() {
+        return testMapper.getInfo();
     }
 }

@@ -1,13 +1,11 @@
 package com.lh.modules.action;
 
-import com.lh.modules.service.Test;
+import com.lh.modules.model.Test;
+import com.lh.modules.service.TestService;
 import com.lh.system.basis.Result;
-import com.lh.system.log.SystemLogService;
-import com.lh.system.log.WriteLog;
 import com.lh.system.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,20 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestAction {
 
     @Autowired
-    private Test test;
+    private TestService testService;
 
-    @ResponseBody
     @RequestMapping("/hello")
-    @WriteLog(mName = "测试", optype = SystemLogService.OPTYPE_READ)
+    // @WriteLog(mName = "测试", optype = SystemLogService.OPTYPE_READ)
     public String hello(){
         return "d";
     }
 
     @RequestMapping("/hi")
     public Result<User> hi(){
-        // User user = test.queryByid("123");
-        User user = new User();
-        user.setPassword("123123");
+        User user = testService.queryByid("123");
         return Result.success(user);
     }
+
+    @RequestMapping("/getInfo")
+    public Test getInfo(){
+        Test dd = testService.getInfo();
+        return dd;
+    }
 }
+

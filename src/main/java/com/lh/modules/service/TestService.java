@@ -1,5 +1,6 @@
 package com.lh.modules.service;
 
+import com.lh.modules.model.Test;
 import com.lh.system.model.User;
 
 /**
@@ -12,7 +13,9 @@ import com.lh.system.model.User;
  * @Datetime: 2019-06-04
  * @Version: 1.0.0
  */
-public interface Test {
+public interface TestService {
 
-    public User queryByid(String id);
+    User queryByid(String id);
+
+    Test getInfo();
 }

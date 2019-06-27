@@ -2,6 +2,7 @@ package com.lh.system.action;
 
 import com.lh.system.basis.BasisAction;
 import com.lh.system.basis.Result;
+import com.lh.system.basis.ResultCode;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import com.lh.system.model.User;
@@ -110,6 +111,7 @@ public class UserAction extends BasisAction {
         User user = new User();
         user.setLoginName("23");
         user.setPassword("23");
-        return Result.success(user);
+        // return Result.fail(ResultCode.FAIL);
+        return Result.success(ResultCode.SUCCESS);
     }
 }

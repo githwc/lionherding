@@ -1,23 +1,18 @@
 package com.lh.modules.model;
 
+import lombok.Data;
+
+@Data
 public class Test {
+
     private Integer id;
 
-    private String name;
+    private String last_name;
 
-    public Integer getId() {
-        return id;
-    }
+    private String email;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Integer gender;
 
-    public String getName() {
-        return name;
-    }
+    private Integer age;
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
 }
