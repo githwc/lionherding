@@ -1,7 +1,8 @@
 package com.lh.modules.service;
 
 import com.lh.modules.model.Test;
-import com.lh.system.model.User;
+
+import java.util.List;
 
 /**
  * 功能描述：
@@ -15,7 +16,11 @@ import com.lh.system.model.User;
  */
 public interface TestService {
 
-    User queryByid(String id);
-
     Test getInfo();
+
+    void addTest();
+
+    Test getInfoById(String id);
+
+    void updateInfo();
 }

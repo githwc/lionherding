@@ -1,4 +1,4 @@
-#\u8DEF\u5F84\u540D
+#项目路径
 #server.servlet.context-path=/lh
 
 server:

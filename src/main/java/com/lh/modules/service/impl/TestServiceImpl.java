@@ -3,11 +3,13 @@ package com.lh.modules.service.impl;
 import com.lh.modules.mapper.TestMapper;
 import com.lh.modules.model.Test;
 import com.lh.modules.service.TestService;
-import com.lh.system.mapper.UserMapper;
-import com.lh.system.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -23,19 +25,39 @@ import org.springframework.stereotype.Service;
 public class TestServiceImpl implements TestService {
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private TestMapper testMapper;
 
     @Override
-    @Cacheable(cacheNames = {"user"})
-    public User queryByid(String id) {
-        return userMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
+    @Cacheable(cacheNames = {"testInfo"})
     public Test getInfo() {
         return testMapper.getInfo();
     }
+
+    @Override
+    public void addTest() {
+        Test test = new Test();
+        test.setAge(11);
+        test.setEmail("1197798263@qq.com");
+        test.setLastName("贝尔");
+        test.setGender(1);
+        test.setCreateTime(LocalDateTime.now());
+        testMapper.insert(test);
+        //获取当前数据在数据库中的主键值
+        System.out.println("key:"+test.getId());
+    }
+
+    @Override
+    public Test getInfoById(String id) {
+        return testMapper.selectById(id);
+    }
+
+    @Override
+    public void updateInfo() {
+        Test test = new Test();
+        test.setId("1jfsidoj");
+        test.setLastName("修改数据");
+        testMapper.updateById(test);
+    }
+
+
 }

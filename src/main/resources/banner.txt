@@ -21,7 +21,7 @@ ${AnsiColor.BRIGHT_GREEN}
         \::/    /        \::/    /                 ~~                      \::/    /                \::/    /                \::/    /                \:|   |                  \::/____/                \::/    /                \::/    /                \::/____/
          \/____/          \/____/                                           \/____/                  \/____/                  \/____/                  \|___|                   ~~                       \/____/                  \/____/
 
-${AnsiColor.BRIGHT_RED}
+${AnsiColor.BRIGHT_GREEN}
 Application Version: ${application.version}${application.formatted-version}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
 ${AnsiColor.BRIGHT_YELLOW}
