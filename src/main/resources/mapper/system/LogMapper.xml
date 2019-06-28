@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lh.system.mapper.LogMapper" >
-    <resultMap id="BaseResultMap" type="com.lh.system.model.Log" >
+    <resultMap id="BaseResultMap" type="com.lh.system.entity.Log" >
         <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="op_desc" property="opDesc" jdbcType="VARCHAR" />
         <result column="function_id" property="functionId" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
         delete from sys_log
         where id = #{id,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.lh.system.model.Log" >
+    <insert id="insert" parameterType="com.lh.system.entity.Log" >
         insert into sys_log (id, op_desc, function_id,
         ip_adress, login_name, op_date,
         op_type, user_id
@@ -34,7 +34,7 @@
         #{opType,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.lh.system.model.Log" >
+    <insert id="insertSelective" parameterType="com.lh.system.entity.Log" >
         insert into sys_log
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -89,7 +89,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.model.Log" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.entity.Log" >
         update sys_log
         <set >
             <if test="opDesc != null" >
@@ -116,7 +116,7 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.lh.system.model.Log" >
+    <update id="updateByPrimaryKey" parameterType="com.lh.system.entity.Log" >
     update sys_log
     set op_Desc = #{opDesc,jdbcType=VARCHAR},
       function_id = #{functionId,jdbcType=VARCHAR},

@@ -1,7 +1,6 @@
-package com.lh.system.service;
+package com.lh.system.controller;
 
-import com.lh.system.entity.Depart;
-import java.util.List;
+import com.lh.system.basis.BasisAction;
 
 /**
  * 功能描述：
@@ -11,9 +10,7 @@ import java.util.List;
  *
  * @Company: LionHerding
  * @Author: 牧狮&&紫色年华
- * @Datetime: 2019-05-31 17:38
+ * @Datetime: 2019-05-31 17:46
  */
-public interface DepartService {
-
-    public List<Depart> departList();
+public class DictionaryController extends BasisAction {
 }

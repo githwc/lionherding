@@ -1,7 +1,7 @@
 package com.lh.system.service;
 
 import com.lh.system.basis.Result;
-import com.lh.system.model.User;
+import com.lh.system.entity.User;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

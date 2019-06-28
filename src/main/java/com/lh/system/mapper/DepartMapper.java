@@ -1,6 +1,6 @@
 package com.lh.system.mapper;
 
-import com.lh.system.model.Depart;
+import com.lh.system.entity.Depart;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.lh.system.log;
 
 import com.lh.system.mapper.LogMapper;
-import com.lh.system.model.Log;
-import com.lh.system.model.User;
+import com.lh.system.entity.Log;
+import com.lh.system.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.core.utils.CommonUtil;

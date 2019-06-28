@@ -1,6 +1,6 @@
 package com.lh.system.mapper;
 
-import com.lh.system.model.Log;
+import com.lh.system.entity.Log;
 
 public interface LogMapper {
     int deleteByPrimaryKey(String id);

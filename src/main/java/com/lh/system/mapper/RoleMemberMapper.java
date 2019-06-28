@@ -1,6 +1,6 @@
 package com.lh.system.mapper;
 
-import com.lh.system.model.RoleMember;
+import com.lh.system.entity.RoleMember;
 
 public interface RoleMemberMapper {
     int deleteByPrimaryKey(String id);

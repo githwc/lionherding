@@ -19,7 +19,7 @@
 
         <!-- java 实体类 -->
         <javaModelGenerator
-                targetPackage="com.lh.system.model"
+                targetPackage="com.lh.system.entity"
                 targetProject="D:\idea_work\lionherding\src\main\java">
             <!-- 设置是否将生成的实体类放在targetPackage包中 -->
             <property name="enableSubPackages" value="true"/>

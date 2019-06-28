@@ -1,6 +1,6 @@
 package com.lh.system.mapper;
 
-import com.lh.system.model.Dictionary;
+import com.lh.system.entity.Dictionary;
 
 public interface DictionaryMapper {
     int deleteByPrimaryKey(String id);

@@ -6,7 +6,7 @@ import com.lh.system.dao.DaoApi;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import com.lh.system.mapper.UserMapper;
-import com.lh.system.model.User;
+import com.lh.system.entity.User;
 import com.lh.system.service.UserService;
 import org.framework.core.encoder.MD5;
 import org.framework.core.utils.LocalHostUtil;

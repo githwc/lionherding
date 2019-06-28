@@ -3,9 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!--pom文件的模型版本：当前仅有的可以被maven2&3同时支持的pom版本，不可缺-->
     <modelVersion>4.0.0</modelVersion>
-    <!--父项目：
-        它的父项目是spring-boot-dependencies来真正管理springboot应用里的所有依赖版本；
-    -->
+    <!--父项目：它的父项目是spring-boot-dependencies来真正管理springboot应用里的所有依赖版本;-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -39,8 +37,8 @@
 
     <dependencies>
         <!--spring-boot中的web场景启动器；导入web模块正常运行所依赖的组件;
-            springboot 将所有的功能场景都抽象出来，做成一个个的starters(启动器)，只需要在项目里边引入这些starter
-            相关场景的所有依赖都会导入进来。
+            springboot 将所有的功能场景都抽象出来，做成一个个的starters(启动器),
+            只需要在项目里边引入这些starter相关场景的所有依赖都会导入进来。
         -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,7 +71,7 @@
             <version>${druid-spring-boot-starter.version}</version>
         </dependency>
 
-        <!--mybatis-->
+        <!--mybatis-Plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -136,6 +134,16 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
 
         <dependency>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lh.system.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.lh.system.model.User" >
+  <resultMap id="BaseResultMap" type="com.lh.system.entity.User" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
@@ -45,7 +45,7 @@
     delete from sys_user
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.lh.system.model.User" >
+  <insert id="insert" parameterType="com.lh.system.entity.User" >
     insert into sys_user (id, name, nick_name, 
       login_name, password, jobs, 
       sex, birthday, picture, 
@@ -67,7 +67,7 @@
       #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.lh.system.model.User" >
+  <insert id="insertSelective" parameterType="com.lh.system.entity.User" >
     insert into sys_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -236,7 +236,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.model.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.entity.User" >
     update sys_user
     <set >
       <if test="name != null" >
@@ -320,7 +320,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.lh.system.model.User" >
+  <update id="updateByPrimaryKey" parameterType="com.lh.system.entity.User" >
     update sys_user
     set name = #{name,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
@@ -353,7 +353,7 @@
 
     <!--自定义SQL-->
     <!--自定义条件查询-->
-    <select id="findByField" resultType="com.lh.system.model.User">
+    <select id="findByField" resultType="com.lh.system.entity.User">
         select
         <include refid="Base_Column_List" />
         from sys_user

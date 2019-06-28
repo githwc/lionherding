@@ -1,6 +1,6 @@
 package com.lh.system.mapper;
 
-import com.lh.system.model.User;
+import com.lh.system.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
