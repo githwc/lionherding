@@ -134,5 +134,17 @@ public class TestController {
     public void deleteConditions(){
         testService.deleteConditions();
     }
+
+    /**
+    * @Description:删除所有  -- 测试执行分析插件
+    * @Date: 22:08 2019/6/28
+    * @Param:
+    * @Return:
+    * @throws:
+    */
+    @RequestMapping("/deleteAll")
+    public void deleteAll(){
+        testService.deleteAll();
+    }
 }
 

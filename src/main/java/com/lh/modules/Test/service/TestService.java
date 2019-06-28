@@ -31,4 +31,6 @@ public interface TestService {
     void updateConditions();
 
     void deleteConditions();
+
+    void deleteAll();
 }

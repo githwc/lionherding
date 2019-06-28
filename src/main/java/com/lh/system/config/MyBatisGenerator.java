@@ -105,7 +105,7 @@ public class MyBatisGenerator {
         fileOutList.add(new FileOutConfig("/templates/mapper.xml.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return BASE_PATH + "/src/main/resources/mapper/"+ MODEL_NAME +"/" + tableInfo.getEntityName() + ".xml";
+                return BASE_PATH + "/src/main/resources/mapper/"+ MODEL_NAME +"/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
         abc.setFileOutConfigList(fileOutList);

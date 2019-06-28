@@ -43,9 +43,9 @@ public class TestServiceImpl implements TestService {
     public void addTest() {
         //插入一条记录
         Test test = new Test();
-        test.setAge(11);
+        test.setAge(33);
         test.setEmail("1197798263@qq.com");
-        test.setLastName("贝尔");
+        test.setLastName("拉莫斯");
         test.setGender(1);
         test.setCreateTime(LocalDateTime.now());
         testMapper.insert(test);
@@ -129,10 +129,14 @@ public class TestServiceImpl implements TestService {
         IPage<Test> iPage = testMapper.selectPage(new Page<Test>(1,3),new QueryWrapper<Test>()
                 .between("age","10","40")
                 .eq("gender","2")
-                .like("last_name","贝")
+                .like("last_name","拉莫斯")
                 .orderByDesc("age","gender")
         );
         System.out.println("当前类:TestServiceImpl.selectConditions()===" + iPage.getRecords());
+        System.out.println("当前类======TestServiceImpl.selectConditions()"+"分页的相关信息");
+        System.out.println("当前类======TestServiceImpl.selectConditions()==总条数"+iPage.getTotal());
+        System.out.println("当前类======TestServiceImpl.selectConditions()==当前页码"+iPage.getCurrent());
+        System.out.println("当前类======TestServiceImpl.selectConditions()==每页条数"+iPage.getSize());
         //selectList
         List<Test> list = testMapper.selectList(new QueryWrapper<Test>()
                 .eq("gender","1")
@@ -163,6 +167,11 @@ public class TestServiceImpl implements TestService {
             .eq("age","55")
         );
         System.out.println("当前类:TestServiceImpl.deleteConditions()===" + result);
+    }
+
+    @Override
+    public void deleteAll() {
+        testMapper.delete(null);
     }
 
 
