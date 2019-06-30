@@ -42,8 +42,11 @@ mybatis-plus:
 
 #=====日志相关=========
 logging:
+  path: C://logback
   level:
     com.lh: DEBUG
+
+
 
 #
 ##===\u914D\u7F6Ethymeleaf\u76F8\u5173\u4FE1\u606F====

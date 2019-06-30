@@ -28,7 +28,6 @@ import org.springframework.cache.annotation.EnableCaching;
  */
 @SpringBootApplication
 @MapperScan({"com.lh.system.mapper", "com.lh.modules.*.mapper"})
-// @MapperScan("com.lh.system.mapper")
 @EnableCaching
 public class Application {
 

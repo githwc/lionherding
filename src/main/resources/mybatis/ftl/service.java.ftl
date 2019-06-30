@@ -4,17 +4,23 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
- * <p>
- * ${table.comment!} 服务类
- * </p>
+ * 功能描述：
  *
- * @author ${author}
- * @date ${date}
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ * @Company: LionHerding
+ * @Author ${author}
+ * @Date ${date}
+ * @Version: 1.0.0
+ *
  */
 <#if kotlin>
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    boolean insertOrUpdate(${entity} i${entity});
 
 }
 </#if>
