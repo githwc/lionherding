@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -101,5 +102,10 @@ public class UserServiceImpl implements UserService {
         }else{
             return Result.fail(ResultCode.USER_LOGIN_ERROR);
         }
+    }
+
+    @Override
+    public List<User> userList() {
+        return userMapper.userList();
     }
 }

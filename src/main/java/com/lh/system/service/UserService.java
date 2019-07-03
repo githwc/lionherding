@@ -5,6 +5,7 @@ import com.lh.system.entity.User;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -36,4 +37,6 @@ public interface UserService {
     User getUserInfo(String loginName);
 
     Result<Object> login(String loginName, String password, HttpServletRequest request, HttpServletResponse response, String code, Model model);
+
+    List<User> userList();
 }

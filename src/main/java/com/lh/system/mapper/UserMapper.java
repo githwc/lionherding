@@ -3,6 +3,8 @@ package com.lh.system.mapper;
 import com.lh.system.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(String id);
 
@@ -18,4 +20,6 @@ public interface UserMapper {
 
     //=======================自定义===========
     User findByField(@Param(value="loginName") String loginName);
+
+    List<User> userList();
 }

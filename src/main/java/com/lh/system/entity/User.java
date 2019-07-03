@@ -1,6 +1,7 @@
 package com.lh.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
 
@@ -27,12 +28,16 @@ public class User implements Serializable {
 
     private String id;
 
+    @JsonView(userSimpleView.class)
     private String name;
 
+    @JsonView(userSimpleView.class)
     private String nickName;
 
+    @JsonView(userSimpleView.class)
     private String loginName;
 
+    @JsonView(userDetailView.class)
     private String password;
 
     private Integer jobs;
@@ -85,4 +90,9 @@ public class User implements Serializable {
         Object object = request.getSession().getAttribute(SESSION_CURRENT_USER);
         return object != null ? (User) object : null;
     }
+
+
+    public interface userSimpleView{};
+
+    public interface userDetailView extends userSimpleView{};
 }
