@@ -1,17 +1,23 @@
 package com.lh.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lh.system.entity.Log;
+import org.springframework.stereotype.Repository;
 
-public interface LogMapper {
-    int deleteByPrimaryKey(String id);
+/**
+ *
+ * 功能描述：
+ *
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ * @Company: LionHerding
+ * @Author 牧狮&&紫色年华
+ * @Date 2019-07-04
+ * @Version: 1.0.0
+ *
+ */
+@Repository
+public interface LogMapper extends BaseMapper<Log> {
 
-    int insert(Log record);
-
-    int insertSelective(Log record);
-
-    Log selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(Log record);
-
-    int updateByPrimaryKey(Log record);
 }

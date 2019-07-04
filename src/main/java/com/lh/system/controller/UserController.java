@@ -9,6 +9,8 @@ import com.lh.system.log.WriteLog;
 import com.lh.system.entity.User;
 import com.lh.system.service.UserService;
 import org.framework.core.utils.PictureValidateCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
@@ -23,20 +25,62 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ *
  * 功能描述：
- * <p>
- * <p>版权所有：</p>
- * 未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
- * @Datetime: 2019-05-31 17:45
+ * @Author 牧狮&&紫色年华
+ * @Date 2019-07-04
+ * @Version: 1.0.0
+ *
  */
 @RestController
-public class UserController extends BasisAction {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private UserService userService;
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    /**
+     * @Description:根据id查询
+     * @param:
+     * @return:
+     */
+    @GetMapping("/getById")
+    public User getById(@RequestParam("id") String id){
+        return null;
+    }
+
+    /**
+     * @Description:根据id删除
+     * @param:
+     * @return:
+     */
+    @GetMapping("/deleteById")
+    public int delete(@RequestParam("id") String id){
+        return 0;
+    }
+
+    /**
+     * @Description:保存和修改公用的
+     * @param sysUser  传递的实体
+     * @return  0 失败  1 成功
+     */
+    @PostMapping("/sysUserSave")
+    public int sysUserSave(User sysUser) {
+        int count = 0;
+        try {
+            count = userService.insertOrUpdate(sysUser) ? 1 : 0;
+        } catch (Exception e) {
+            logger.error("sysUserSave -=- {}",e.toString());
+        }
+        return count;
+    }
     /**
      * @Description:用户自行注册
      * @Date: 2019/6/13 13:34

@@ -28,9 +28,9 @@ public class MyBatisGenerator {
 
     private static final String BASE_PATH = "D:\\idea_work\\lionherding";   //生成文件所在项目路径
     private static final String BASE_PACKAGE = "com.lh.modules";      //基本包名
-    private static final String MODEL_NAME = "Emp";                         //文件夹名
+    private static final String MODEL_NAME = "temp";                         //文件夹名
     private static final String AUTHOR = "牧狮&&紫色年华";                    //作者
-    private static final String[] TABLES = {"emp"};             //要生成的表名
+    private static final String[] TABLES = {"sys_user","sys_depart","sys_log","sys_dictionary","sys_role","sys_rolemember"};             //要生成的表名
 
     //数据库配置四要素
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";

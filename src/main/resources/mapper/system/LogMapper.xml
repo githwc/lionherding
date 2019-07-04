@@ -1,130 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lh.system.mapper.LogMapper" >
-    <resultMap id="BaseResultMap" type="com.lh.system.entity.Log" >
-        <id column="id" property="id" jdbcType="VARCHAR" />
-        <result column="op_desc" property="opDesc" jdbcType="VARCHAR" />
-        <result column="function_id" property="functionId" jdbcType="VARCHAR" />
-        <result column="ip_adress" property="ipAdress" jdbcType="VARCHAR" />
-        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
-        <result column="op_date" property="opDate" jdbcType="TIMESTAMP" />
-        <result column="op_type" property="opType" jdbcType="INTEGER" />
-        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lh.system.entity.Log">
+        <result column="id" property="id" />
+        <result column="op_desc" property="opDesc" />
+        <result column="function_id" property="functionId" />
+        <result column="ip_adress" property="ipAdress" />
+        <result column="login_name" property="loginName" />
+        <result column="op_date" property="opDate" />
+        <result column="op_type" property="opType" />
+        <result column="user_id" property="userId" />
     </resultMap>
-    <sql id="Base_Column_List" >
-        id, op_desc, function_id, ip_adress, login_name, op_date, op_type, user_id
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        op_desc, function_id, ip_adress, login_name, op_date, op_type, user_id
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-        select
-        <include refid="Base_Column_List" />
-        from sys_log
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-        delete from sys_log
-        where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <insert id="insert" parameterType="com.lh.system.entity.Log" >
-        insert into sys_log (id, op_desc, function_id,
-        ip_adress, login_name, op_date,
-        op_type, user_id
-        )
-        values (#{id,jdbcType=VARCHAR}, #{opDesc,jdbcType=VARCHAR}, #{functionId,jdbcType=VARCHAR},
-        #{ipAdress,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{opDate,jdbcType=TIMESTAMP},
-        #{opType,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}
-        )
-    </insert>
-    <insert id="insertSelective" parameterType="com.lh.system.entity.Log" >
-        insert into sys_log
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                id,
-            </if>
-            <if test="opDesc != null" >
-                op_Desc,
-            </if>
-            <if test="functionId != null" >
-                function_id,
-            </if>
-            <if test="ipAdress != null" >
-                ip_adress,
-            </if>
-            <if test="loginName != null" >
-                login_name,
-            </if>
-            <if test="opDate != null" >
-                op_date,
-            </if>
-            <if test="opType != null" >
-                op_type,
-            </if>
-            <if test="userId != null" >
-                user_id,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="opDesc != null" >
-                #{opDesc,jdbcType=VARCHAR},
-            </if>
-            <if test="functionId != null" >
-                #{functionId,jdbcType=VARCHAR},
-            </if>
-            <if test="ipAdress != null" >
-                #{ipAdress,jdbcType=VARCHAR},
-            </if>
-            <if test="loginName != null" >
-                #{loginName,jdbcType=VARCHAR},
-            </if>
-            <if test="opDate != null" >
-                #{opDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="opType != null" >
-                #{opType,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null" >
-                #{userId,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.entity.Log" >
-        update sys_log
-        <set >
-            <if test="opDesc != null" >
-                op_Desc = #{opDesc,jdbcType=VARCHAR},
-            </if>
-            <if test="functionId != null" >
-                function_id = #{functionId,jdbcType=VARCHAR},
-            </if>
-            <if test="ipAdress != null" >
-                ip_adress = #{ipAdress,jdbcType=VARCHAR},
-            </if>
-            <if test="loginName != null" >
-                login_name = #{loginName,jdbcType=VARCHAR},
-            </if>
-            <if test="opDate != null" >
-                op_date = #{opDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="opType != null" >
-                op_type = #{opType,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null" >
-                user_id = #{userId,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.lh.system.entity.Log" >
-    update sys_log
-    set op_Desc = #{opDesc,jdbcType=VARCHAR},
-      function_id = #{functionId,jdbcType=VARCHAR},
-      ip_adress = #{ipAdress,jdbcType=VARCHAR},
-      login_name = #{loginName,jdbcType=VARCHAR},
-      op_date = #{opDate,jdbcType=TIMESTAMP},
-      op_type = #{opType,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
 </mapper>

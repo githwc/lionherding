@@ -1,128 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lh.system.mapper.DictionaryMapper" >
-  <resultMap id="BaseResultMap" type="com.lh.system.entity.Dictionary" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="create_id" property="createId" jdbcType="VARCHAR" />
-    <result column="create_name" property="createName" jdbcType="VARCHAR" />
-    <result column="key" property="key" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="value" property="value" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, create_date, create_id, create_name, key, parent_id, sort, value
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from sys_dictionary
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sys_dictionary
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.lh.system.entity.Dictionary" >
-    insert into sys_dictionary (id, create_date, create_id, 
-      create_name, key, parent_id, 
-      sort, value)
-    values (#{id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, 
-      #{createName,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.lh.system.entity.Dictionary" >
-    insert into sys_dictionary
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lh.system.mapper.DictionaryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lh.system.entity.Dictionary">
+        <result column="id" property="id" />
+        <result column="create_date" property="createDate" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="key" property="key" />
+        <result column="parent_id" property="parentId" />
+        <result column="sort" property="sort" />
+        <result column="value" property="value" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
         id,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createId != null" >
-        create_id,
-      </if>
-      <if test="createName != null" >
-        create_name,
-      </if>
-      <if test="key != null" >
-        key,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-      <if test="sort != null" >
-        sort,
-      </if>
-      <if test="value != null" >
-        value,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null" >
-        #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="createName != null" >
-        #{createName,jdbcType=VARCHAR},
-      </if>
-      <if test="key != null" >
-        #{key,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="value != null" >
-        #{value,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.entity.Dictionary" >
-    update sys_dictionary
-    <set >
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null" >
-        create_id = #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="createName != null" >
-        create_name = #{createName,jdbcType=VARCHAR},
-      </if>
-      <if test="key != null" >
-        key = #{key,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="value != null" >
-        value = #{value,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lh.system.entity.Dictionary" >
-    update sys_dictionary
-    set create_date = #{createDate,jdbcType=TIMESTAMP},
-      create_id = #{createId,jdbcType=VARCHAR},
-      create_name = #{createName,jdbcType=VARCHAR},
-      key = #{key,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      value = #{value,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        create_date, create_id, create_name, key, parent_id, sort, value
+    </sql>
+
 </mapper>

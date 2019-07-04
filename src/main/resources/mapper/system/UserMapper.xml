@@ -1,355 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lh.system.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.lh.system.entity.User" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="jobs" property="jobs" jdbcType="INTEGER" />
-    <result column="sex" property="sex" jdbcType="INTEGER" />
-    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
-    <result column="picture" property="picture" jdbcType="VARCHAR" />
-    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
-    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
-    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
-    <result column="short_tel" property="shortTel" jdbcType="VARCHAR" />
-    <result column="fax" property="fax" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
-    <result column="reg_date" property="regDate" jdbcType="TIMESTAMP" />
-    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
-    <result column="to_day_login_count" property="toDayLoginCount" jdbcType="INTEGER" />
-    <result column="create_id" property="createId" jdbcType="VARCHAR" />
-    <result column="create_name" property="createName" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="depart_id" property="departId" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, nick_name, login_name, password, jobs, sex, birthday, picture, card_id, 
-    mobile_phone, telephone, short_tel, fax, address, email, ip_address, reg_date, login_count, 
-    to_day_login_count, create_id, create_name, create_date, sort, state, remark, depart_id
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from sys_user
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sys_user
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.lh.system.entity.User" >
-    insert into sys_user (id, name, nick_name, 
-      login_name, password, jobs, 
-      sex, birthday, picture, 
-      card_id, mobile_phone, telephone, 
-      short_tel, fax, address, 
-      email, ip_address, reg_date, 
-      login_count, to_day_login_count, create_id, 
-      create_name, create_date, sort, 
-      state, remark, depart_id
-      )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{jobs,jdbcType=INTEGER}, 
-      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, 
-      #{cardId,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
-      #{shortTel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, #{regDate,jdbcType=TIMESTAMP}, 
-      #{loginCount,jdbcType=INTEGER}, #{toDayLoginCount,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
-      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lh.system.entity.User" >
-    insert into sys_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lh.system.entity.User" >
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="nick_name" property="nickName" />
+        <result column="login_name" property="loginName" />
+        <result column="password" property="password" />
+        <result column="age" property="age" />
+        <result column="jobs" property="jobs" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="picture" property="picture" />
+        <result column="card_id" property="cardId" />
+        <result column="mobile_phone" property="mobilePhone" />
+        <result column="telephone" property="telephone" />
+        <result column="short_tel" property="shortTel" />
+        <result column="fax" property="fax" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="reg_date" property="regDate" />
+        <result column="login_count" property="loginCount" />
+        <result column="to_day_login_count" property="toDayLoginCount" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="create_date" property="createDate" />
+        <result column="sort" property="sort" />
+        <result column="state" property="state" />
+        <result column="remark" property="remark" />
+        <result column="depart_id" property="departId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
         id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="nickName != null" >
-        nick_name,
-      </if>
-      <if test="loginName != null" >
-        login_name,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-      <if test="jobs != null" >
-        jobs,
-      </if>
-      <if test="sex != null" >
-        sex,
-      </if>
-      <if test="birthday != null" >
-        birthday,
-      </if>
-      <if test="picture != null" >
-        picture,
-      </if>
-      <if test="cardId != null" >
-        card_id,
-      </if>
-      <if test="mobilePhone != null" >
-        mobile_phone,
-      </if>
-      <if test="telephone != null" >
-        telephone,
-      </if>
-      <if test="shortTel != null" >
-        short_tel,
-      </if>
-      <if test="fax != null" >
-        fax,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="ipAddress != null" >
-        ip_address,
-      </if>
-      <if test="regDate != null" >
-        reg_date,
-      </if>
-      <if test="loginCount != null" >
-        login_count,
-      </if>
-      <if test="toDayLoginCount != null" >
-        to_day_login_count,
-      </if>
-      <if test="createId != null" >
-        create_id,
-      </if>
-      <if test="createName != null" >
-        create_name,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="sort != null" >
-        sort,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="departId != null" >
-        depart_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nickName != null" >
-        #{nickName,jdbcType=VARCHAR},
-      </if>
-      <if test="loginName != null" >
-        #{loginName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="jobs != null" >
-        #{jobs,jdbcType=INTEGER},
-      </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="picture != null" >
-        #{picture,jdbcType=VARCHAR},
-      </if>
-      <if test="cardId != null" >
-        #{cardId,jdbcType=VARCHAR},
-      </if>
-      <if test="mobilePhone != null" >
-        #{mobilePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="telephone != null" >
-        #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="shortTel != null" >
-        #{shortTel,jdbcType=VARCHAR},
-      </if>
-      <if test="fax != null" >
-        #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="ipAddress != null" >
-        #{ipAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="regDate != null" >
-        #{regDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginCount != null" >
-        #{loginCount,jdbcType=INTEGER},
-      </if>
-      <if test="toDayLoginCount != null" >
-        #{toDayLoginCount,jdbcType=INTEGER},
-      </if>
-      <if test="createId != null" >
-        #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="createName != null" >
-        #{createName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="departId != null" >
-        #{departId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lh.system.entity.User" >
-    update sys_user
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nickName != null" >
-        nick_name = #{nickName,jdbcType=VARCHAR},
-      </if>
-      <if test="loginName != null" >
-        login_name = #{loginName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="jobs != null" >
-        jobs = #{jobs,jdbcType=INTEGER},
-      </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="birthday != null" >
-        birthday = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="picture != null" >
-        picture = #{picture,jdbcType=VARCHAR},
-      </if>
-      <if test="cardId != null" >
-        card_id = #{cardId,jdbcType=VARCHAR},
-      </if>
-      <if test="mobilePhone != null" >
-        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="telephone != null" >
-        telephone = #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="shortTel != null" >
-        short_tel = #{shortTel,jdbcType=VARCHAR},
-      </if>
-      <if test="fax != null" >
-        fax = #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="ipAddress != null" >
-        ip_address = #{ipAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="regDate != null" >
-        reg_date = #{regDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginCount != null" >
-        login_count = #{loginCount,jdbcType=INTEGER},
-      </if>
-      <if test="toDayLoginCount != null" >
-        to_day_login_count = #{toDayLoginCount,jdbcType=INTEGER},
-      </if>
-      <if test="createId != null" >
-        create_id = #{createId,jdbcType=VARCHAR},
-      </if>
-      <if test="createName != null" >
-        create_name = #{createName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="departId != null" >
-        depart_id = #{departId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lh.system.entity.User" >
-    update sys_user
-    set name = #{name,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      login_name = #{loginName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      jobs = #{jobs,jdbcType=INTEGER},
-      sex = #{sex,jdbcType=INTEGER},
-      birthday = #{birthday,jdbcType=TIMESTAMP},
-      picture = #{picture,jdbcType=VARCHAR},
-      card_id = #{cardId,jdbcType=VARCHAR},
-      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
-      telephone = #{telephone,jdbcType=VARCHAR},
-      short_tel = #{shortTel,jdbcType=VARCHAR},
-      fax = #{fax,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      ip_address = #{ipAddress,jdbcType=VARCHAR},
-      reg_date = #{regDate,jdbcType=TIMESTAMP},
-      login_count = #{loginCount,jdbcType=INTEGER},
-      to_day_login_count = #{toDayLoginCount,jdbcType=INTEGER},
-      create_id = #{createId,jdbcType=VARCHAR},
-      create_name = #{createName,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      sort = #{sort,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER},
-      remark = #{remark,jdbcType=VARCHAR},
-      depart_id = #{departId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        name, nick_name, login_name, password, age, jobs, sex, birthday, picture, card_id, mobile_phone, telephone, short_tel, fax, address, email, ip_address, reg_date, login_count, to_day_login_count, create_id, create_name, create_date, sort, state, remark, depart_id
+    </sql>
 
     <!--自定义SQL-->
     <!--自定义条件查询-->
@@ -368,4 +57,5 @@
         select *
         from sys_user
     </select>
+
 </mapper>

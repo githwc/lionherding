@@ -1,24 +1,28 @@
 package com.lh.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lh.system.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserMapper {
-    int deleteByPrimaryKey(String id);
+/**
+ *
+ * 功能描述：
+ *
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ * @Company: LionHerding
+ * @Author 牧狮&&紫色年华
+ * @Date 2019-07-04
+ * @Version: 1.0.0
+ *
+ */
+@Repository
+public interface UserMapper extends BaseMapper<User> {
 
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
-
-    //=======================自定义===========
     User findByField(@Param(value="loginName") String loginName);
 
     List<User> userList();

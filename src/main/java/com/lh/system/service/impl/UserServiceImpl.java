@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.system.basis.Result;
 import com.lh.system.basis.ResultCode;
 import com.lh.system.dao.DaoApi;
@@ -12,6 +13,7 @@ import org.framework.core.encoder.MD5;
 import org.framework.core.utils.LocalHostUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,16 +24,19 @@ import java.util.List;
 
 /**
  * 功能描述：
- * <p>
- * <p>版权所有：</p>
- * 未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
- * @Datetime: 2019-05-31 17:38
+ * @Author 牧狮&&紫色年华
+ * @Date 2019-07-04
+ * @Version: 1.0.0
+ *
  */
 @Service
-public class UserServiceImpl implements UserService {
+@Transactional(rollbackFor = Exception.class)
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -107,5 +112,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> userList() {
         return userMapper.userList();
+    }
+
+    @Override
+    public boolean insertOrUpdate(User iSysUser) {
+        boolean result = false;
+        return result;
     }
 }

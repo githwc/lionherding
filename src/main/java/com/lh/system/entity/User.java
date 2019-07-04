@@ -3,6 +3,8 @@ package com.lh.system.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Transient;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,16 +12,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 功能描述：Model - 系统用户管理  SYS_User
- * <p>
- * <p>版权所有：</p>
- * 未经本人许可，不得以任何方式复制或使用本程序任何部分
+ * 功能描述：
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
- * @Datetime: 2019-05-10 15:20
+ * @Author 牧狮&&紫色年华
+ * @Date 2019-07-04
+ * @Version: 1.0.0
+ *
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +44,8 @@ public class User implements Serializable {
 
     @JsonView(userDetailView.class)
     private String password;
+
+    private Integer age;
 
     private Integer jobs;
 
