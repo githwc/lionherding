@@ -62,7 +62,7 @@ public class UserController {
      * @return:
      */
     @GetMapping("/deleteById")
-    public int delete(@RequestParam("id") String id){
+    public int deleteById(@RequestParam("id") String id){
         return 0;
     }
 
@@ -216,4 +216,15 @@ public class UserController {
         System.out.println(date.getTime());
         return 1;
     }
+
+    @PutMapping("/update/{id}")
+    public int update(@RequestBody User user){
+        return 1;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public int delete(@PathVariable("id") String id){
+        return 1;
+    }
+
 }
