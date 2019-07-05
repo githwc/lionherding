@@ -2,6 +2,7 @@ package com.lh.system.controller;
 
 import com.lh.system.entity.Depart;
 import com.lh.system.service.DepartService;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

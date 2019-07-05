@@ -1,25 +1,24 @@
 package com.lh.system.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.lh.system.basis.BasisAction;
 import com.lh.system.basis.Result;
 import com.lh.system.basis.ResultCode;
+import com.lh.system.entity.User;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
-import com.lh.system.entity.User;
 import com.lh.system.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.framework.core.utils.PictureValidateCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -178,9 +177,10 @@ public class UserController {
     */
     @GetMapping("/user")
     @JsonView({User.userSimpleView.class})
-    public List<User> userList(@RequestParam(name = "name",defaultValue = "贝尔",required = false) String name,
-                           @RequestParam(name = "password",defaultValue = "123456" ,required = false) String password
-                           /*@PageableDefault(page = 1,size = 10,sort = "age,asc")  Pageable pageable*/){
+    @ApiOperation(value = "出庭公告列表", httpMethod = "POST", response = String.class, notes = "出庭公告列表")
+    public List<User> userList(@ApiParam(required = true, name = "token", value = "token值") @RequestParam(name = "name",defaultValue = "贝尔",required = false) String name,
+                               @ApiParam( name = "pageSize", value = "每页信息数") @RequestParam(name = "password",defaultValue = "123456" ,required = false) String password
+                           ){
         return userService.userList();
     }
 
@@ -227,4 +227,11 @@ public class UserController {
         return 1;
     }
 
+    @PostMapping("/aaa")
+    @ApiOperation(value = "出庭公告列表", httpMethod = "POST", response = String.class, notes = "出庭公告列表")
+    public void aaa(
+            @ApiParam(required = false,value = "jsfidofj",name = "fsd" ) String dd
+            ){
+        System.out.println("当前类======UserController.aaa()");
+    }
 }

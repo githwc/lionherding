@@ -1,16 +1,8 @@
 package com.lh.system.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 功能描述：
@@ -35,11 +27,11 @@ public class MyMvcConfig implements WebMvcConfigurer {
     * @Return:
     * @throws:
     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(myInterceptorConfig).addPathPatterns("/**")
-                .excludePathPatterns("/index.html","/","/user/login");
-    }
+    // @Override
+    // public void addInterceptors(InterceptorRegistry registry){
+    //     registry.addInterceptor(myInterceptorConfig).addPathPatterns("/**")
+    //             .excludePathPatterns("/index.html","/","/user/login");
+    // }
 
 
     /**
@@ -49,18 +41,18 @@ public class MyMvcConfig implements WebMvcConfigurer {
     * @Return:
     * @throws:
     */
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean(){
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        MyFilterConfig myFilterConfig = new MyFilterConfig();
-        registration.setFilter(myFilterConfig);
-        //表明拦截哪些请求
-        List<String> list = new ArrayList<>();
-        list.add("/*");
-        registration.setUrlPatterns(list);
-
-        return registration;
-    }
+    // @Bean
+    // public FilterRegistrationBean filterRegistrationBean(){
+    //     FilterRegistrationBean registration = new FilterRegistrationBean();
+    //     MyFilterConfig myFilterConfig = new MyFilterConfig();
+    //     registration.setFilter(myFilterConfig);
+    //     //表明拦截哪些请求
+    //     List<String> list = new ArrayList<>();
+    //     list.add("/*");
+    //     registration.setUrlPatterns(list);
+    //
+    //     return registration;
+    // }
 
     /**
     * @Description:视图控制器
