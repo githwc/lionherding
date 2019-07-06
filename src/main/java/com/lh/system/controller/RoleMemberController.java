@@ -1,7 +1,11 @@
 package com.lh.system.controller;
 
 import com.lh.system.entity.RoleMember;
+import com.lh.system.log.SystemLogService;
+import com.lh.system.log.WriteLog;
 import com.lh.system.service.RoleMemberService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +39,9 @@ public class RoleMemberController {
      * @return:
      */
     @GetMapping("/getById")
-    public RoleMember getById(@RequestParam("id") String id){
+    @WriteLog(mName = "根据主键ID查询", optype = SystemLogService.OPTYPE_READ)
+    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
+    public RoleMember getById(@ApiParam(required = true, name = "id",value = "主键ID")@RequestParam("id") String id){
         return null;
     }
 
@@ -45,7 +51,9 @@ public class RoleMemberController {
      * @return:
      */
     @GetMapping("/deleteById")
-    public int delete(@RequestParam("id") String id){
+    @WriteLog(mName = "根据主键ID查询", optype = SystemLogService.OPTYPE_READ)
+    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
+    public int delete(@ApiParam(required = true, name = "id",value = "主键ID")@RequestParam("id") String id){
         return 0;
     }
 
@@ -55,6 +63,8 @@ public class RoleMemberController {
      * @return  0 失败  1 成功
      */
     @PostMapping("/sysRolememberSave")
+    @WriteLog(mName = "保存和修改公用API", optype = SystemLogService.OPTYPE_CREATE)
+    @ApiOperation(value = "保存和修改公用API", notes = "保存和修改公用API")
     public int sysRolememberSave(RoleMember sysRolemember) {
         int count = 0;
         try {

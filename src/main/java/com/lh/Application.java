@@ -30,7 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @MapperScan({"com.lh.system.mapper", "com.lh.modules.*.mapper"})
 @EnableCaching
-@EnableSwagger2
+// @EnableSwagger2
 public class Application {
 
 	public static void main(String[] args) {

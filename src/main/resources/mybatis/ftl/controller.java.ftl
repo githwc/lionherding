@@ -47,32 +47,35 @@ public class ${table.controllerName} {
     public ${table.serviceName} i${entity}Service;
 
     /**
-    * @Description:根据id查询
+    * @Description:
     * @param:
     * @return:
     */
-    @GetMapping("/getById")
-    public ${entity} getById(@RequestParam("id") String id){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
+    public ${entity} get${entity}ById(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
         return null;
     }
 
     /**
-    * @Description:根据id删除
+    * @Description:
     * @param:
     * @return:
     */
-    @GetMapping("/deleteById")
-    public int delete(@RequestParam("id") String id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "根据主键ID删除",  notes = "根据主键ID删除")
+    public int delete(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
        return 0;
     }
 
     /**
-    * @Description:保存和修改公用的
-    * @param ${table.entityPath}  传递的实体
+    * @Description:
+    * @param
     * @return  0 失败  1 成功
     */
-    @PostMapping("/${table.entityPath}Save")
-    public int ${table.entityPath}Save(${entity} ${table.entityPath}) {
+    @PostMapping("/createAndUpdate")
+    @ApiOperation(value = "保存和修改公用API", notes = "保存和修改公用API")
+    public int createAndUpdate(${entity} ${table.entityPath}) {
        int count = 0;
        try {
            count = i${entity}Service.insertOrUpdate(${table.entityPath}) ? 1 : 0;

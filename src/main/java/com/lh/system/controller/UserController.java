@@ -13,6 +13,7 @@ import org.framework.core.utils.PictureValidateCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.keyvalue.repository.query.CachingKeyValuePartTreeQuery;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,31 +47,37 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * @Description:根据id查询
+     * @Description:
      * @param:
      * @return:
      */
-    @GetMapping("/getById")
-    public User getById(@RequestParam("id") String id){
+    @GetMapping("/{id}")
+    @WriteLog(mName = "根据主键ID查询", optype = SystemLogService.OPTYPE_READ)
+    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
+    public User getById(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
         return null;
     }
 
     /**
-     * @Description:根据id删除
+     * @Description:
      * @param:
      * @return:
      */
-    @GetMapping("/deleteById")
-    public int deleteById(@RequestParam("id") String id){
+    @DeleteMapping("/{id}")
+    @WriteLog(mName = "根据主键ID删除", optype = SystemLogService.OPTYPE_DELETE)
+    @ApiOperation(value = "根据主键ID删除",  notes = "根据主键ID删除")
+    public int deleteById(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
         return 0;
     }
 
     /**
-     * @Description:保存和修改公用的
+     * @Description:
      * @param sysUser  传递的实体
      * @return  0 失败  1 成功
      */
-    @PostMapping("/sysUserSave")
+    @PostMapping("/createAndUpdate")
+    @WriteLog(mName = "保存和修改公用API", optype = SystemLogService.OPTYPE_CREATE)
+    @ApiOperation(value = "保存和修改公用API", notes = "保存和修改公用API")
     public int sysUserSave(User sysUser) {
         int count = 0;
         try {
@@ -81,14 +88,15 @@ public class UserController {
         return count;
     }
     /**
-     * @Description:用户自行注册
+     * @Description:
      * @Date: 2019/6/13 13:34
      * @Param:
      * @Return:
      * @throws:
      */
     @PostMapping(value = "/register")
-    @ResponseBody
+    @WriteLog(mName = "用户自行注册", optype = SystemLogService.OPTYPE_CREATE)
+    @ApiOperation(value = "用户自行注册", notes = "用户自行注册")
     public String register(User user, Map<String,Object> map){
         //保证登录名的唯一性
         User onlyUser = userService.getUserInfo(user.getLoginName());
@@ -105,17 +113,19 @@ public class UserController {
     }
 
     /**
-     * @Description:用户登录
+     * @Description:
      * @Date: 2019/6/13 15:05
      * @Param:
      * @Return:
      * @throws:
      */
     @PostMapping(value = "/login")
-    @WriteLog(mName = "登录", optype = SystemLogService.OPTYPE_READ)
-    public Result<Object> login(@RequestParam("login_loginName")String loginName,
-                        @RequestParam("login_password")String password,
-                        @RequestParam("code")String code,
+    @WriteLog(mName = "用户登录", optype = SystemLogService.OPTYPE_READ)
+    @ApiOperation(value = "用户登录",notes = "用户登录")
+    public Result<Object> login(
+                        @ApiParam(required = true,name = "login_loginName",value = "姓名")@RequestParam("login_loginName")String loginName,
+                        @ApiParam(required = true,name = "login_password",value = "密码")@RequestParam("login_password")String password,
+                        @ApiParam(required = true,name = "code",value = "验证码")@RequestParam("code")String code,
                         Model model,
                         HttpServletRequest request, HttpServletResponse response
     ){
@@ -123,7 +133,7 @@ public class UserController {
     }
 
     /**
-     * @Description:图片验证
+     * @Description:
      *      随机生成图片验证码
      *      并通过流的形式返回到前端
      *      比对session的code和前端返回的code是否一致
@@ -132,8 +142,9 @@ public class UserController {
      * @Return:
      * @throws:
      */
-    @RequestMapping(value = "/pictureValidate")
+    @GetMapping(value = "/pictureValidate")
     @WriteLog(mName = "图片验证登录", optype = SystemLogService.OPTYPE_READ)
+    @ApiOperation(value = "随机生成图片验证码",notes = "随机生成图片验证码")
     public String pictureValidate(HttpServletRequest request,HttpServletResponse response
     )throws Exception{
         response.setContentType("image/jpeg");//设置响应格式
@@ -152,19 +163,9 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/seckill")
-    public Result<Object> login(
-    ){
-        System.out.println("当前类:UserAction.login()===" + new Date());
-        User user = new User();
-        user.setLoginName("23");
-        user.setPassword("23");
-        // return Result.fail(ResultCode.FAIL);
-        return Result.success(ResultCode.SUCCESS);
-    }
-
+    //===============================REST ful API START 仅用于测试  ==========================
     /**
-    * @Description:查询用户列表
+    * @Description:
     * @Date: 22:12 2019/7/3
     * @Param:
     * @Return:
@@ -177,15 +178,15 @@ public class UserController {
     */
     @GetMapping("/user")
     @JsonView({User.userSimpleView.class})
-    @ApiOperation(value = "出庭公告列表", httpMethod = "POST", response = String.class, notes = "出庭公告列表")
-    public List<User> userList(@ApiParam(required = true, name = "token", value = "token值") @RequestParam(name = "name",defaultValue = "贝尔",required = false) String name,
-                               @ApiParam( name = "pageSize", value = "每页信息数") @RequestParam(name = "password",defaultValue = "123456" ,required = false) String password
+    @ApiOperation(value = "查询用户列表", notes = "查询用户列表")
+    public List<User> userList(@ApiParam(required = true, name = "name", value = "姓名") @RequestParam(name = "name",defaultValue = "贝尔",required = false) String name,
+                               @ApiParam(required = true, name = "password", value = "密码") @RequestParam(name = "password",defaultValue = "123456" ,required = false) String password
                            ){
         return userService.userList();
     }
 
     /**
-    * @Description:查询指定用户详情
+    * @Description:
     * @Date: 22:34 2019/7/3
     * @Param:
     * @Return:
@@ -193,7 +194,8 @@ public class UserController {
     * @PathVariable：匹配请求URL片段
     */
     @GetMapping("/user/{id}")
-    public User userDetail(@PathVariable("id") String id){
+    @ApiOperation(value = "查询指定用户详情", notes = "查询指定用户详情")
+    public User userDetail(@ApiParam(required = true,name = "id",value = "主键ID")@PathVariable("id") String id){
         User user = new User();
         user.setId(id);
         user.setName("莫德里奇");
@@ -202,7 +204,7 @@ public class UserController {
     }
 
     /**
-    * @Description:创建用户
+    * @Description:
     * @Date: 23:26 2019/7/3
     * @Param:
     * @Return:
@@ -210,6 +212,7 @@ public class UserController {
      * @RequestBody：解析传进的json串
     */
     @PostMapping("/user")
+    @ApiOperation(value = "创建用户", notes = "创建用户")
     public int create(@RequestBody User user){
         Date date = new Date();
         System.out.println(date);
@@ -217,21 +220,17 @@ public class UserController {
         return 1;
     }
 
-    @PutMapping("/update/{id}")
-    public int update(@RequestBody User user){
-        return 1;
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public int delete(@PathVariable("id") String id){
-        return 1;
-    }
-
-    @PostMapping("/aaa")
-    @ApiOperation(value = "出庭公告列表", httpMethod = "POST", response = String.class, notes = "出庭公告列表")
-    public void aaa(
-            @ApiParam(required = false,value = "jsfidofj",name = "fsd" ) String dd
-            ){
-        System.out.println("当前类======UserController.aaa()");
-    }
+    //===============================REST ful API  END 仅用于测试  ==========================
+    // @RequestMapping(value = "/getBookList", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    // @ApiOperation(value = "获取图书列表", notes = "获取图书列表")
+    // public String getBookList(HttpServletRequest request,
+    //                               @ApiParam(required = false, name = "name", value = "关键词") @RequestParam(value = "name",required = false) String name,
+    //                               @ApiParam(required = false, name = "name", value = "作者") @RequestParam(value = "author",required = false) String author,
+    //                               @ApiParam(required = false, name = "name", value = "出版社") @RequestParam(value = "cbs",required = false) String cbs,
+    //                               @ApiParam(required = false, name = "state", value = "状态") @RequestParam(value = "state",required = false) String state,
+    //                               @ApiParam(required = true, name = "pageCode", value = "页码") @RequestParam(value = "pageCode") int pageCode,
+    //                               @ApiParam(required = true, name = "pageSize", value = "页尺寸") @RequestParam(value = "pageSize") int pageSize,
+    //                               @ApiParam(required = true, name = "token", value = "token") @RequestParam(value = "token") String token){
+    //     return "";
+    // }
 }
