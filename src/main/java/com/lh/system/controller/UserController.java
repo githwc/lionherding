@@ -221,16 +221,4 @@ public class UserController {
     }
 
     //===============================REST ful API  END 仅用于测试  ==========================
-    // @RequestMapping(value = "/getBookList", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    // @ApiOperation(value = "获取图书列表", notes = "获取图书列表")
-    // public String getBookList(HttpServletRequest request,
-    //                               @ApiParam(required = false, name = "name", value = "关键词") @RequestParam(value = "name",required = false) String name,
-    //                               @ApiParam(required = false, name = "name", value = "作者") @RequestParam(value = "author",required = false) String author,
-    //                               @ApiParam(required = false, name = "name", value = "出版社") @RequestParam(value = "cbs",required = false) String cbs,
-    //                               @ApiParam(required = false, name = "state", value = "状态") @RequestParam(value = "state",required = false) String state,
-    //                               @ApiParam(required = true, name = "pageCode", value = "页码") @RequestParam(value = "pageCode") int pageCode,
-    //                               @ApiParam(required = true, name = "pageSize", value = "页尺寸") @RequestParam(value = "pageSize") int pageSize,
-    //                               @ApiParam(required = true, name = "token", value = "token") @RequestParam(value = "token") String token){
-    //     return "";
-    // }
 }

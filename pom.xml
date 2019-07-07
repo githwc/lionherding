@@ -51,7 +51,13 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!--thymeleaf场景启动器&ndash;&gt;-->
+        <!-- 集成 Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--thymeleaf场景启动器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
