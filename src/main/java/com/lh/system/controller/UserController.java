@@ -2,7 +2,6 @@ package com.lh.system.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.lh.system.basis.Result;
-import com.lh.system.basis.ResultCode;
 import com.lh.system.entity.User;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
@@ -13,7 +12,6 @@ import org.framework.core.utils.PictureValidateCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.keyvalue.repository.query.CachingKeyValuePartTreeQuery;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -143,7 +141,7 @@ public class UserController {
      * @throws:
      */
     @GetMapping(value = "/pictureValidate")
-    @WriteLog(mName = "图片验证登录", optype = SystemLogService.OPTYPE_READ)
+    @WriteLog(mName = "获取图片验证", optype = SystemLogService.OPTYPE_READ)
     @ApiOperation(value = "随机生成图片验证码",notes = "随机生成图片验证码")
     public String pictureValidate(HttpServletRequest request,HttpServletResponse response
     )throws Exception{
@@ -220,5 +218,9 @@ public class UserController {
         return 1;
     }
 
+    @PostMapping("/op")
+    public void lo(){
+        System.out.println("当前类======UserController.lo()"+new Date());
+    }
     //===============================REST ful API  END 仅用于测试  ==========================
 }

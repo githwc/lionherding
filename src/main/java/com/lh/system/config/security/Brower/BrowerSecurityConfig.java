@@ -1,5 +1,7 @@
-package com.lh.system.config.security;
+package com.lh.system.config.security.Brower;
 
+import com.lh.system.config.security.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,15 +28,21 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         // http.httpBasic()
         http.formLogin()    //配置身份验证为表单登录的方式
-                .loginPage("/templates/in.html") //配置默认登录页
+                .loginPage("/authentication/require") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
+                .loginProcessingUrl("/user/op")
                 .and()
+                .csrf().disable()
                 .authorizeRequests() //下面配置都是关于授权的配置
-                .antMatchers("/templates/in.html").permitAll()   //此请求不需要认证
+                .antMatchers("/authentication/require",securityProperties.getBrower().getLoginPage()).permitAll()  //此请求不需要认证
                 .anyRequest()   //任何请求
                 .authenticated();//需要身份验证
     }
+
 }

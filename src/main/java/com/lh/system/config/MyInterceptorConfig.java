@@ -19,38 +19,38 @@ import java.util.Date;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-28
  */
-@Component
+// @Component
 public class MyInterceptorConfig implements HandlerInterceptor{
 
     //目标方法执行之前
-    @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println("======preHandle()==============");
-        httpServletRequest.setAttribute("startTime",new Date().getTime());
-        System.out.println("类名："+((HandlerMethod)o).getBean().getClass().getName());
-        System.out.println("方法名："+((HandlerMethod)o).getMethod().getName());
-        //登录检查
-        Object user = httpServletRequest.getSession().getAttribute("loginUser");
-        System.out.println("===LionHerding===值=" + new Date() + "," + "当前类=LoginHandlerInterceptor.preHandle()");
-        if(user == null){//未登录，返回到登录页面
-            httpServletRequest.setAttribute("msg","没有权限请先登录！");
-            //转发
-            httpServletRequest.getRequestDispatcher("/index.html").forward(httpServletRequest,httpServletResponse);
-        }else{//已登陆
-            return true;
-        }
-        return true;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("======postHandle()==============");
-        System.out.println("耗时："+ (new Date().getTime()-(Long)httpServletRequest.getAttribute("startTime")));
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        System.out.println("==========afterCompletion()===========");
-        System.out.println("耗时："+ (new Date().getTime()-(Long)httpServletRequest.getAttribute("startTime")));
-    }
+    // @Override
+    // public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    //     System.out.println("======preHandle()==============");
+    //     httpServletRequest.setAttribute("startTime",new Date().getTime());
+    //     System.out.println("类名："+((HandlerMethod)o).getBean().getClass().getName());
+    //     System.out.println("方法名："+((HandlerMethod)o).getMethod().getName());
+    //     //登录检查
+    //     Object user = httpServletRequest.getSession().getAttribute("loginUser");
+    //     System.out.println("===LionHerding===值=" + new Date() + "," + "当前类=LoginHandlerInterceptor.preHandle()");
+    //     if(user == null){//未登录，返回到登录页面
+    //         httpServletRequest.setAttribute("msg","没有权限请先登录！");
+    //         //转发
+    //         httpServletRequest.getRequestDispatcher("/index.html").forward(httpServletRequest,httpServletResponse);
+    //     }else{//已登陆
+    //         return true;
+    //     }
+    //     return true;
+    // }
+    //
+    // @Override
+    // public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    //     System.out.println("======postHandle()==============");
+    //     System.out.println("耗时："+ (new Date().getTime()-(Long)httpServletRequest.getAttribute("startTime")));
+    // }
+    //
+    // @Override
+    // public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+    //     System.out.println("==========afterCompletion()===========");
+    //     System.out.println("耗时："+ (new Date().getTime()-(Long)httpServletRequest.getAttribute("startTime")));
+    // }
 }

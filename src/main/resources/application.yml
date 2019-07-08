@@ -54,3 +54,9 @@ logging:
   path: C://logback
   level:
     com.lh: DEBUG
+
+#=====security相关======
+lh:
+  security:
+    browser:
+      loginPage: /demo-sign.html

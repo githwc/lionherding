@@ -3,7 +3,6 @@ package com.lh.system.config.mybatis;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
-import javafx.scene.paint.Stop;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

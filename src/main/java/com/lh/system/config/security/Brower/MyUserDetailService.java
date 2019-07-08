@@ -1,4 +1,4 @@
-package com.lh.system.config.security;
+package com.lh.system.config.security.Brower;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

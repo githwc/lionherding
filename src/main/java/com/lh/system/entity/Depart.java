@@ -1,5 +1,6 @@
 package com.lh.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@TableName(value = "sys_depart")
 public class Depart implements Serializable {
 
     private static final long serialVersionUID = 1L;
