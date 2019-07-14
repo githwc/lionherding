@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import javax.sql.ConnectionEvent;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.Map;
 
 /**
  * DESC：测试用例
@@ -70,5 +71,6 @@ public class ApplicationTest {
         System.out.println(dataSource);
         connection.close();
     }
+
 
 }
