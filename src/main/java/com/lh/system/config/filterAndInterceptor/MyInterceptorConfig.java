@@ -1,4 +1,4 @@
-package com.lh.system.config;
+package com.lh.system.config.filterAndInterceptor;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

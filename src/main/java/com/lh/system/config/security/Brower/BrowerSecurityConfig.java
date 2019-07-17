@@ -35,12 +35,12 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         // http.httpBasic()
         http.formLogin()    //配置身份验证为表单登录的方式
-                .loginPage("/authentication/require") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
-                .loginProcessingUrl("/user/op")
+                .loginPage("/index.html") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
+                .loginProcessingUrl("/user/op") //用这个请求进行登录
                 .and()
                 .csrf().disable()
                 .authorizeRequests() //下面配置都是关于授权的配置
-                .antMatchers("/authentication/require",securityProperties.getBrower().getLoginPage()).permitAll()  //此请求不需要认证
+                .antMatchers("/index.html").permitAll()  //此请求不需要认证
                 .anyRequest()   //任何请求
                 .authenticated();//需要身份验证
     }

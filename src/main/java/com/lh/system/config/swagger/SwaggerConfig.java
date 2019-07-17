@@ -1,4 +1,4 @@
-package com.lh.system.config;
+package com.lh.system.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

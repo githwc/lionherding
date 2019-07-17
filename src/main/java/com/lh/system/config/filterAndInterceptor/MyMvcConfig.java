@@ -1,4 +1,4 @@
-package com.lh.system.config;
+package com.lh.system.config.filterAndInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 功能描述：
- *      配置类：用来注册配置
+ *      配置类：用来注册配置扩展springMvc功能
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -64,8 +64,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index/login");
-        registry.addViewController("/index.html").setViewName("index/login");
+        registry.addViewController("/").setViewName("index/index");
+        registry.addViewController("/index.html").setViewName("index/index");
         //登录成功后重定向到首页
         registry.addViewController("/main.html").setViewName("dashboard");
     }
