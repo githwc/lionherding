@@ -15,10 +15,22 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙，此处是filter修改的地方
     druid:
-      filters: stat,wall,log4j
-      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,log4j,config
       use-global-data-source-stat: true
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      max-active: 100
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
   #=====Redis相关========
   redis:
     host: 127.0.0.1

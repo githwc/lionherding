@@ -38,6 +38,9 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and().logout().permitAll();
 
+        //忽略druid的csrf校验
+        http.csrf().ignoringAntMatchers("/druid/*");
+
         // http.httpBasic()
         // http.formLogin()    //配置身份验证为表单登录的方式
         //         .loginPage("/index.html") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
