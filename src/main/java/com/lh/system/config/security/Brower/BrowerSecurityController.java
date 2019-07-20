@@ -29,7 +29,7 @@ import java.io.IOException;
  * @Datetime: 2019-07-08
  * @Version: 1.0.0
  */
-@RestController
+// @RestController
 public class BrowerSecurityController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

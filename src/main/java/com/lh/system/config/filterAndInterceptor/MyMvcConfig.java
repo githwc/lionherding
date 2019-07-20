@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Author: 牧狮&&紫色年华
  * @Datetime: 2019-05-27
  */
-@Configuration
+// @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
 
     // @Autowired
@@ -62,12 +62,12 @@ public class MyMvcConfig implements WebMvcConfigurer {
     * @Return:
     * @throws:
     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index/index");
-        registry.addViewController("/index.html").setViewName("index/index");
-        //登录成功后重定向到首页
-        registry.addViewController("/main.html").setViewName("dashboard");
-    }
+    // @Override
+    // public void addViewControllers(ViewControllerRegistry registry) {
+    //     registry.addViewController("/").setViewName("index/index");
+    //     registry.addViewController("/index.html").setViewName("index/index");
+    //     //登录成功后重定向到首页
+    //     registry.addViewController("/main.html").setViewName("dashboard");
+    // }
 
 }

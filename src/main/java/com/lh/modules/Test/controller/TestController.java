@@ -4,6 +4,7 @@ import com.lh.modules.Test.entity.Test;
 import com.lh.modules.Test.service.TestService;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/test")
+@Api(tags = "测试相关")
 public class TestController {
 
     @Autowired

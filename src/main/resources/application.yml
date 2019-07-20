@@ -56,7 +56,10 @@ logging:
     com.lh: DEBUG
 
 #=====security相关======
-lh:
-  security:
-    browser:
-      loginPage: /demo-sign.html
+#lh:
+#  security:
+#    browser:
+#      loginPage: /demo-sign.html
+security:
+  basic:
+    enabled: false

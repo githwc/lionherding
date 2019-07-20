@@ -2,6 +2,7 @@ package com.lh.modules.region.controller;
 
 import com.lh.modules.region.entity.Region;
 import com.lh.modules.region.service.RegionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/region/region")
+@Api(tags = "行政区划相关")
 public class RegionController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @Datetime: 2019-07-07
  * @Version: 1.0.0
  */
-@Component
+// @Component
 public class MyUserDetailService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

@@ -33,16 +33,21 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+        //配置不需要登录验证
+        http.authorizeRequests()
+                .anyRequest().permitAll()
+                .and().logout().permitAll();
+
         // http.httpBasic()
-        http.formLogin()    //配置身份验证为表单登录的方式
-                .loginPage("/index.html") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
-                .loginProcessingUrl("/user/op") //用这个请求进行登录
-                .and()
-                .csrf().disable()
-                .authorizeRequests() //下面配置都是关于授权的配置
-                .antMatchers("/index.html").permitAll()  //此请求不需要认证
-                .anyRequest()   //任何请求
-                .authenticated();//需要身份验证
+        // http.formLogin()    //配置身份验证为表单登录的方式
+        //         .loginPage("/index.html") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
+        //         .loginProcessingUrl("/user/op") //用这个请求进行登录
+        //         .and()
+        //         .csrf().disable()
+        //         .authorizeRequests() //下面配置都是关于授权的配置
+        //         .antMatchers("/index.html").permitAll()  //此请求不需要认证
+        //         .anyRequest()   //任何请求
+        //         .authenticated();//需要身份验证
     }
 
 }

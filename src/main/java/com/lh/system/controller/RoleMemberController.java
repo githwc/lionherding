@@ -4,6 +4,7 @@ import com.lh.system.entity.RoleMember;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import com.lh.system.service.RoleMemberService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("rolemember")
+@Api(tags = "角色成员相关")
 public class RoleMemberController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

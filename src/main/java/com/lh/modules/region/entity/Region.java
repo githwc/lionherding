@@ -85,5 +85,5 @@ public class Region implements Serializable {
     /////////////////////////////// 非表字段 ///////////////////////////////
 
     @TableField(exist = false)
-    private List<B> blist = new ArrayList<B>();
+    private List<RegionCountry> blist = new ArrayList<RegionCountry>();
 }

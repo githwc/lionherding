@@ -3,9 +3,6 @@ package com.lh.modules.region.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 功能描述：
  * <p>版权所有：</p>
@@ -17,15 +14,16 @@ import java.util.List;
  * @Version: 1.0.0
  */
 @Data
-public class B {
-
-    private String bname;
-
-    private String bcode;
-
-    private String bpcode;
+public class RegionArea {
 
     @TableField(exist = false)
-    private List<C> clist = new ArrayList<C>();
+    private String cname;
+
+    @TableField(exist = false)
+    private String ccode;
+
+    @TableField(exist = false)
+    private String cpcode;
+
 
 }

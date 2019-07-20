@@ -27,13 +27,13 @@
         <result column="region_name" property="regionName" />
         <result column="region_code" property="regionCode" />
 
-        <collection property="blist" ofType="com.lh.modules.region.entity.B">
+        <collection property="blist" ofType="com.lh.modules.region.entity.RegionCountry">
 <!--            <id column="b" property="id" jdbcType="INTEGER" />-->
             <result column="bname" property="bname" />
             <result column="bcode" property="bcode" />
             <result column="bpcode" property="bpcode"/>
 
-            <collection property="clist" ofType="com.lh.modules.region.entity.C">
+            <collection property="clist" ofType="com.lh.modules.region.entity.RegionArea">
 <!--                <id column="tagId" property="tagId" jdbcType="INTEGER"/>-->
                 <result column="cname" property="cname" />
                 <result column="ccode" property="ccode" />

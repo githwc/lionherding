@@ -4,6 +4,7 @@ import com.lh.system.entity.Log;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
 import com.lh.system.service.LogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/log")
+@Api(tags = "日志相关")
 public class LogController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
