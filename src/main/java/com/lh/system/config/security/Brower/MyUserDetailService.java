@@ -12,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * 功能描述：
+ * 功能描述:用户认证逻辑
+ *      根据自己的用户体系配置用户认证逻辑
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Component;
  * @Datetime: 2019-07-07
  * @Version: 1.0.0
  */
-// @Component
+@Component
 public class MyUserDetailService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -32,11 +34,12 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("登录用户名"+ username);
-        //根据用户名查找用户信息
-        String password = "123456";
-        //根据查找到的用户信息判断用户是否被冻结
-        return new User(username,passwordEncoder.encode(password),
+        //根据用户名查找用户信息与权限
+
+        //封装用户信息,并返回。参数分别是:用户名,密码,用户权限
+        return new User(username,passwordEncoder.encode("123456"),
                 true,true,true,true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+
     }
 }

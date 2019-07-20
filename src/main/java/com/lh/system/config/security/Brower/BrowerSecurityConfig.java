@@ -28,29 +28,42 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    private SecurityProperties securityProperties;
+    // @Autowired
+    // private SecurityProperties securityProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        //配置不需要登录验证
-        http.authorizeRequests()
-                .anyRequest().permitAll()
-                .and().logout().permitAll();
+        /**
+         *  取消Security登录验证
+         */
+        // http.authorizeRequests()
+        //         .anyRequest().permitAll()
+        //         .and().logout().permitAll();
 
-        //忽略druid的csrf校验
+        /**
+         *  忽略druid的csrf校验
+         */
         http.csrf().ignoringAntMatchers("/druid/*");
 
+        /**
+         * 基础登录验证样式
+         */
         // http.httpBasic()
-        // http.formLogin()    //配置身份验证为表单登录的方式
-        //         .loginPage("/index.html") //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
-        //         .loginProcessingUrl("/user/op") //用这个请求进行登录
-        //         .and()
-        //         .csrf().disable()
-        //         .authorizeRequests() //下面配置都是关于授权的配置
-        //         .antMatchers("/index.html").permitAll()  //此请求不需要认证
-        //         .anyRequest()   //任何请求
-        //         .authenticated();//需要身份验证
+
+        /**
+         * 配置身份验证为表单登录的方式
+         */
+        http.formLogin()
+                .loginPage("/login")           //配置默认登录页(security判断是否已经登陆授权，否则跳到这里) (配合配置的视图控制器使用)
+                .loginProcessingUrl("/user/login")  //自定义的登录接口
+                .and()
+                .authorizeRequests()                //定义不需要认证的请求
+                .antMatchers("/login","/user/login").permitAll()
+                .anyRequest()                       //定义需要认证的请求
+                .authenticated()
+                .and()
+                .csrf().disable()       //关闭csrf防护
+        ;
     }
 
 }

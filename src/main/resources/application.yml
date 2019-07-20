@@ -43,15 +43,15 @@ spring:
         max-idle: 5
         max-active: 10
   #=====thymeleaf相关=========
-#  thymeleaf:
-#    cache: false
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    check-template-location: true
-#    encoding: utf-8
-#    servlet:
-#      content-type: text/html
-#    mode: HTML5
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    mode: HTML5
   #=====日期格式相关=========
   mvc:
     date-format: yyyy-MM-dd
@@ -72,6 +72,3 @@ logging:
 #  security:
 #    browser:
 #      loginPage: /demo-sign.html
-security:
-  basic:
-    enabled: false

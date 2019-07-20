@@ -7,6 +7,7 @@ import com.lh.system.log.WriteLog;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,12 +30,11 @@ public class TestController {
     private TestService testService;
 
     @RequestMapping("/hello")
-    @WriteLog(mName = "测试", optype = SystemLogService.OPTYPE_READ)
-    public String hello(){
+    @WriteLog(mName = "测试", optype = SystemLogService.OPTYPE_READ) public String hello(){
         return "d";
     }
 
-    @RequestMapping("/getInfo")
+    @PostMapping("/getInfo")
     public Test getInfo(){
         Test dd = testService.getInfo();
         return dd;
