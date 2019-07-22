@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!--pom文件的模型版本：当前仅有的可以被maven2&3同时支持的pom版本，不可缺-->
     <modelVersion>4.0.0</modelVersion>
-    <!--父项目：它的父项目是spring-boot-dependencies来真正管理springboot应用里的所有依赖版本;-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -11,19 +9,11 @@
         <relativePath/>
     </parent>
 
-    <!-- 基本设置：
-        groupId：com.公司名.项目名
-        artifactId：功能模块名
-        version：版本号
-        packaging:项目打包的后缀，默认jar，war是web项目发布用的
-            附：groupid+artifactid+version:项目在仓库中的坐标
-    -->
     <groupId>com.lh</groupId>
     <artifactId>lionherding</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <!--基本属性-->
     <properties>
         <java.version>1.8</java.version>
         <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
@@ -36,6 +26,10 @@
         <swagger.version>2.7.0</swagger.version>
         <bootstrap.version>4.0.0</bootstrap.version>
         <common-codec.version>1.9</common-codec.version>
+        <guava.version>28.0-jre</guava.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <itextpdf.version>5.5.13.1</itextpdf.version>
+        <zxing-core.version>3.4.0</zxing-core.version>
     </properties>
 
     <dependencies>
@@ -48,28 +42,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--引入AOP场景启动器-->
+        <!--AOP场景启动器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- 集成 Spring Security -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!--thymeleaf场景启动器-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!--mysql-->
@@ -104,6 +86,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!--thymeleaf场景启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!--配置文件处理器：用于编写yml时的提示信息-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,15 +99,12 @@
             <optional>true</optional>
         </dependency>
 
-        <!--Swagger 相关-->
-        <!-- 核心包:扫面程序，生成文档数据 -->
+        <!--Swagger 相关：核心包:扫描程序,生成文档数据;swagger生成可视化界面-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
         </dependency>
-
-        <!-- swagger生成可视化界面 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -133,11 +118,30 @@
             <version>${bootstrap.version}</version>
         </dependency>
 
-        <!--lombok jar -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!--常用第三方类库 START-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
+                  常见的编码解码工具Base64、MD5、Hex、SHA1、DES等-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
 
         <!-- Jackson jar -->
@@ -158,18 +162,28 @@
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
 
-        <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
-                  常见的编码解码工具Base64、MD5、Hex、SHA1、DES等-->
+        <!--lombok jar -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>${commons-codec.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
+        <!-- 生成PDF -->
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>${itextpdf.version}</version>
         </dependency>
+
+        <!--生成二维码 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>${zxing-core.version}</version>
+        </dependency>
+
+        <!--常用第三方类库 END-->
 
         <dependency>
             <groupId>junit</groupId>
