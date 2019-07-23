@@ -30,6 +30,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <itextpdf.version>5.5.13.1</itextpdf.version>
         <zxing-core.version>3.4.0</zxing-core.version>
+        <fastjson.version>1.2.54</fastjson.version>
     </properties>
 
     <dependencies>
@@ -160,6 +161,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <!--lombok jar -->
