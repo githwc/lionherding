@@ -6,6 +6,6 @@
 技术选型:JDK1.8 + SpringBoot2.1.5 +  MybatisPlus + MySql + Spring Security 
     其他： swagger 
 FAQ(开发过程中常见问题):
-    
+    FAQ1：集成ResponseBodyAdvice
 
 
