@@ -13,8 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Datetime: 2019-07-08
  * @Version: 1.0.0
  */
-@ConfigurationProperties(prefix = "lh.security")
-@Data
+// @ConfigurationProperties(prefix = "lh.security")
+// @Data
 public class SecurityProperties {
 
     private BrowerProperties brower = new BrowerProperties();

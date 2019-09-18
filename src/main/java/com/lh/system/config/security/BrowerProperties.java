@@ -12,7 +12,7 @@ import lombok.Data;
  * @Datetime: 2019-07-08
  * @Version: 1.0.0
  */
-@Data
+// @Data
 public class BrowerProperties {
 
     private String loginPage = "/login.html";   //登录页面

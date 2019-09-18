@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @Datetime: 2019-07-08
  * @Version: 1.0.0
  */
-@Configuration
-@EnableConfigurationProperties(SecurityProperties.class)
+// @Configuration
+// @EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityCoreConfig {
 }
