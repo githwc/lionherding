@@ -1,8 +1,8 @@
 package com.lh.system.log;
 
-import com.lh.system.mapper.LogMapper;
 import com.lh.system.entity.Log;
 import com.lh.system.entity.User;
+import com.lh.system.mapper.LogMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.core.utils.CommonUtil;
@@ -19,8 +19,8 @@ import java.util.Date;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company  LionHerding
- * @Author   牧狮&&紫色年华
+ * @Company  紫色年华
+ * @Author   xieyc
  * @Datetime 2019-05-31 10:58
  */
 @Service

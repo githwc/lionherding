@@ -2,9 +2,7 @@ package com.lh;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 
 /**
@@ -24,8 +22,8 @@ import org.springframework.cache.annotation.EnableCaching;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author:  xieyc
  * @Datetime: 2019-05-30
  */
 @SpringBootApplication
@@ -33,6 +31,13 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class Application {
 
+    // todo 1 logback-spring.xml
+    // todo 2 resources -> mybatis -> xxx
+    // todo 3 swagger
+    // todo 4 log （参考jeecg 和 lionherding）
+    // todo 5 redis (参考jeecg)
+    // todo 6 数据库字段统一驼峰式命名
+    // todo 7 统一返回格式 (参考 jeecg 和 lionherding)
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

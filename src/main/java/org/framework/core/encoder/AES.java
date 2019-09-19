@@ -27,8 +27,8 @@ import java.security.NoSuchAlgorithmException;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author: xieyc
  * @Datetime: 2019-05-09
  */
 public class AES {
@@ -40,11 +40,11 @@ public class AES {
 	 * @return 加密结果
 	 */
 	public static String encrypt(String content, String key) {
-		
+
 		if ((content == null) || (key == null)) {
 			return null;
 		}
-		
+
 		try {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(1, new SecretKeySpec(key.getBytes("utf-8"), "AES"));
@@ -63,10 +63,10 @@ public class AES {
 		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * AES 对称解密
 	 * @param content	: 加密后的内容
@@ -74,11 +74,11 @@ public class AES {
 	 * @return 解密结果
 	 */
 	public static String decrypt(String content, String key) {
-		
+
 		if ((content == null) || (key == null)) {
 			return null;
 		}
-		
+
 		try {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(2, new SecretKeySpec(key.getBytes("utf-8"), "AES"));
@@ -100,8 +100,8 @@ public class AES {
 		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 }

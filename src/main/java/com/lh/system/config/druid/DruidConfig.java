@@ -20,8 +20,8 @@ import java.util.Map;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author:  xieyc
  * @Datetime: 2019-06-06
  * @Version: 1.0.0
  */
@@ -39,7 +39,7 @@ public class DruidConfig {
     @Bean
     public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
-        Map<String,String> initParams = new HashMap<>();
+        Map<String,String> initParams = new HashMap<String, String>();
         initParams.put("loginUsername","xieyc");
         initParams.put("loginPassword","xieyc");
         initParams.put("allow","127.0.0.1");//默认就是允许所有访问:可设置为""
@@ -54,7 +54,7 @@ public class DruidConfig {
     public FilterRegistrationBean webStatFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
-        Map<String,String> initParams = new HashMap<>();
+        Map<String,String> initParams = new HashMap<String, String>();
         initParams.put("exclusions","*.js,*.css,/druid/*");
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));

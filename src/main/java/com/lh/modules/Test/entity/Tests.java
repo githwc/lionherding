@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * 可以通过@TableName来指定在数据库中的名字
  */
 @TableName(value = "test")
-public class Test extends Model<Test> {
+public class Tests extends Model<Tests> {
 
     /**
      * @TableId:

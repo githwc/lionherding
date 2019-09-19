@@ -20,8 +20,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author:  xieyc
  * @Datetime: 2019-07-07
  * @Version: 1.0.0
  */
@@ -69,7 +69,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     /**
      * @Description: 定义项目描述信息
      * @Date: 2019/7/20 14:39
-     * @Param: 
+     * @Param:
      * @Return:
      * @throws:
      */

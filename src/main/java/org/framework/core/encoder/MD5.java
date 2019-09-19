@@ -5,14 +5,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
- * 
+ *
  * 功能描述：信息摘要算法, 简称：MD5(Message Digest algorithm 5)
- * 
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
- * 
- * @Company  LionHerding
- * @Author   牧狮&&紫色年华
+ *
+ * @Company  紫色年华
+ * @Author   xieyc
  * @Datetime 2016-05-09
  */
 public class MD5 {
@@ -22,7 +22,7 @@ public class MD5 {
      * @param text ：文本内容
 	 * @return　加密后的内容
 	 */
-	public static String encrypt(String text) { 
+	public static String encrypt(String text) {
 		String result = null;
 		MessageDigest md = null;
 		try {

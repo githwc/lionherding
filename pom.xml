@@ -19,10 +19,6 @@
         <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <lombok.version>1.16.4</lombok.version>
-        <!--        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>-->
-        <!--        &lt;!&ndash; 布局功能的支持程序  thymeleaf3主程序  layout2以上版本 &ndash;&gt;-->
-        <!--        &lt;!&ndash; thymeleaf2   layout1&ndash;&gt;-->
-        <!--        <thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>-->
         <swagger.version>2.7.0</swagger.version>
         <bootstrap.version>4.0.0</bootstrap.version>
         <common-codec.version>1.9</common-codec.version>
@@ -49,11 +45,12 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- Spring Security -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <!--shiro-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-starter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <!--mysql-->
         <dependency>
@@ -221,6 +218,14 @@
                     <configurationFile>src/main/resources/mybatis/generator.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>6</source>
+                    <target>6</target>
                 </configuration>
             </plugin>
 

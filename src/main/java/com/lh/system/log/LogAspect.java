@@ -11,26 +11,26 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 
+ *
  * 功能描述： 系统日志切面
- * 
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company  LionHerding
- * @Author   牧狮&&紫色年华
+ * @Company  紫色年华
+ * @Author   xieyc
  * @Datetime 2019-05-31 10:58
  */
 @Aspect
 @Component
 public class LogAspect {
-	
+
 	@Autowired
 	private SystemLogService service;
-	
+
     /**
      * @Description:标注为后置通知，当目标方法执行成功后执行该函数
-     * @Date: 2019/5/31 11:04 
+     * @Date: 2019/5/31 11:04
      * @Param: within：扫描目标方法   annotation：标记为log的方法
      * @Return:
      */
@@ -39,7 +39,7 @@ public class LogAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_SUCCESS);
 	}
-	
+
     /**
      * @Description:标注为异常通知，当目标方法出现异常，执行该方法体
      * @Date: 2019/5/31 11:07
@@ -51,5 +51,5 @@ public class LogAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_FAILURE, ex);
 	}
-	
+
 }

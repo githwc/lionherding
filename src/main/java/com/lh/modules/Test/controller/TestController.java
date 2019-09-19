@@ -1,6 +1,6 @@
 package com.lh.modules.Test.controller;
 
-import com.lh.modules.Test.entity.Test;
+import com.lh.modules.Test.entity.Tests;
 import com.lh.modules.Test.service.TestService;
 import com.lh.system.log.SystemLogService;
 import com.lh.system.log.WriteLog;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author: xieyc
  * @Datetime: 2019-05-30 10:53
  */
 @RestController
@@ -35,8 +35,8 @@ public class TestController {
     }
 
     @PostMapping("/getInfo")
-    public Test getInfo(){
-        Test dd = testService.getInfo();
+    public Tests getInfo(){
+        Tests dd = testService.getInfo();
         return dd;
     }
 
@@ -73,7 +73,7 @@ public class TestController {
     * @throws:
     */
     @RequestMapping("/getInfoById/{id}")
-    public Test getInfoById(@PathVariable String id){
+    public Tests getInfoById(@PathVariable String id){
         return testService.getInfoById(id);
     }
 

@@ -19,8 +19,8 @@ import java.util.Map;
  * <p>版权所有：</p>
  * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author:  xieyc
  * @Datetime: 2019-06-28 17:17
  * @Version: 1.0.0
  */
@@ -95,13 +95,13 @@ public class MyBatisGenerator {
         InjectionConfig abc = new InjectionConfig() {
             @Override
             public void initMap() {
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<String, Object>();
                 map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
                 this.setMap(map);
             }
         };
         //自定义文件输出位置（非必须）
-        List<FileOutConfig> fileOutList = new ArrayList<>();
+        List<FileOutConfig> fileOutList = new ArrayList<FileOutConfig>();
         fileOutList.add(new FileOutConfig("/templates/mapper.xml.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
