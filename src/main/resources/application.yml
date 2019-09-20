@@ -60,12 +60,15 @@ spring:
 mybatis-plus:
   mapper-locations: /mapper/**/*Mapper.xml
   type-aliases-package: com.lh.modules.model,com.lh.system.model
+  configuration:
+    map-underscore-to-camel-case: true
 
 #=====日志相关=========
 logging:
   path: C://logback
   level:
     com.lh: DEBUG
+  config: classpath:logback-spring.xml
 
 #=====security相关======
 #lh:

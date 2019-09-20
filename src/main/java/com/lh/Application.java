@@ -31,12 +31,9 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class Application {
 
-    // todo 1 logback-spring.xml
-    // todo 2 resources -> mybatis -> xxx
     // todo 3 swagger
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
-    // todo 7 统一返回格式 (参考 jeecg 和 lionherding)
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
