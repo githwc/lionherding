@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lh.system.mapper.SysDictionaryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lh.system.entity.SysDictionary">
+        <id column="sys_dictionary_id" property="sysDictionaryId" />
+        <result column="parent_id" property="parentId" />
+        <result column="key" property="key" />
+        <result column="value" property="value" />
+        <result column="sort" property="sort" />
+        <result column="create_id" property="createId" />
+        <result column="create_date" property="createDate" />
+        <result column="update_id" property="updateId" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        sys_dictionary_id, parent_id, key, value, sort, create_id, create_date, update_id, update_date
+    </sql>
+
+</mapper>

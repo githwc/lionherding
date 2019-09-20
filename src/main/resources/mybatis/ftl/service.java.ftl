@@ -20,7 +20,5 @@ interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-    boolean insertOrUpdate(${entity} i${entity});
-
 }
 </#if>

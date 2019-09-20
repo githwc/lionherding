@@ -1,7 +1,7 @@
 package com.lh.system.service;
 
-import com.lh.system.entity.SysRolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lh.system.entity.SysRolePermission;
 
 /**
  * 功能描述：
@@ -16,7 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *
  */
 public interface SysRolePermissionService extends IService<SysRolePermission> {
-
-    boolean insertOrUpdate(SysRolePermission iSysRolePermission);
 
 }

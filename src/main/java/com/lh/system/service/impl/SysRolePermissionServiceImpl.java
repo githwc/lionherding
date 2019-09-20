@@ -1,9 +1,9 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysRolePermissionMapper;
 import com.lh.system.service.SysRolePermissionService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +23,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission> implements SysRolePermissionService {
 
-    @Override
-    public boolean insertOrUpdate(SysRolePermission iSysRolePermission) {
-        boolean result = false;
-        return result;
-    }
 }

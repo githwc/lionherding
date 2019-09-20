@@ -1,13 +1,10 @@
 package com.lh.system.controller;
 
-import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
@@ -24,50 +21,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sysPermission")
+@Slf4j
 public class SysPermissionController {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public SysPermissionService iSysPermissionService;
-
-    /**
-    * @Description:
-    * @param:
-    * @return:
-    */
-    @GetMapping("/{id}")
-    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
-    public SysPermission getSysPermissionById(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
-        return null;
-    }
-
-    /**
-    * @Description:
-    * @param:
-    * @return:
-    */
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "根据主键ID删除",  notes = "根据主键ID删除")
-    public int delete(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
-       return 0;
-    }
-
-    /**
-    * @Description:
-    * @param
-    * @return  0 失败  1 成功
-    */
-    @PostMapping("/createAndUpdate")
-    @ApiOperation(value = "保存和修改公用API", notes = "保存和修改公用API")
-    public int createAndUpdate(SysPermission sysPermission) {
-       int count = 0;
-       try {
-           count = iSysPermissionService.insertOrUpdate(sysPermission) ? 1 : 0;
-       } catch (Exception e) {
-           logger.error("sysPermissionSave -=- {}",e.toString());
-       }
-       return count;
-    }
 
 }

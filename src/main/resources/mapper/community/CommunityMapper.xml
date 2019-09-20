@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lh.modules.community.mapper.CommunityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lh.modules.community.entity.Community">
+        <id column="community_id" property="communityId" />
+        <result column="group_id" property="groupId" />
+        <result column="tree_code" property="treeCode" />
+        <result column="name" property="name" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="county" property="county" />
+        <result column="region_code" property="regionCode" />
+        <result column="lng" property="lng" />
+        <result column="lat" property="lat" />
+        <result column="addr" property="addr" />
+        <result column="build_area" property="buildArea" />
+        <result column="build_num" property="buildNum" />
+        <result column="service_tel" property="serviceTel" />
+        <result column="billing_mode" property="billingMode" />
+        <result column="effective_stime" property="effectiveStime" />
+        <result column="effective_etime" property="effectiveEtime" />
+        <result column="sms_number" property="smsNumber" />
+        <result column="is_init" property="isInit" />
+        <result column="init_no" property="initNo" />
+        <result column="status" property="status" />
+        <result column="jw_status" property="jwStatus" />
+        <result column="check_cause" property="checkCause" />
+        <result column="is_line_pay" property="isLinePay" />
+        <result column="app_logo" property="appLogo" />
+        <result column="app_banner" property="appBanner" />
+        <result column="jf_lk" property="jfLk" />
+        <result column="jf_case" property="jfCase" />
+        <result column="seq_num" property="seqNum" />
+        <result column="remark" property="remark" />
+        <result column="create_user" property="createUser" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        community_id, group_id, tree_code, name, province, city, county, region_code, lng, lat, addr, build_area, build_num, service_tel, billing_mode, effective_stime, effective_etime, sms_number, is_init, init_no, status, jw_status, check_cause, is_line_pay, app_logo, app_banner, jf_lk, jf_case, seq_num, remark, create_user, create_time, update_user, update_time
+    </sql>
+
+</mapper>

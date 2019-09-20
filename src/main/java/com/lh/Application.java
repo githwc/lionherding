@@ -36,9 +36,7 @@ public class Application {
     // todo 3 swagger
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
-    // todo 6 自動生成代碼模板調整
     // todo 7 统一返回格式 (参考 jeecg 和 lionherding)
-    // todo 8 工具类精简
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

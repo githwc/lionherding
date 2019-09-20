@@ -23,9 +23,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
-    @Override
-    public boolean insertOrUpdate(SysRole iSysRole) {
-        boolean result = false;
-        return result;
-    }
 }
