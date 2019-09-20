@@ -1,4 +1,4 @@
-package org.framework.core.utils;
+package com.lh.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

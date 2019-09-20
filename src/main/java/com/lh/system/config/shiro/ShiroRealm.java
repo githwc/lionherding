@@ -1,5 +1,6 @@
 package com.lh.system.config.shiro;
 
+import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.framework.core.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -22,8 +22,8 @@ import java.util.Set;
  * <p>版权所有：</p>
  * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author: xie && 紫色年华
+ * @Company: 紫色年华
+ * @Author:  xie
  * @Datetime: 2019-09-17 16:34
  * @Version: 1.0.0
  */
@@ -53,7 +53,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         SysUser sysUser = sysUserService.getUserByName(token.getUsername());
         //密码加密
-        token.setPassword(PasswordUtil.encrypt(token.getUsername(),String.valueOf(token.getPassword()),sysUser.getLoginName()).toCharArray());
+        // token.setPassword(EncoderUtil.encrypt(token.getUsername(),String.valueOf(token.getPassword()),sysUser.getLoginName()).toCharArray());
         //判断用户名
         if (sysUser == null) {
             return null;
@@ -64,8 +64,9 @@ public class ShiroRealm extends AuthorizingRealm {
          * credentialsSalt: 盐值
          * realmName: 当前realm对象的name
          */
-        ByteSource credentialsSalt = ByteSource.Util.bytes(sysUser.getLoginName());
-        return new SimpleAuthenticationInfo(sysUser,sysUser.getPassword(),credentialsSalt,getName());
+        // ByteSource credentialsSalt = ByteSource.Util.bytes(sysUser.getLoginName());
+        // return new SimpleAuthenticationInfo(sysUser,sysUser.getPassword(),credentialsSalt,getName());
+        return new SimpleAuthenticationInfo(sysUser,"123456",getName());
     }
 
     /**

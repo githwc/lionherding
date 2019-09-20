@@ -24,12 +24,12 @@
         select
             role_code
         from sys_role
-        where id in
+        where sys_role_id in
             (select
                 role_id
                 from sys_user_role
                 where user_id =
-                (select id from sys_user where username=#{username})
+                (select sys_user_id from sys_user where login_name=#{loginName})
             )
     </select>
 </mapper>

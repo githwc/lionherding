@@ -2,22 +2,31 @@ package com.lh.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Transient;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 功能描述：
  *  <p>版权所有：</p>
  *  未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author 牧狮&&紫色年华
+ * @Company: 紫色年华
+ * @Author xieyc
  * @Date 2019-09-19
  * @Version: 1.0.0
  *
+ *  mybatisPlus会默认使用实体类的类名到数据库中找对应的表
+ *  也可以通过@TableName(value = "sys_user")来指定在数据库中的名字
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,6 +35,17 @@ public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SESSION_CURRENT_USER = "SYSUSER";
+
+    /**
+     * @TableId:
+     *  value:指定数据库表中主键的列名，如果实体类属性和表中字段一致，可省略
+     *  type:指定主键策略
+     *         IdType.AUTO：数据库ID自增
+     *         IdType.INPUT: 用户输入ID
+     *         IdType.ID_WORKER:  全局唯一ID，内容为空自动填充（默认配置）
+     *         IdType.UUID: 全局唯一ID，内容为空自动填充
+     */
     @TableId(value = "sys_user_id", type = IdType.UUID)
     private String sysUserId;
     /**
@@ -130,7 +150,18 @@ public class SysUser implements Serializable {
      */
     private String departId;
 
+    @JsonIgnore
+    @Transient
+    public static SysUser getCurrentUser(HttpServletRequest request) {
+        Object object = request.getSession().getAttribute(SESSION_CURRENT_USER);
+        return object != null ? (SysUser) object : null;
+    }
 
     /////////////////////////////// 非表字段 ///////////////////////////////
 
+    /**
+     * 通过此注解表明不对应数据库中的字段
+     */
+    @TableField(exist = false)
+    private String tempArgs;
 }

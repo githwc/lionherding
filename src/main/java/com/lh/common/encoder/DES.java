@@ -1,4 +1,4 @@
-package org.framework.core.encoder;
+package com.lh.common.encoder;
 
 import org.apache.commons.codec.binary.Hex;
 

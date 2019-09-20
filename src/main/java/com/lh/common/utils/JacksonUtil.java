@@ -1,4 +1,4 @@
-package org.framework.core.utils;
+package com.lh.common.utils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -23,8 +23,9 @@ import java.util.Map;
  * @Company: 紫色年华
  * @Author:  xieyc
  * @Datetime: 2019-05-10 15:47
+ * @Version: 1.0.0
  */
-public class Jackson {
+public class JacksonUtil {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static XmlMapper xmlMapper = new XmlMapper();

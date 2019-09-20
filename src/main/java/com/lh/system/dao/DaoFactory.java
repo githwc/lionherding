@@ -13,6 +13,7 @@ import java.util.UUID;
  * @Company: 紫色年华
  * @Author: xieyc
  * @Datetime: 2019-05-31 14:15
+ * @Version: 1.0.0
  */
 @Service
 public class DaoFactory implements DaoApi {

@@ -1,11 +1,11 @@
 package com.lh.system.log;
 
+import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.Log;
-import com.lh.system.entity.User;
+import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.LogMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.framework.core.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,20 +42,21 @@ public class SystemLogService {
     /**
      * @Description:写系统日志(原始方法)
      * @Date: 2019/5/31 11:14
-     * @param user	    : HttpSession中的User
+     * @param sysUser	    : HttpSession中的User
      * @param operate	: 操作位置:比如写模块的名称、站点名称、登录、退出等
      * @param opType	: 操作类型
      * @param describe	: 描述(可选)
      *      String...:String类型的可变长度的数组,固定长度的数组是String[] str={};这样写,可变的就String... str.
      * @return 是否成功
      */
-    public boolean write(User user, String operate, int opType, String... describe) {
-        user = user!=null ? user : new User();
+    public boolean write(SysUser sysUser, String operate, int opType, String... describe) {
+        sysUser = sysUser!=null ? sysUser : new SysUser();
         Log log = new Log();
-        log.setId(CommonUtil.getUUID());
-        log.setLoginName(user.getLoginName());
-        log.setUserId(user.getId());
-        log.setIpAdress(user.getIpAddress());
+        log.setId(BasisUtil.getUUID());
+        log.setLoginName(sysUser.getLoginName());
+        log.setUserId(sysUser.getSysUserId());
+        // todo 存放当前访问IP地址
+        // log.setIpAdress(sysUser.getIpAddress());
         log.setFunctionId(operate);
         log.setOpDate(new Date());
         log.setOpType(opType);
@@ -79,7 +80,7 @@ public class SystemLogService {
      */
     public boolean write(HttpServletRequest request, String operate, int opType, int opState) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + operate + ")" + (opState != 1 ? "成功" : "失败");
-        return write(User.getCurrentUser(request), operate, opType, message);
+        return write(SysUser.getCurrentUser(request), operate, opType, message);
     }
 
     /**
@@ -96,7 +97,7 @@ public class SystemLogService {
         //如果抛出异常则将异常信息写入到文件日志中，否则仅仅记录操作日志不会写文件日志
         logger.error(message, ex);
         //将系统异常信息写入文件日志中后，写用户系统操作日志，返回日志操作状态
-        return write(User.getCurrentUser(request), operate, opType, message);
+        return write(SysUser.getCurrentUser(request), operate, opType, message);
     }
 
 }

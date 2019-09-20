@@ -29,7 +29,7 @@ public class MyBatisGenerator {
     private static final String BASE_PATH = "D:\\idea_work\\lionherding";   //生成文件所在项目路径
     private static final String BASE_PACKAGE = "com.lh.modules";      //基本包名
     private static final String MODEL_NAME = "sysRolePermission";                         //文件夹名
-    private static final String AUTHOR = "xieyc && 紫色年华";                    //作者
+    private static final String AUTHOR = "xieyc";                    //作者
     private static final String[] TABLES = {"sys_role_permission"};             //要生成的表名
 
     //数据库配置四要素

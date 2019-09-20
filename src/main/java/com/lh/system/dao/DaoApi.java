@@ -10,6 +10,7 @@ package com.lh.system.dao;
  * @Company: 紫色年华
  * @Author: xieyc
  * @Datetime: 2019-05-31 11:39
+ * @Version: 1.0.0
  */
 
 public interface DaoApi {

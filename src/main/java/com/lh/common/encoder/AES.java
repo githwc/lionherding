@@ -1,4 +1,4 @@
-package org.framework.core.encoder;
+package com.lh.common.encoder;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

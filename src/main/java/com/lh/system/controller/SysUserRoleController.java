@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
  *  <p>版权所有：</p>
  *  未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
- * @Company: LionHerding
- * @Author xieyc && 紫色年华
+ * @Company: 紫色年华
+ * @Author  xieyc
  * @Date 2019-09-19
  * @Version: 1.0.0
  *
  */
 @RestController
-@RequestMapping("/sysUserRole/sys-user-role")
+@RequestMapping("/sysUserRole")
 public class SysUserRoleController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

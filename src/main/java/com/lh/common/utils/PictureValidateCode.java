@@ -1,4 +1,4 @@
-package org.framework.core.utils;
+package com.lh.common.utils;
 
 import java.awt.Color;
 import java.awt.Font;

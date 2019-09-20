@@ -1,16 +1,14 @@
-package org.framework.core.utils;
+package com.lh.common.utils;
 
 
-import org.framework.core.encoder.BASE64;
+import com.lh.common.encoder.BASE64;
 
 import java.io.*;
 import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 功能描述：数据类型转换工具包
@@ -65,19 +63,30 @@ public class ConverterUtil {
     }
 
     /**
+     * SET转换MAP
+     *
+     // * @param str
+     * @return
+     */
+    public static Map<Object, Object> SetToMap(Set<Object> setobj) {
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        for (Iterator iterator = setobj.iterator(); iterator.hasNext();) {
+            Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) iterator.next();
+            map.put(entry.getKey().toString(), entry.getValue() == null ? "" : entry.getValue().toString().trim());
+        }
+        return map;
+    }
+
+    /**
      * 将 ResultSet 转化成 List
      * @param rs : {@link java.lang.ResultSet}
      * @return List&lt;HashMap&lt;String, Object&gt;&gt;
      */
     public static List<HashMap<String, Object>> ResultSet2List(ResultSet rs) {
-
         List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-
         try {
-
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
-
             while (rs.next()) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 for (int i = 1; i <= columnCount; i++) {
@@ -87,11 +96,9 @@ public class ConverterUtil {
                 }
                 list.add(map);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 

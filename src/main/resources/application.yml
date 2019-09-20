@@ -2,7 +2,7 @@
 #server.servlet.context-path=/lh
 
 server:
-  port: 8081
+  port: 8080
   tomcat:
     uri-encoding: UTF-8
 spring:

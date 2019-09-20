@@ -1,4 +1,4 @@
-package org.framework.core.utils;
+package com.lh.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;

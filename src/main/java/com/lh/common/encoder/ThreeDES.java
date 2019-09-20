@@ -1,4 +1,4 @@
-package org.framework.core.encoder;
+package com.lh.common.encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

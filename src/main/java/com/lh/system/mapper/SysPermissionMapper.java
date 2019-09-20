@@ -23,5 +23,5 @@ import java.util.List;
 @Repository
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
-    public List<SysPermission> queryByUser(@Param("username") String username);
+    public List<SysPermission> queryByUser(@Param("loginName") String loginName);
 }
