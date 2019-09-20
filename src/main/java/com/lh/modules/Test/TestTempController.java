@@ -1,5 +1,7 @@
 package com.lh.modules.Test;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Version: 1.0.0
  */
 @Controller
+@Api(tags="测试接口")
 public class TestTempController {
 
 

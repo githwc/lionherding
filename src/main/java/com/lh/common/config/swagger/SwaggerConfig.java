@@ -16,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 功能描述：swagger相关配置
+ *  http://localhost:8080/swagger-ui.html
  *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -54,12 +55,13 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket createSystemRestApi() {
         //分组展示
         Predicate<RequestHandler> selector1 = RequestHandlerSelectors.basePackage("com.lh.system.controller");
-        Predicate<RequestHandler> selector2 = RequestHandlerSelectors.basePackage("com.lh.modules");
+        // Predicate<RequestHandler> selector2 = RequestHandlerSelectors.basePackage("com.lh.modules");
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("系统接口")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(Predicates.or(selector1,selector2))
+                .apis(Predicates.or(selector1))
+                // .apis(Predicates.or(selector1,selector2))    // 将多个controller拼装到一个分组
                 // .paths(PathSelectors.regex("/user.*"))   //只监控user相关接口
                 .paths(PathSelectors.any())
                 .build()

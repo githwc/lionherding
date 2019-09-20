@@ -1,9 +1,13 @@
 package com.lh;
 
+import com.lh.common.utils.LocalHostUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
 /**
  * 功能描述：
@@ -29,13 +33,24 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @MapperScan({"com.lh.system.mapper", "com.lh.modules.*.mapper"})
 @EnableCaching
+@Slf4j
 public class Application {
 
-    // todo 3 swagger
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
 
+        ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
+        Environment env = application.getEnvironment();
+        String ip = LocalHostUtil.getIpAddress();
+        String port = env.getProperty("server.port");
+        String path = env.getProperty("server.servlet.context-path");
+        log.info("\n----------------------------------------------------------\n\t" +
+                "Application LionHerding is running! Access URLs:\n\t" +
+                "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
+                "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
+                "swagger-ui: http://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +
+                "----------------------------------------------------------");
+
+	}
 }
