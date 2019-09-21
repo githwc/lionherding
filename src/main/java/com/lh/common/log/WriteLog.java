@@ -1,5 +1,7 @@
 package com.lh.common.log;
 
+import com.lh.common.constant.CommonConstant;
+
 import java.lang.annotation.*;
 
 /**
@@ -23,8 +25,24 @@ import java.lang.annotation.*;
 @Inherited
 public @interface WriteLog {
 
-	public String mName();      //方法名
+    /**
+     * 操作位置
+     * @return
+     */
+	String opPosition();
 
-	public int optype();        //操作类型：CRUD
+    /**
+     * 操作类型(0:增 1：删  2：改 3：查)
+     * @return
+     */
+	int optype();
+
+    /**
+     * 日志类型
+     *     0:操作日志;1:登录日志;2:定时任务;
+     *
+     * @return
+     */
+    int logType() default CommonConstant.LOG_TYPE_0;
 
 }

@@ -26,11 +26,11 @@ import java.util.Map;
  */
 public class MyBatisGenerator {
 
-    private static final String BASE_PATH = "F:\\lionherding";   //生成文件所在项目路径
+    private static final String BASE_PATH = "D:\\idea_work\\lionherding";   //生成文件所在项目路径
     private static final String BASE_PACKAGE = "com.lh.modules";      //基本包名
-    private static final String MODEL_NAME = "teqst";                         //文件夹名
+    private static final String MODEL_NAME = "sysLog";                         //文件夹名
     private static final String AUTHOR = "xieyc";                    //作者
-    private static final String[] TABLES = {"test"};             //要生成的表名
+    private static final String[] TABLES = {"sys_log"};             //要生成的表名
 
     //数据库配置四要素
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";

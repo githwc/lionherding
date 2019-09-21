@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lh.common.constant.CommonConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -34,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    public static final String SESSION_CURRENT_USER = "SYSUSER";
 
     /**
      * @TableId:
@@ -153,7 +152,7 @@ public class SysUser implements Serializable {
     @JsonIgnore
     @Transient
     public static SysUser getCurrentUser(HttpServletRequest request) {
-        Object object = request.getSession().getAttribute(SESSION_CURRENT_USER);
+        Object object = request.getSession().getAttribute(CommonConstant.SESSION_CURRENT_USER);
         return object != null ? (SysUser) object : null;
     }
 

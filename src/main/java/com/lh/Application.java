@@ -35,7 +35,7 @@ import org.springframework.core.env.Environment;
 @EnableCaching
 @Slf4j
 public class Application {
-
+    // todo 1 json转换
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
 	public static void main(String[] args) {

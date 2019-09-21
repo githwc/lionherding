@@ -1,5 +1,6 @@
 package com.lh.common.log;
 
+import com.lh.common.constant.CommonConstant;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -37,7 +39,7 @@ public class LogAspect {
 	@AfterReturning("(within(com.lh..*) || within(org.framework.plugins..*)) && @annotation(log)")
 	public void addLogSuccess(JoinPoint jp, WriteLog log) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_SUCCESS);
+		service.write(request, log.opPosition(), log.optype(),log.logType(), jp.getSignature().getDeclaringTypeName(), CommonConstant.OPSTATE_SUCCESS);
 	}
 
     /**
@@ -47,9 +49,9 @@ public class LogAspect {
      * @Return:
      */
 	@AfterThrowing(pointcut="(within(com.lh..*) || within(org.framework.plugins..*)) && @annotation(log)", throwing="ex")
-	public void addLog(JoinPoint jp, WriteLog log, Exception ex) {
+	public void addLogFail(JoinPoint jp, WriteLog log, Exception ex) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		service.write(request, log.mName(), log.optype(), SystemLogService.OPSTATE_FAILURE, ex);
+		service.write(request, log.opPosition(), log.optype(), log.logType(),jp.getSignature().getDeclaringTypeName(), CommonConstant.OPSTATE_FAILURE, ex);
 	}
 
 }

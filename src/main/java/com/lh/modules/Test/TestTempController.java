@@ -1,5 +1,7 @@
 package com.lh.modules.Test;
 
+import com.lh.common.log.SystemLogService;
+import com.lh.common.log.WriteLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -28,8 +30,10 @@ public class TestTempController {
 
 
     @RequestMapping("/test")
+    @WriteLog(opPosition = "测试日志点" ,optype = SystemLogService.OPTYPE_READ)
     public String test(){
         return "test";
+
     }
 
     @RequestMapping("/add")
@@ -53,6 +57,7 @@ public class TestTempController {
     }
 
     @RequestMapping("/login")
+    @WriteLog(opPosition = "登录系统" ,optype = SystemLogService.OPTYPE_READ)
     public String login(String name, String password, Model model){
         // 获取Subject
         Subject subject = SecurityUtils.getSubject();
