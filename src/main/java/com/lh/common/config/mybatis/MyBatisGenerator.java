@@ -54,8 +54,8 @@ public class MyBatisGenerator {
                 .setOpen(false)                                 // 生成后打开文件夹
                 // .setActiveRecord(true)                          // 开启 activeRecord 模式
                 .setEnableCache(false)                          // XML 二级缓存
-                .setBaseResultMap(true)                         // XML 生成基本的resultMap
-                .setBaseColumnList(true)                        // XML 生成基本的sql片段
+                .setBaseResultMap(false)                         // XML 生成基本的resultMap
+                .setBaseColumnList(false)                        // XML 生成基本的sql片段
                 // 自定义文件命名,%s会自动填充表实体属性！默认IXXXService
                 .setMapperName("%sMapper")
                 .setXmlName("%sMapper")
