@@ -67,12 +67,30 @@ public class SysDepart implements Serializable {
      * 状态(0启用 1不启用 2 删除)
      */
     private Integer state;
+    /**
+     * 排序
+     */
     private Integer sort;
+    /**
+     * 备注
+     */
     private String remark;
+    /**
+     * 创建人
+     */
     private String createId;
-    private LocalDateTime createDate;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+    /**
+     * 修改人
+     */
     private String updateId;
-    private LocalDateTime updateDate;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
 
 
     /////////////////////////////// 非表字段 ///////////////////////////////

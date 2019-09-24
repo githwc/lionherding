@@ -120,18 +120,29 @@ public class SysUser implements Serializable {
      */
     private Integer toDayLoginCount;
     /**
+     * 首次登录时间
+     */
+    private LocalDateTime firstLoginTime;
+    /**
+     * 最后一次登录时间
+     */
+    private LocalDateTime lastLoginTime;
+    /**
      * 创建人
      */
     private String createId;
     /**
      * 创建时间
      */
-    private LocalDateTime createDate;
+    private LocalDateTime createTime;
     /**
-     * 建人
+     * 修改人
      */
     private String updateId;
-    private LocalDateTime updateDate;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
     /**
      * 序号
      */

@@ -27,15 +27,38 @@ public class SysDictionary implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(value = "sys_dictionary_id", type = IdType.UUID)
     private String sysDictionaryId;
+    /**
+     * 父级ID
+     */
     private String parentId;
+    /**
+     * 字典项文本
+     */
     private String key;
+    /**
+     * 字典项值
+     */
     private String value;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 状态(0启用 1不启用)
+     */
+    private Integer state;
+    /**
+     * 排序
+     */
     private Integer sort;
     /**
      * 创建人
      */
     private String createId;
-    private LocalDateTime createDate;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
     /**
      * 修改人
      */
@@ -43,7 +66,7 @@ public class SysDictionary implements Serializable {
     /**
      * 修改时间
      */
-    private LocalDateTime updateDate;
+    private LocalDateTime updateTime;
 
 
     /////////////////////////////// 非表字段 ///////////////////////////////

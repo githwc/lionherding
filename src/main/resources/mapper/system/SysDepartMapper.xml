@@ -2,30 +2,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lh.system.mapper.SysDepartMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lh.system.entity.SysDepart">
-        <id column="sys_depart_id" property="sysDepartId" />
-        <result column="parent_id" property="parentId" />
-        <result column="depart_name" property="departName" />
-        <result column="short_name" property="shortName" />
-        <result column="manager_id" property="managerId" />
-        <result column="telephone" property="telephone" />
-        <result column="address" property="address" />
-        <result column="org_type" property="orgType" />
-        <result column="unique_coding" property="uniqueCoding" />
-        <result column="admin_level" property="adminLevel" />
-        <result column="state" property="state" />
-        <result column="sort" property="sort" />
-        <result column="remark" property="remark" />
-        <result column="create_id" property="createId" />
-        <result column="create_date" property="createDate" />
-        <result column="update_id" property="updateId" />
-        <result column="update_date" property="updateDate" />
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        sys_depart_id, parent_id, depart_name, short_name, manager_id, telephone, address, org_type, unique_coding, admin_level, state, sort, remark, create_id, create_date, update_id, update_date
-    </sql>
-
 </mapper>

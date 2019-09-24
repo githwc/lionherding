@@ -2,10 +2,11 @@ package com.lh.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * 功能描述：
@@ -34,7 +35,6 @@ public class SysRolePermission implements Serializable {
      * 权限id
      */
     private String permissionId;
-    private String dataRuleIds;
 
 
     /////////////////////////////// 非表字段 ///////////////////////////////

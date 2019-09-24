@@ -51,7 +51,7 @@ public class SysRole implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createDate;
+    private LocalDateTime createTime;
     /**
      * 修改人
      */
@@ -59,7 +59,7 @@ public class SysRole implements Serializable {
     /**
      * 修改时间
      */
-    private LocalDateTime updateDate;
+    private LocalDateTime updateTime;
 
 
     /////////////////////////////// 非表字段 ///////////////////////////////

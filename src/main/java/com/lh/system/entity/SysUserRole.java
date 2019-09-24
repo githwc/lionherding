@@ -26,7 +26,13 @@ public class SysUserRole implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(value = "sys_user_role_id", type = IdType.UUID)
     private String sysUserRoleId;
+    /**
+     * 角色ID
+     */
     private String roleId;
+    /**
+     * 用户ID
+     */
     private String userId;
 
 

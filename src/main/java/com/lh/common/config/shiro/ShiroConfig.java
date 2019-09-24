@@ -37,24 +37,28 @@ public class ShiroConfig {
      *      user: 需要认证或通过记住我认证才能访问
      *      perms:必须得到资源权限才可以访问
      *      roles:必须得到角色权限才可以访问
-     *
      */
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        // 放行
-        filterChainDefinitionMap.put("/test","anon");
-        filterChainDefinitionMap.put("/login","anon");
+        // 配置不会被拦截的链接 顺序判断
+        filterChainDefinitionMap.put("/sys/login", "anon"); //登录接口
+        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger**/**", "anon");
+
+        filterChainDefinitionMap.put("/test","anon");   //Temp APi
+        filterChainDefinitionMap.put("/login","anon");  //Temp APi
 
         //权限访问
         filterChainDefinitionMap.put("/add","perms[hr:BaseSettings]");
 
         //认证后可访问
-        // filterChainDefinitionMap.put("/add","authc");
-        // filterChainDefinitionMap.put("/update","authc");
         filterChainDefinitionMap.put("/*","authc");
+        filterChainDefinitionMap.put("/add","authc");   // Temp API
+        filterChainDefinitionMap.put("/update","authc");    //Temp API
 
         //设置默认登录页面
         shiroFilterFactoryBean.setLoginUrl("/toLogin");
