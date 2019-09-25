@@ -33,7 +33,7 @@ public class SysLog implements Serializable {
      */
     private Integer opType;
     /**
-     * 日志类型(0.操作日志 1.登录日志 2.定时任务）
+     * 日志类型(0.操作日志 1.登录登出日志 2.定时任务）
      */
     private Integer logType;
     /**

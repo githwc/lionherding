@@ -112,7 +112,7 @@ public class SysUser implements Serializable {
     /**
      * 今日登录次数
      */
-    private Integer toDayLoginCount;
+    private Integer todayLoginCount;
     /**
      * 首次登录时间
      */

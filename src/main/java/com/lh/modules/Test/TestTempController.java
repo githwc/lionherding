@@ -96,7 +96,6 @@ public class TestTempController {
         SysUser sysUser = new SysUser();
         sysUser = iSysUserService.getUserByName(name);
         if(sysUser==null) {
-            sysLogService.addLog("登录失败，用户名:"+name+"不存在！", CommonConstant.LOG_TYPE_1, 3);
             throw new UserLoginNameException("该用户不存在！");
         }else {
             // 密码验证
@@ -115,7 +114,6 @@ public class TestTempController {
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
 
-            sysLogService.addLog("用户名: "+name+",登录成功！", CommonConstant.LOG_TYPE_1, 3);
             return jsonObject;
         }
     }

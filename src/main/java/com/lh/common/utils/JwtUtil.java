@@ -60,7 +60,7 @@ public class JwtUtil {
 	public static String getUsername(String token) {
 		try {
 			DecodedJWT jwt = JWT.decode(token);
-			return jwt.getClaim("username").asString();
+			return jwt.getClaim("loginName").asString();
 		} catch (JWTDecodeException e) {
 			return null;
 		}

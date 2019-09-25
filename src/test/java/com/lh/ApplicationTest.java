@@ -1,5 +1,6 @@
 package com.lh;
 
+import com.lh.system.entity.SysUser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
 import javax.sql.ConnectionEvent;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -26,9 +28,9 @@ import java.util.Map;
  *  @SpringBootTest：指明这是一个测试用例
  *  @WebAppConfiguration：
  */
-@RunWith(SpringRunner.class)
+// @RunWith(SpringRunner.class)
 @SpringBootTest
-@WebAppConfiguration
+// @WebAppConfiguration
 public class ApplicationTest {
 
     @Autowired
@@ -70,6 +72,18 @@ public class ApplicationTest {
         Connection connection = dataSource.getConnection();
         System.out.println(dataSource);
         connection.close();
+    }
+
+
+    @Test
+    public void test21() throws Exception {
+        SysUser sysUser = new SysUser();
+        sysUser.setLastLoginTime(LocalDateTime.now());
+        if (sysUser.getLastLoginTime().toString().substring(0, 10).equalsIgnoreCase(LocalDateTime.now().toString().substring(0, 10))) {
+
+            System.out.println("当前类======ApplicationTest.test21()hahahahhahahahhahaha");
+        }
+        System.out.println("当前类======ApplicationTest.test21()"+ sysUser.getLastLoginTime().toString().substring(0,10));
     }
 
 

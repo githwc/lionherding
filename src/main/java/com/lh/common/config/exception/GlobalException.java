@@ -2,13 +2,15 @@ package com.lh.common.config.exception;
 
 import com.lh.common.config.response.ResponseBean;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 功能描述：
+ * 功能描述：自定义异常
+ *      ExceptionHandler: 指定拦截的异常
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -21,12 +23,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalException {
 
-    /**
-     * 拦截捕捉自定义异常
-     *  ExceptionHandler: 指定拦截的异常
-     * @param e
-     * @return
-     */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(ApiException.class)
     public Object myErrorHandlerException(ApiException e) {

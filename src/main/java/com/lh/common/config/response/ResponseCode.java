@@ -72,6 +72,11 @@ public class ResponseCode {
     public static final int USER_NO_EXIST_EXCEPTION = 10005 ;
 
     /**
+     * Token 为空
+     */
+    public static final int TOKEN_IS_NULL_EXCEPTION = 10006 ;
+
+    /**
      * 结果集错误
      */
     public static final int RESULT_EXCEPTION = 10300;

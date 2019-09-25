@@ -31,21 +31,18 @@ import java.time.LocalDateTime;
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
     @Override
-    public void addLog(String LogContent, Integer logType, Integer opType) {
+    public void addLog(String LogContent, Integer logType, String requestMethod,String requestParams) {
         SysLog sysLog = new SysLog();
         sysLog.setLogContent(LogContent);
         sysLog.setLogType(logType);
-        sysLog.setOpType(opType);
-        //请求的方法名
-        //请求的参数
+        sysLog.setRequestMethod(requestMethod);
+        sysLog.setRequestParam(requestParams);
         try {
-            //获取request
             HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
             sysLog.setIpAdress(LocalHostUtil.getIpAddress(request));
         } catch (Exception e) {
             sysLog.setIpAdress("异常地址");
         }
-
         //获取登录用户信息
         SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
         if(sysUser!=null){

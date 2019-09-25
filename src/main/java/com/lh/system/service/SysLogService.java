@@ -21,8 +21,9 @@ public interface SysLogService extends IService<SysLog> {
      * 日志添加
      * @param LogContent 内容
      * @param logType  日志类型(0.操作日志 1.登录日志 2.定时任务）
-     * @param opType 操作类型(0:增 1：删  2：改 3：查)
+     * @param requestMethod 请求方法
+     * @param params 请求参数
      */
-    void addLog(String LogContent, Integer logType, Integer opType);
+    void addLog(String LogContent, Integer logType, String requestMethod,String requestParams);
 
 }

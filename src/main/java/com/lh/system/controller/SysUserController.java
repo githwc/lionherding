@@ -7,18 +7,19 @@ import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.common.utils.JwtUtil;
 import com.lh.common.utils.RedisUtil;
-import com.lh.system.entity.SysDepart;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -52,66 +53,50 @@ public class SysUserController {
         String password = sysUser.getPassword();
         sysUser = iSysUserService.getUserByName(username);
         if(sysUser==null) {
-            sysLogService.addLog("登录失败，用户名:"+username+"不存在！", CommonConstant.LOG_TYPE_1, 3);
+            sysLogService.addLog("登录失败，用户名:"+username+"不存在！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
             throw new UserLoginNameException("该用户不存在！");
         }else {
             // 密码验证
             String userpassword = EncoderUtil.encrypt(username, password, sysUser.getLoginName());
             String syspassword = sysUser.getPassword();
-            // if(!syspassword.equals(userpassword)) {
-            //     sysLogService.addLog("登录失败，用户:"+username+"密码输入错误！", CommonConstant.LOG_TYPE_1, 3);
-            //     throw new UserPasswordException("密码错误！");
-            // }
+            if(!syspassword.equals(userpassword)) {
+                sysLogService.addLog("登录失败，用户:"+username+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
+                throw new UserPasswordException("密码错误！");
+            }
             JSONObject jsonObject = new JSONObject();
-            //生成token
+            // 生成token
             String token = JwtUtil.sign(username, syspassword);
             RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
-            //设置超时时间
+            // 设置超时时间
             RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
-
-            sysLogService.addLog("用户名: "+username+",登录成功！", CommonConstant.LOG_TYPE_1, 3);
+            iSysUserService.dealUser(sysUser);  // 记录登录数据
+            sysLogService.addLog("用户名: "+username+",登录成功！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
             return jsonObject;
         }
     }
-    /**
-    * @Description:
-    * @param:
-    * @return:
-    */
-    @GetMapping("/{id}")
-    @ApiOperation(value = "根据主键ID查询",  notes = "根据主键ID查询")
-    public SysUser getSysUserById(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
-        return null;
-    }
 
     /**
-    * @Description:
-    * @param:
-    * @return:
-    */
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "根据主键ID删除",  notes = "根据主键ID删除")
-    public int delete(@ApiParam(required = true, name = "id",value = "主键ID")@PathVariable("id") String id){
-       return 0;
+     * 退出登录
+     * @return
+     */
+    @GetMapping(value = "/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        //用户退出逻辑
+        Subject subject = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser)subject.getPrincipal();
+        sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
+        subject.logout();
+
+        String token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
+        //清空用户Token缓存
+        RedisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
+        //清空用户权限缓存：权限Perms和角色集合
+        RedisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
+        RedisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
     }
 
-    /**
-    * @Description:
-    * @param
-    * @return  0 失败  1 成功
-    */
-    @PostMapping("/createAndUpdate")
-    @ApiOperation(value = "保存和修改公用API", notes = "保存和修改公用API")
-    public int createAndUpdate(SysUser sysUser) {
-       int count = 0;
-       try {
-           count = iSysUserService.insertOrUpdate(sysUser) ? 1 : 0;
-       } catch (Exception e) {
-           log.error("sysUserSave -=- {}",e.toString());
-       }
-       return count;
-    }
+
 
 }

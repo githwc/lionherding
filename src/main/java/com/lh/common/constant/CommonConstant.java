@@ -19,7 +19,7 @@ public class CommonConstant {
     public static final int  LOG_TYPE_0 = 0;
 
     /**
-     * 系统日志类型： 登录
+     * 系统日志类型： 登录 & 登出
      */
     public static final int LOG_TYPE_1 = 1;
 
@@ -56,6 +56,16 @@ public class CommonConstant {
 
     //================== 系统日志 END ===========================
 
-
+    // ================== 凭证相关 START ===========================
     public static String PREFIX_USER_TOKEN  = "PREFIX_USER_TOKEN_";
+
+    public static String X_ACCESS_TOKEN = "X-Access-Token";
+
+    /** 登录用户拥有角色缓存KEY前缀 */
+    public static String LOGIN_USER_CACHERULES_ROLE = "loginUser_cacheRules::Roles_";
+
+    /** 登录用户拥有权限缓存KEY前缀 */
+    public static String LOGIN_USER_CACHERULES_PERMISSION  = "loginUser_cacheRules::Permissions_";
+
+    // ================== 凭证相关 END ===========================
 }

@@ -19,9 +19,17 @@ import java.util.Set;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    boolean insertOrUpdate(SysUser iSysUser);
-
+    /**
+     * 根据账号查询用户
+     * @param loginName
+     * @return
+     */
     SysUser getUserByName(String loginName);
+
+    /**
+     * 处理用户数据
+     */
+    void dealUser(SysUser sysUser);
 
     Set<String> getUserRoles(String loginName);
 

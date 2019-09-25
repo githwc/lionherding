@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,15 +41,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysPermissionMapper sysPermissionMapper;
 
     @Override
-    public boolean insertOrUpdate(SysUser iSysUser) {
-        boolean result = false;
-        return result;
-    }
-
-    @Override
     public SysUser getUserByName(String loginName) {
         return this.baseMapper.selectOne(new QueryWrapper<SysUser>()
                 .eq("login_name",loginName));
+    }
+
+    @Override
+    public void dealUser(SysUser sysUser) {
+        // todo 验证此处几个参数是否准确
+        sysUser.setLoginCount(sysUser.getLoginCount()+1);
+        if(BasisUtil.isNotEmpty(sysUser.getLastLoginTime())){
+            if(!sysUser.getLastLoginTime().toString().substring(0,10)
+                    .equalsIgnoreCase(LocalDateTime.now().toString().substring(0,10))){// 判断上一次登录时间是当前时间的前一天或更多天则证明今天没登陆过
+                sysUser.setTodayLoginCount(1);
+            }else{
+                sysUser.setTodayLoginCount(sysUser.getTodayLoginCount()+1);
+            }
+        }else{
+            sysUser.setTodayLoginCount(1);
+        }
+        if(BasisUtil.isEmpty(sysUser.getFirstLoginTime())){
+            sysUser.setFirstLoginTime(LocalDateTime.now());
+        }
+        sysUser.setLastLoginTime(LocalDateTime.now());
+        this.baseMapper.updateById(sysUser);
     }
 
     @Override
