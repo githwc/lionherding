@@ -1,7 +1,8 @@
-package com.lh.common.response;
+package com.lh.common.config.response;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lh.common.utils.ResultUtils;
 
 import java.util.HashMap;
 
@@ -35,14 +36,14 @@ public class ResponseBean extends HashMap<String,Object> {
 
     public static ResponseBean success(String msg, Object... params) {
         ResponseBean error = new ResponseBean();
-        error.put("msg", ResponseUtils.formatMsg(msg, params));
+        error.put("msg", ResultUtils.formatMsg(msg, params));
         return error;
     }
 
     public static ResponseBean error(int code, String msg, Object... params) {
         ResponseBean e = new ResponseBean();
         e.put("code", code);
-        e.put("msg", ResponseUtils.formatMsg(msg, params));
+        e.put("msg", ResultUtils.formatMsg(msg, params));
         return e;
     }
 

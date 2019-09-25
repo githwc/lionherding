@@ -1,4 +1,4 @@
-package com.lh.common.response;
+package com.lh.common.config.response;
 
 public class JeecgBootException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.lh.common.response;
+package com.lh.common.config.response;
 
 /**
  * 功能描述：编码类型

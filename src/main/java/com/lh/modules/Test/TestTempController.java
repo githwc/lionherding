@@ -1,7 +1,9 @@
 package com.lh.modules.Test;
 
+import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.log.SystemLogService;
 import com.lh.common.log.WriteLog;
+import com.sun.xml.internal.ws.handler.HandlerException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -32,8 +34,8 @@ public class TestTempController {
     @RequestMapping("/test")
     @WriteLog(opPosition = "测试日志点" ,optype = SystemLogService.OPTYPE_READ)
     public String test(){
-        return "test";
-
+        throw new ParameterException("哈哈哈，错了");
+        // return "test";
     }
 
     @RequestMapping("/add")

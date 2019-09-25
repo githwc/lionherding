@@ -1,4 +1,4 @@
-package com.lh.common.response;
+package com.lh.common.config.response;
 
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
