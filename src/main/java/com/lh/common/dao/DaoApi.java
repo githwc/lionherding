@@ -1,7 +1,9 @@
 package com.lh.common.dao;
 
+import com.lh.system.entity.SysUser;
+
 /**
- * 功能描述：Interface - DAO data layer operation
+ * 功能描述：Interface - DAO data operation layer
  *
  * <p>
  * <p>版权所有：</p>
@@ -16,10 +18,9 @@ package com.lh.common.dao;
 public interface DaoApi {
 
     /**
-     * @Description:创建主键
-     * @Date: 2019/5/31 14:16
-     * @Param:
-     * @Return:New UUID
+     * 获取当前用户
+     * @return
      */
-    String getUUID();
+    SysUser getCurrentUser();
+
 }

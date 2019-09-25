@@ -1,11 +1,12 @@
 package com.lh.common.dao;
 
+import com.lh.system.entity.SysUser;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 功能描述：implements - DAO data layer operation
+ * 功能描述：implements - DAO data operation layer
  * <p>
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -16,10 +17,11 @@ import java.util.UUID;
  * @Version: 1.0.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class DaoFactory implements DaoApi {
 
     @Override
-    public synchronized String getUUID() {
-       return (UUID.randomUUID().toString()).replace("-", "");
+    public SysUser getCurrentUser() {
+        return (SysUser) SecurityUtils.getSubject().getPrincipal();
     }
 }

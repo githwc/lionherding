@@ -1,9 +1,15 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.common.config.exception.userException.UserLoginNameException;
+import com.lh.common.config.exception.userException.UserPasswordException;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.utils.EncoderUtil;
+import com.lh.common.utils.JwtUtil;
+import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysDepart;
 import com.lh.system.entity.SysUser;
+import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +22,7 @@ import java.util.List;
 
 /**
  *
- * 功能描述：
+ * 功能描述：系统用户 Controller
  *
  *  <p>版权所有：</p>
  *  未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -36,51 +42,38 @@ public class SysUserController {
     @Autowired
     public SysUserService iSysUserService;
 
+    @Autowired
+    public SysLogService sysLogService;
+
     @PostMapping("/login")
     @ApiOperation(value = "用户登录",notes = "用户登录")
-    public SysUser login(@RequestBody SysUser sysUser){
-        // Result<JSONObject> result = new Result<JSONObject>();
-        // String username = sysUser.getLoginName();
-        // String password = sysUser.getPassword();
-        // sysUser = iSysUserService.getUserByName(username);
-        // if(sysUser==null) {
-        //     result.error500("该用户不存在");
-        //     sysBaseAPI.addLog("登录失败，用户名:"+username+"不存在！", CommonConstant.LOG_TYPE_1, null);
-        //     return result;
-        // }else {
-        //     //密码验证
-        //     String userpassword = PasswordUtil.encrypt(username, password, sysUser.getSalt());
-        //     String syspassword = sysUser.getPassword();
-        //     if(!syspassword.equals(userpassword)) {
-        //         result.error500("用户名或密码错误");
-        //         return result;
-        //     }
-        //     //生成token
-        //     String token = JwtUtil.sign(username, syspassword);
-        //     redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
-        //     //设置超时时间
-        //     redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
-        //
-        //     //获取用户部门信息
-        //     JSONObject obj = new JSONObject();
-        //     List<SysDepart> departs = sysDepartService.queryUserDeparts(sysUser.getId());
-        //     obj.put("departs",departs);
-        //     if(departs==null || departs.size()==0) {
-        //         obj.put("multi_depart",0);
-        //     }else if(departs.size()==1){
-        //         sysUserService.updateUserDepart(username, departs.get(0).getOrgCode());
-        //         obj.put("multi_depart",1);
-        //     }else {
-        //         obj.put("multi_depart",2);
-        //     }
-        //     obj.put("token", token);
-        //     obj.put("userInfo", sysUser);
-        //     result.setResult(obj);
-        //     result.success("登录成功");
-        //     sysBaseAPI.addLog("用户名: "+username+",登录成功！", CommonConstant.LOG_TYPE_1, null);
-        // }
-        // return result;
-        return null;
+    public JSONObject login(@RequestBody SysUser sysUser){
+        String username = sysUser.getLoginName();
+        String password = sysUser.getPassword();
+        sysUser = iSysUserService.getUserByName(username);
+        if(sysUser==null) {
+            sysLogService.addLog("登录失败，用户名:"+username+"不存在！", CommonConstant.LOG_TYPE_1, 3);
+            throw new UserLoginNameException("该用户不存在！");
+        }else {
+            // 密码验证
+            String userpassword = EncoderUtil.encrypt(username, password, sysUser.getLoginName());
+            String syspassword = sysUser.getPassword();
+            // if(!syspassword.equals(userpassword)) {
+            //     sysLogService.addLog("登录失败，用户:"+username+"密码输入错误！", CommonConstant.LOG_TYPE_1, 3);
+            //     throw new UserPasswordException("密码错误！");
+            // }
+            JSONObject jsonObject = new JSONObject();
+            //生成token
+            String token = JwtUtil.sign(username, syspassword);
+            RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
+            //设置超时时间
+            RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
+            jsonObject.put("token", token);
+            jsonObject.put("userInfo", sysUser);
+
+            sysLogService.addLog("用户名: "+username+",登录成功！", CommonConstant.LOG_TYPE_1, 3);
+            return jsonObject;
+        }
     }
     /**
     * @Description:

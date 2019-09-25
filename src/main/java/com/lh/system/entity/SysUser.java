@@ -1,20 +1,14 @@
 package com.lh.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lh.common.constant.CommonConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Transient;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 功能描述：
@@ -159,13 +153,6 @@ public class SysUser implements Serializable {
      * 所属部门
      */
     private String departId;
-
-    @JsonIgnore
-    @Transient
-    public static SysUser getCurrentUser(HttpServletRequest request) {
-        Object object = request.getSession().getAttribute(CommonConstant.SESSION_CURRENT_USER);
-        return object != null ? (SysUser) object : null;
-    }
 
     /////////////////////////////// 非表字段 ///////////////////////////////
 

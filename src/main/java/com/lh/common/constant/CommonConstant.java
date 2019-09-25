@@ -12,11 +12,7 @@ package com.lh.common.constant;
  */
 public class CommonConstant {
 
-    /**
-     * 当前在线用户
-     */
-    public static final String SESSION_CURRENT_USER = "SYSUSER";
-
+    // =============== 系统日志 START ====================
     /**
      * 系统日志类型： 操作
      */
@@ -40,4 +36,26 @@ public class CommonConstant {
      * 系统日志操作结果 失败
      */
     public final static int OPSTATE_FAILURE = 1;
+
+    /**
+     * 系统日志操作类型 增加
+     */
+    public final static int OPTYPE_CREATE = 0;
+    /**
+     * 系统日志操作类型 删除
+     */
+    public final static int OPTYPE_DELETE = 1;
+    /**
+     * 系统日志操作类型 修改
+     */
+    public final static int OPTYPE_UPDATE = 2;
+    /**
+     * 系统日志操作类型 读取
+     */
+    public final static int OPTYPE_READ   = 3;
+
+    //================== 系统日志 END ===========================
+
+
+    public static String PREFIX_USER_TOKEN  = "PREFIX_USER_TOKEN_";
 }

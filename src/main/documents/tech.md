@@ -71,3 +71,10 @@
         即便使用tomcat服务器，System.out会输出到catalina.out文件，catalina.out文件也不会一直存在，需要定期清空，
         如果不清空，大文件的读写也是挺影响性能的。说到这里，System.out.print写入的文件只有一个，对于一个文件的读写，
         这个io肯定会排队写，且System.out.print在当前线程，肯定对性能会有稍微的影响。程序中充斥着大量的System.out.print打印代码是相当不规范的。
+四、异常
+    通过@RestControllerAdvice 和 @ExceptionHandler 自定义异常
+    使用方式:throw new ParameterException("错误内容")
+五、druid
+    安全框架中配置不拦截规则,通过访问项目路径/druid 进入
+六、swagger2
+    安全框架中配置不拦截规则,通过访问项目路径/swagger-ui.html进入    

@@ -1,19 +1,26 @@
 package com.lh.modules.Test;
 
-import com.lh.common.config.exception.parameterException.ParameterException;
-import com.lh.common.log.SystemLogService;
+import com.alibaba.fastjson.JSONObject;
+import com.lh.common.config.exception.userException.UserLoginNameException;
+import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
-import com.sun.xml.internal.ws.handler.HandlerException;
+import com.lh.common.utils.EncoderUtil;
+import com.lh.common.utils.JwtUtil;
+import com.lh.common.utils.RedisUtil;
+import com.lh.system.entity.SysUser;
+import com.lh.system.service.SysLogService;
+import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 功能描述：
@@ -22,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: 紫色年华
- * @Author:   xie
+ * @Author:   xieyc
  * @Datetime: 2019-09-18 14:01
  * @Version: 1.0.0
  */
@@ -30,12 +37,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(tags="测试接口")
 public class TestTempController {
 
+    @Autowired
+    public SysUserService iSysUserService;
+
+    @Autowired
+    public SysLogService sysLogService;
 
     @RequestMapping("/test")
-    @WriteLog(opPosition = "测试日志点" ,optype = SystemLogService.OPTYPE_READ)
+    @WriteLog(opPosition = "测试日志点" ,optype = CommonConstant.OPTYPE_READ)
     public String test(){
-        throw new ParameterException("哈哈哈，错了");
-        // return "test";
+        return "test";
     }
 
     @RequestMapping("/add")
@@ -59,7 +70,7 @@ public class TestTempController {
     }
 
     @RequestMapping("/login")
-    @WriteLog(opPosition = "登录系统" ,optype = SystemLogService.OPTYPE_READ)
+    @WriteLog(opPosition = "登录系统" ,optype = CommonConstant.OPTYPE_READ)
     public String login(String name, String password, Model model){
         // 获取Subject
         Subject subject = SecurityUtils.getSubject();
@@ -77,5 +88,38 @@ public class TestTempController {
             return "login";
         }
     }
+
+    @RequestMapping("/login2")
+    @ResponseBody
+    @WriteLog(opPosition = "登录系统" ,optype = CommonConstant.OPTYPE_READ)
+    public JSONObject login2(String name, String password, Model model){
+        SysUser sysUser = new SysUser();
+        sysUser = iSysUserService.getUserByName(name);
+        if(sysUser==null) {
+            sysLogService.addLog("登录失败，用户名:"+name+"不存在！", CommonConstant.LOG_TYPE_1, 3);
+            throw new UserLoginNameException("该用户不存在！");
+        }else {
+            // 密码验证
+            String userpassword = EncoderUtil.encrypt(name, password, sysUser.getLoginName());
+            String syspassword = sysUser.getPassword();
+            // if(!syspassword.equals(userpassword)) {
+            //     sysLogService.addLog("登录失败，用户:"+username+"密码输入错误！", CommonConstant.LOG_TYPE_1, 3);
+            //     throw new UserPasswordException("密码错误！");
+            // }
+            JSONObject jsonObject = new JSONObject();
+            //生成token
+            String token = JwtUtil.sign(name, syspassword);
+            RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
+            //设置超时时间
+            RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
+            jsonObject.put("token", token);
+            jsonObject.put("userInfo", sysUser);
+
+            sysLogService.addLog("用户名: "+name+",登录成功！", CommonConstant.LOG_TYPE_1, 3);
+            return jsonObject;
+        }
+    }
+
+
 
 }

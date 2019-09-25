@@ -78,7 +78,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("后台管理服务API")
-                .description("后台管理服务API文档说明")
+                .description("后台管理服务Restful风格API文档")
                 .version("1.0")
                 .build();
     }

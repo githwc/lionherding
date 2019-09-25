@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 功能描述：
  * <p>版权所有：</p>
@@ -26,13 +23,13 @@ public class GlobalException {
 
     /**
      * 拦截捕捉自定义异常
-     *
+     *  ExceptionHandler: 指定拦截的异常
      * @param e
      * @return
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(ApiException.class)
-    public Object handleAppException(ApiException e) {
+    public Object myErrorHandlerException(ApiException e) {
         ResponseBean response = ResponseBean.error(e.getCode(), e.getMsg());
         log.error("error : {}", response.toJSONString(), e);
         return response;

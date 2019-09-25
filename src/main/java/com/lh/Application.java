@@ -32,7 +32,6 @@ import org.springframework.core.env.Environment;
  */
 @SpringBootApplication
 @MapperScan({"com.lh.system.mapper", "com.lh.modules.*.mapper"})
-@EnableCaching
 @Slf4j
 public class Application {
 

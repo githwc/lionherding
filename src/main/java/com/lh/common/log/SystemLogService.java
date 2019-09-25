@@ -1,5 +1,6 @@
 package com.lh.common.log;
 
+import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.LocalHostUtil;
 import com.lh.system.entity.SysLog;
@@ -7,13 +8,11 @@ import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  *
@@ -30,26 +29,11 @@ import java.util.Map;
 @Slf4j
 public class SystemLogService {
 
-    /**
-     * 操作类型 增加
-     */
-    public final static int OPTYPE_CREATE = 0;
-    /**
-     * 操作类型 删除
-     */
-    public final static int OPTYPE_DELETE = 1;
-    /**
-     * 操作类型 修改
-     */
-    public final static int OPTYPE_UPDATE = 2;
-    /**
-     * 操作类型 读取
-     */
-    public final static int OPTYPE_READ   = 3;
-
-
     @Autowired
     private SysLogMapper sysLogMapper;
+
+    @Autowired
+    private DaoApi daoApi;
 
     /**
      * @Description:方法重写：仅仅记录用户系统操作日志，不进行系统文件日志写入
@@ -63,7 +47,7 @@ public class SystemLogService {
     public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
         String requestParams = JSONObject.fromObject(request.getParameterMap()).toString();
-        return write(SysUser.getCurrentUser(request), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
+        return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
     }
 
     /**
@@ -81,7 +65,7 @@ public class SystemLogService {
         log.error(message, ex);
         //将系统异常信息写入文件日志中后，写用户系统操作日志，返回日志操作状态
         String requestParams = JSONObject.fromObject(request.getParameterMap()).toString();
-        return write(SysUser.getCurrentUser(request), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
+        return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
     }
 
     /**

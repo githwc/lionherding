@@ -51,6 +51,7 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/test","anon");   //Temp APi
         filterChainDefinitionMap.put("/login","anon");  //Temp APi
+        filterChainDefinitionMap.put("/login2","anon");  //Temp APi
 
         //权限访问
         filterChainDefinitionMap.put("/add","perms[hr:BaseSettings]");

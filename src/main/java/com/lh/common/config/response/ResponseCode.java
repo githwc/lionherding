@@ -67,6 +67,11 @@ public class ResponseCode {
     public static final int USER_DISABLE_EXCEPTION = 10004 ;
 
     /**
+     * 用户不存在
+     */
+    public static final int USER_NO_EXIST_EXCEPTION = 10005 ;
+
+    /**
      * 结果集错误
      */
     public static final int RESULT_EXCEPTION = 10300;
