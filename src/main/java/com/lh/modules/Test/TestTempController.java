@@ -43,6 +43,9 @@ public class TestTempController {
     @Autowired
     public SysLogService sysLogService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @RequestMapping("/test")
     @WriteLog(opPosition = "测试日志点" ,optype = CommonConstant.OPTYPE_READ)
     public String test(){
@@ -108,9 +111,9 @@ public class TestTempController {
             JSONObject jsonObject = new JSONObject();
             //生成token
             String token = JwtUtil.sign(name, syspassword);
-            RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
+            redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             //设置超时时间
-            RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
+            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
 

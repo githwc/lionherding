@@ -10,12 +10,14 @@ import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -40,6 +42,9 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private SysUserService sysUserService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 功能： 执行身份认证
@@ -120,9 +125,10 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 校验token是否超时失效 & 或者账号密码是否错误
-        if (!jwtTokenRefresh(token, loginName, sysUser.getPassword())) {
-            throw new TokenException("Token失效，请重新登录!");
-        }
+        // todo 暂时注释
+        // if (!jwtTokenRefresh(token, loginName, sysUser.getPassword())) {
+        //     throw new TokenException("Token失效，请重新登录!");
+        // }
 
         // 判断用户状态
         if (sysUser.getState() != 0) {
@@ -147,18 +153,18 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return
      */
     public boolean jwtTokenRefresh(String token, String userName, String passWord) {
-        String cacheToken = String.valueOf(RedisUtil.get(CommonConstant.PREFIX_USER_TOKEN + token));
+        String cacheToken = String.valueOf(redisUtil.get(CommonConstant.PREFIX_USER_TOKEN + token));
         if (BasisUtil.isNotEmpty(cacheToken)) {
             // 校验token有效性
             if (!JwtUtil.verifyToken(token, userName, passWord)) {
                 String newAuthorization = JwtUtil.sign(userName, passWord);
-                RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, newAuthorization);
+                redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, newAuthorization);
                 // 设置超时时间
-                RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
+                redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
             } else {
-                RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, cacheToken);
+                redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, cacheToken);
                 // 设置超时时间
-                RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
+                redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
             }
             return true;
         }

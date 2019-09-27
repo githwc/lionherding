@@ -3,7 +3,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
   servlet:
-    context-path: /lion-herding
+    context-path: /jeecg-boot
 spring:
   #=====DataBase 相关===========
   datasource:
@@ -51,6 +51,9 @@ spring:
     servlet:
       content-type: text/html
     mode: HTML5
+  #======静态资源相关 ===========
+  resource:
+    static-locations: classpath:/static/,classpath:/public/
   #=====日期格式相关=========
   #  mvc:
   #    date-format: yyyy-MM-dd
@@ -98,3 +101,11 @@ logging:
 #  security:
 #    browser:
 #      loginPage: /demo-sign.html
+
+#jeecg专用配置
+jeecg :
+  path :
+    #文件上传根目录 设置
+    upload: D://upFiles
+    #webapp文件路径
+    webapp: D://webapp

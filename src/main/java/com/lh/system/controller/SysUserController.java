@@ -2,7 +2,6 @@ package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lh.common.config.exception.userException.UserLoginNameException;
-import com.lh.common.config.exception.userException.UserPasswordException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.common.utils.JwtUtil;
@@ -46,33 +45,37 @@ public class SysUserController {
     @Autowired
     public SysLogService sysLogService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @PostMapping("/login")
     @ApiOperation(value = "用户登录",notes = "用户登录")
     public JSONObject login(@RequestBody SysUser sysUser){
-        String username = sysUser.getLoginName();
+        String loginName = sysUser.getLoginName();
         String password = sysUser.getPassword();
-        sysUser = iSysUserService.getUserByName(username);
+        sysUser = iSysUserService.getUserByName(loginName);
         if(sysUser==null) {
-            sysLogService.addLog("登录失败，用户名:"+username+"不存在！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
+            sysLogService.addLog("登录失败，用户名:"+loginName+"不存在！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
             throw new UserLoginNameException("该用户不存在！");
         }else {
             // 密码验证
-            String userpassword = EncoderUtil.encrypt(username, password, sysUser.getLoginName());
-            String syspassword = sysUser.getPassword();
-            if(!syspassword.equals(userpassword)) {
-                sysLogService.addLog("登录失败，用户:"+username+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
-                throw new UserPasswordException("密码错误！");
-            }
+            String requestPassword = EncoderUtil.encrypt(loginName, password, sysUser.getLoginName());
+            String sysPassword = sysUser.getPassword();
+            // todo 暂时注释
+            // if(!sysPassword.equals(requestPassword)) {
+            //     sysLogService.addLog("登录失败，用户:"+loginName+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
+            //     throw new UserPasswordException("密码错误！");
+            // }
             JSONObject jsonObject = new JSONObject();
             // 生成token
-            String token = JwtUtil.sign(username, syspassword);
-            RedisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
+            String token = JwtUtil.sign(loginName, sysPassword);
+            redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
-            RedisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
+            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
             iSysUserService.dealUser(sysUser);  // 记录登录数据
-            sysLogService.addLog("用户名: "+username+",登录成功！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+username+",password:"+password);
+            sysLogService.addLog("用户名: "+loginName+",登录成功！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
             return jsonObject;
         }
     }
@@ -91,10 +94,10 @@ public class SysUserController {
 
         String token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
         //清空用户Token缓存
-        RedisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
+        redisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
         //清空用户权限缓存：权限Perms和角色集合
-        RedisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
-        RedisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
     }
 
 
