@@ -2,6 +2,7 @@ package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
@@ -63,12 +64,11 @@ public class SysPermissionController {
             JSONArray authjsonArray = new JSONArray();
             this.getAuthJsonArray(authjsonArray, metaList);
             // 查询所有的权限
-            // LambdaQueryWrapper<SysPermission> query = new LambdaQueryWrapper<SysPermission>();
-            // query.eq(SysPermission::getDelFlag, 0);
-            // query.eq(SysPermission::getMenuType, 2);
-            // //query.eq(SysPermission::getStatus, "1");
-            // List<SysPermission> allAuthList = iSysPermissionService.list(query);
-            List<SysPermission> allAuthList = iSysPermissionService.queryPermissionByArgs(0,2);
+            LambdaQueryWrapper<SysPermission> query = new LambdaQueryWrapper<SysPermission>();
+            query.eq(SysPermission::getDelFlag, 0);
+            query.eq(SysPermission::getMenuType, 2);
+            //query.eq(SysPermission::getStatus, "1");
+            List<SysPermission> allAuthList = iSysPermissionService.list(query);
             JSONArray allauthjsonArray = new JSONArray();
             this.getAllAuthJsonArray(allauthjsonArray, allAuthList);
             json.put("menu", menujsonArray);

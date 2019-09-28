@@ -46,14 +46,4 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         return this.baseMapper.queryPermissionByUser(loginName);
     }
 
-    @Override
-    public List<SysPermission> queryPermissionByArgs(Integer delFlag,Integer menuType) {
-        // return this.baseMapper.selectList(new QueryWrapper<SysPermission>()
-        //     .eq("del_flag",delFlag)
-        //         .eq("menu_type",menuType)
-        // );
-        return this.baseMapper.getALlPermission();
-        // return null;
-    }
-
 }

@@ -4,11 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysUser;
-import com.lh.system.mapper.SysPermissionMapper;
-import com.lh.system.mapper.SysRoleMapper;
 import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,12 +26,6 @@ import java.time.LocalDateTime;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
-
-    @Autowired
-    private SysRoleMapper sysRoleMapper;
-
-    @Autowired
-    private SysPermissionMapper sysPermissionMapper;
 
     @Override
     public SysUser getUserByName(String loginName) {

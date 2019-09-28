@@ -25,5 +25,4 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
     List<SysPermission> queryPermissionByUser(@Param("loginName") String loginName);
 
-    List<SysPermission> getALlPermission();
 }

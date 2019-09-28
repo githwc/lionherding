@@ -16,8 +16,4 @@
 		   order by p.sort_no ASC
 	</select>
 
-    <select id="getALlPermission" resultType="com.lh.system.entity.SysPermission">
-        select * from sys_permission where del_flag = 0 and menu_type = 2
-    </select>
-
 </mapper>

@@ -126,6 +126,7 @@ public class SysPermission implements Serializable {
 
     /////////////////////////////// 非表字段 ///////////////////////////////
 
+    public SysPermission() {}
 
     public SysPermission(boolean index) {
         if(index) {

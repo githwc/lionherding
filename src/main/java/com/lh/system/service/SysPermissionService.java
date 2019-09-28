@@ -33,9 +33,4 @@ public interface SysPermissionService extends IService<SysPermission> {
      * @return
      */
     List<SysPermission> queryPermissionByUser(String loginName);
-
-    /**
-     * 查询指定条件的权限
-     */
-    List<SysPermission> queryPermissionByArgs(Integer delFlag,Integer menuType);
 }
