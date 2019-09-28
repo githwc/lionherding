@@ -8,6 +8,8 @@ import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.JwtUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
+import com.lh.system.service.SysPermissionService;
+import com.lh.system.service.SysRoleService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
@@ -42,6 +44,14 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private SysUserService sysUserService;
+
+    @Autowired
+    @Lazy
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    @Lazy
+    private SysPermissionService sysPermissionService;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -97,10 +107,10 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 设置用户拥有的角色集合 比如 admin,test
-        Set<String> roleSet = sysUserService.getUserRoles(sysUser.getLoginName());
+        Set<String> roleSet = sysRoleService.getUserRoles(sysUser.getLoginName());
         info.setRoles(roleSet);
         //设置用户拥有的权限集合 比如sys:role:add
-        Set<String> permissionSet =sysUserService.getUserPermissions(sysUser.getLoginName());
+        Set<String> permissionSet = sysPermissionService.getUserPermissions(sysUser.getLoginName());
         info.addStringPermissions(permissionSet);
         return info;
     }

@@ -68,7 +68,8 @@ public class SysUserController {
             // }
             JSONObject jsonObject = new JSONObject();
             // 生成token
-            String token = JwtUtil.sign(loginName, sysPassword);
+            // todo 暂时放置默认密码 此处应放置系统密码
+            String token = JwtUtil.sign(loginName, "123456");
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
             redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
@@ -84,20 +85,21 @@ public class SysUserController {
      * 退出登录
      * @return
      */
-    @GetMapping(value = "/logout")
+    @PostMapping(value = "/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         //用户退出逻辑
         Subject subject = SecurityUtils.getSubject();
-        SysUser sysUser = (SysUser)subject.getPrincipal();
-        sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
+        // todo 暂时放置
+        // SysUser sysUser = (SysUser)subject.getPrincipal();
+        // sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
         subject.logout();
 
         String token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
         //清空用户Token缓存
         redisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
         //清空用户权限缓存：权限Perms和角色集合
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + /*sysUser.getLoginName()*/ "admin");
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + /*sysUser.getLoginName()*/ "admin");
     }
 
 

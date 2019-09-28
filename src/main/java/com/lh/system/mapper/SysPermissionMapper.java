@@ -1,7 +1,7 @@
 package com.lh.system.mapper;
 
-import com.lh.system.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.system.entity.SysPermission;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +23,7 @@ import java.util.List;
 @Repository
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
-    public List<SysPermission> queryByUser(@Param("loginName") String loginName);
+    List<SysPermission> queryPermissionByUser(@Param("loginName") String loginName);
+
+    List<SysPermission> getALlPermission();
 }

@@ -1,9 +1,7 @@
 package com.lh.system.service;
 
-import com.lh.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.Set;
+import com.lh.system.entity.SysUser;
 
 /**
  * 功能描述：
@@ -31,7 +29,4 @@ public interface SysUserService extends IService<SysUser> {
      */
     void dealUser(SysUser sysUser);
 
-    Set<String> getUserRoles(String loginName);
-
-    Set<String> getUserPermissions(String loginName);
 }

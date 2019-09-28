@@ -3,6 +3,8 @@ package com.lh.system.service;
 import com.lh.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
  * 功能描述：
  *
@@ -17,4 +19,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysRoleService extends IService<SysRole> {
 
+    Set<String> getUserRoles(String loginName);
 }

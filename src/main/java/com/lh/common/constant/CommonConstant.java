@@ -54,9 +54,8 @@ public class CommonConstant {
      */
     public final static int OPTYPE_READ   = 3;
 
-    //================== 系统日志 END ===========================
-
     // ================== 凭证相关 START ===========================
+
     public static String PREFIX_USER_TOKEN  = "PREFIX_USER_TOKEN_";
 
     public static String X_ACCESS_TOKEN = "X-Access-Token";
@@ -67,5 +66,14 @@ public class CommonConstant {
     /** 登录用户拥有权限缓存KEY前缀 */
     public static String LOGIN_USER_CACHERULES_PERMISSION  = "loginUser_cacheRules::Permissions_";
 
-    // ================== 凭证相关 END ===========================
+    // ================== 编码格式 ===========================
+
+    /** 文本编码 */
+    public static String TEXT_CODE = "text/plain;charset=UTF-8";
+
+    /** JSON编码 */
+    public static String JSON_CODE = "application/json;charset=UTF-8";
+
+    /** XML编码 */
+    public static String XML_CODE = "text/xml;charset=UTF-8";
 }

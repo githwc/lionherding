@@ -126,4 +126,24 @@ public class SysPermission implements Serializable {
 
     /////////////////////////////// 非表字段 ///////////////////////////////
 
+
+    public SysPermission(boolean index) {
+        if(index) {
+            this.sysPermissionId = "9502685863ab87f0ad1134142788a385";
+            this.name="首页";
+            this.component="dashboard/Analysis";
+            this.url="/dashboard/analysis";
+            this.icon="home";
+            this.menuType=0;
+            this.sortNo=0;
+            this.ruleFlag=0;
+            this.delFlag=0;
+            this.alwaysShow=false;
+            this.isRoute=true;
+            this.isLeaf=true;
+            this.hidden=0;
+        }
+
+    }
+
 }
