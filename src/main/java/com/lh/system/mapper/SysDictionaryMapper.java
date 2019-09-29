@@ -19,4 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysDictionaryMapper extends BaseMapper<SysDictionary> {
 
+    // void updateAll();
 }

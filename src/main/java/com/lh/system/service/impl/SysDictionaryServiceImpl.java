@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lh.system.entity.SysDictionary;
 import com.lh.system.mapper.SysDictionaryMapper;
 import com.lh.system.service.SysDictionaryService;
@@ -23,4 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class SysDictionaryServiceImpl extends ServiceImpl<SysDictionaryMapper, SysDictionary> implements SysDictionaryService {
 
+    @Override
+    public void updateALl() {
+        SysDictionary sysDictionary = new SysDictionary();
+        this.baseMapper.update(sysDictionary,new QueryWrapper<SysDictionary>());
+    }
 }

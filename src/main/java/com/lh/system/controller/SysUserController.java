@@ -15,7 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,6 +103,7 @@ public class SysUserController {
         //清空用户权限缓存：权限Perms和角色集合
         redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + /*sysUser.getLoginName()*/ "admin");
         redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + /*sysUser.getLoginName()*/ "admin");
+    //    todo 记录日志 和用户信息
     }
 
 

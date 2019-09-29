@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("/sysDepart/sys-depart")
+@RequestMapping("/sysDepart")
 @Slf4j
 public class SysDepartController {
 

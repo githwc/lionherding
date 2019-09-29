@@ -84,16 +84,15 @@ spring:
 
 #=====Mybatis相关=====
 mybatis-plus:
-  mapper-locations: /mapper/**/*Mapper.xml
-  type-aliases-package: com.lh.modules.model,com.lh.system.model
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml
+  global-config:
+    banner: false #关闭MP 3.0 自带的banner
+  type-aliases-package: com.lh.modules.*.entity,com.lh.system.entity
   configuration:
     map-underscore-to-camel-case: true
-
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl    # 打印 sql 语句
 #=====日志相关=========
 logging:
-  path: C://logback
-  level:
-    com.lh: DEBUG
   config: classpath:logback-spring.xml
 
 #=====security相关======
