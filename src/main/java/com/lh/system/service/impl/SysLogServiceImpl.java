@@ -44,6 +44,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
             sysLog.setIpAdress("异常地址");
         }
         //获取登录用户信息
+        // todo 验证是否能获取到信息
         SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
         if(sysUser!=null){
             sysLog.setCreateUserId(sysUser.getLoginName());

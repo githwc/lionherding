@@ -1,7 +1,7 @@
 package com.lh.modules.TestTemp.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.common.config.exception.userException.UserLoginNameException;
+import com.lh.common.config.exception.userException.UserNoExistException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.common.utils.EncoderUtil;
@@ -99,7 +99,7 @@ public class TestTempController {
         SysUser sysUser = new SysUser();
         sysUser = iSysUserService.getUserByName(name);
         if(sysUser==null) {
-            throw new UserLoginNameException("该用户不存在！");
+            throw new UserNoExistException("该用户不存在！");
         }else {
             // 密码验证
             String userpassword = EncoderUtil.encrypt(name, password, sysUser.getLoginName());

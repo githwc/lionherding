@@ -1,7 +1,11 @@
 package com.lh.system.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUser;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 功能描述：
@@ -16,6 +20,18 @@ import com.lh.system.entity.SysUser;
  *
  */
 public interface SysUserService extends IService<SysUser> {
+
+    /**
+     * 登录
+     */
+    JSONObject login(SysUser sysUser);
+
+    /**
+     * 登出
+     * @param request
+     * @param response
+     */
+    void logout(HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 根据账号查询用户
