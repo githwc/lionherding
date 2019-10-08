@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.UserNoExistException;
+import com.lh.common.config.webSocket.WebSocket;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
@@ -43,6 +44,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysLogService sysLogService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     public JSONObject login(SysUser sysUser) {
@@ -119,5 +123,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         sysUser.setLastLoginTime(LocalDateTime.now());
         this.baseMapper.updateById(sysUser);
+    }
+
+    @Override
+    public void tempApi() {
+        //创建业务消息信息
+        JSONObject obj = new JSONObject();
+        obj.put("cmd", "user");//业务类型
+        obj.put("msgId", "8888888888");//消息id
+        obj.put("msgTxt", "欢迎来到新的世界！");//消息内容
+        //单个用户发送 (userId为用户id)
+        webSocket.sendOneMessage("9999999999999999", obj.toJSONString());
     }
 }

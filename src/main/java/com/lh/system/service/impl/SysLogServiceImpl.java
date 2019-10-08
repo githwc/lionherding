@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * 功能描述：
@@ -54,4 +56,14 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         //保存系统日志
         this.baseMapper.insert(sysLog);
     }
+
+    @Override
+    public Map<String, Object> logInfo() {
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("totalVisitCount", 120);
+        map.put("todayVisitCount", 19);
+        map.put("todayIp", "192.168.0.283");
+        return map;
+    }
+
 }

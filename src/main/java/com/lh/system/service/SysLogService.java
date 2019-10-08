@@ -3,6 +3,8 @@ package com.lh.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysLog;
 
+import java.util.Map;
+
 /**
  * 功能描述：
  *
@@ -25,5 +27,7 @@ public interface SysLogService extends IService<SysLog> {
      * @param requestParams 请求参数
      */
     void addLog(String LogContent, Integer logType, String requestMethod,String requestParams);
+
+    Map<String,Object> logInfo();
 
 }

@@ -91,6 +91,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <!-- websocket 相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!--配置文件处理器：用于编写yml时的提示信息-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

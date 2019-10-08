@@ -1,8 +1,10 @@
 package com.lh.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lh.system.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("/sysLog/sys-log")
+@RequestMapping("/sysLog")
 @Slf4j
 public class SysLogController {
 
     @Autowired
     public SysLogService iSysLogService;
+
+
+    /**
+     * 获取日志信息
+     * @return
+     */
+    @GetMapping("/logInfo")
+    public JSONObject logInfo(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("logInfo",iSysLogService.logInfo());
+        return jsonObject;
+    }
 
 }
