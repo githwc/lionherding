@@ -54,14 +54,4 @@ public class SysUserController {
     }
 
 
-    /**
-     *  测试接口
-     * @return
-     */
-    @PostMapping("/tempApi")
-    public void tempApi(){
-        JSONObject jsonObject = new JSONObject();
-        iSysUserService.tempApi();
-    }
-
 }

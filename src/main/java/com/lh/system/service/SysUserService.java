@@ -6,7 +6,6 @@ import com.lh.system.entity.SysUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * 功能描述：
@@ -45,10 +44,5 @@ public interface SysUserService extends IService<SysUser> {
      * 处理用户数据
      */
     void dealUser(SysUser sysUser);
-
-    /**
-     *
-     */
-    void tempApi();
 
 }

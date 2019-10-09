@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.UserNoExistException;
-import com.lh.common.config.webSocket.WebSocket;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
@@ -45,9 +44,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysLogService sysLogService;
 
-    @Autowired
-    private WebSocket webSocket;
-
     @Override
     public JSONObject login(SysUser sysUser) {
         String loginName = sysUser.getLoginName();
@@ -71,7 +67,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             String token = JwtUtil.sign(loginName, "123456");
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
-            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
+            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 30);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
             this.dealUser(sysUser);  // 记录登录数据
@@ -125,14 +121,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.baseMapper.updateById(sysUser);
     }
 
-    @Override
-    public void tempApi() {
-        //创建业务消息信息
-        JSONObject obj = new JSONObject();
-        obj.put("cmd", "user");//业务类型
-        obj.put("msgId", "8888888888");//消息id
-        obj.put("msgTxt", "欢迎来到新的世界！");//消息内容
-        //单个用户发送 (userId为用户id)
-        webSocket.sendOneMessage("9999999999999999", obj.toJSONString());
-    }
 }

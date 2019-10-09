@@ -35,7 +35,7 @@ public class WebSocket {
     /*用户ID*/
     private String userId="";
 
-    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
+    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象
     private static CopyOnWriteArraySet<WebSocket> webSockets =new CopyOnWriteArraySet<>();
     private static Map<String,Session> sessionPool = new HashMap<String,Session>();
 

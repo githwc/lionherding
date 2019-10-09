@@ -1,4 +1,4 @@
-${AnsiColor.BRIGHT_GREEN}
+${AnsiColor.BRIGHT_BLUE}
          _________ _______           _______
 |\     /|\__   __/(  ____ \|\     /|(  ____ \
 ( \   / )   ) (   | (    \/( \   / )| (    \/
@@ -8,10 +8,11 @@ ${AnsiColor.BRIGHT_GREEN}
 ( /   \ )___) (___| (____/\   | |   | (____/\
 |/     \|\_______/(_______/   \_/   (_______/
 
-${AnsiColor.BRIGHT_RED}
+${AnsiColor.BRIGHT_GREEN}
 Application Version: ${application.version}${application.formatted-version}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
 ${AnsiColor.BRIGHT_YELLOW}
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                Coding Changes The World
+                CODE CHANGES THE WORLD
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+${AnsiColor.BLACK}

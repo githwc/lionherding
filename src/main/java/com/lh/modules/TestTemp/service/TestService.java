@@ -18,4 +18,6 @@ import com.lh.modules.TestTemp.entity.Test;
 public interface TestService extends IService<Test> {
 
     void updateAll();
+
+    void tempApi();
 }
