@@ -2,6 +2,8 @@ package com.lh.modules.remind.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -48,7 +50,7 @@ public class RemindMessage implements Serializable {
      */
     private String modelType;
     /**
-     * 接收类型(USER:指定用户 ALL:全体用户)
+     * 接收类型(USER:指定用户 ALL:全体用户 GROUP:组内用户)
      */
     private String receiveType;
     /**
@@ -78,5 +80,17 @@ public class RemindMessage implements Serializable {
 
 
     /////////////////////////////// 非表字段 ///////////////////////////////
+
+    /**
+     * 消息接收表标识
+     */
+    @TableField(exist = false)
+    private String userId;
+
+    /**
+     * 消息接收表标识
+     */
+    @TableField(exist = false)
+    private String remindMessageReceiveId;
 
 }

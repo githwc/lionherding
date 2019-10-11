@@ -1,11 +1,10 @@
 package com.lh.modules.remind.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.lh.modules.remind.entity.RemindMessage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.modules.remind.entity.RemindMessageReceive;
 import com.lh.modules.remind.mapper.RemindMessageReceiveMapper;
 import com.lh.modules.remind.service.RemindMessageReceiveService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class RemindMessageReceiveServiceImpl extends ServiceImpl<RemindMessageReceiveMapper, RemindMessageReceive> implements RemindMessageReceiveService {
 
     @Override
-    public void insertRecord(String userId, String messageId) {
+    public void insertRecord(String userId, String messageId,boolean receiveFlag) {
         RemindMessageReceive remindMessageReceive = new RemindMessageReceive();
         remindMessageReceive.setMessageId(messageId);
         remindMessageReceive.setUserId(userId);
+        remindMessageReceive.setReceiveFlag(receiveFlag);
         this.baseMapper.insert(remindMessageReceive);
     }
 
@@ -42,4 +42,5 @@ public class RemindMessageReceiveServiceImpl extends ServiceImpl<RemindMessageRe
                 .eq("message_id",messageId)
         );
     }
+
 }

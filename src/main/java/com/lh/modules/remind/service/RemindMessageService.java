@@ -2,6 +2,9 @@ package com.lh.modules.remind.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.remind.entity.RemindMessage;
+import com.lh.modules.remind.entity.RemindMessageReceive;
+
+import java.util.List;
 
 /**
  * 功能描述：
@@ -41,4 +44,12 @@ public interface RemindMessageService extends IService<RemindMessage> {
      * @param content
      */
     void sendAllUser(String content,String level,String type,String modelType,String rid);
+
+
+    /**
+     * 我未接受的消息
+     * @param userId 用户ID
+     * @return
+     */
+    List<RemindMessage> myNotReceiveMessages(String userId);
 }

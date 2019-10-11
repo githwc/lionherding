@@ -30,9 +30,6 @@ public class RemindMessageController {
     @Autowired
     public RemindMessageService iRemindMessageService;
 
-    // todo 登录后服务端主动推送消息
-    // todo websocket如何知道是否推送成功
-    // todo 测试稳定性 token session
     /**
      * 发送消息给指定人
      *

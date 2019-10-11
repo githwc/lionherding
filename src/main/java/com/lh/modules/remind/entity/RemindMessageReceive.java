@@ -40,6 +40,10 @@ public class RemindMessageReceive implements Serializable {
      */
     private LocalDateTime readTime;
     /**
+     * 接收状态
+     */
+    private boolean receiveFlag;
+    /**
      * 消息ID
      */
     private String messageId;

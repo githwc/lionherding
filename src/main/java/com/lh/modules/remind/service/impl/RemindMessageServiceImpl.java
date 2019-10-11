@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
 * 功能描述：
@@ -39,7 +40,7 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
     public void sendUser(String userId, String content,String level,String type,String modelType,String rid) {
         JSONObject obj = new JSONObject();
         obj.put("content", content);//消息内容
-        webSocket.sendOneMessage(userId, obj.toJSONString());
+        boolean flag = webSocket.sendOneMessage(userId, obj.toJSONString());
         /*记录推送消息*/
         RemindMessage remindMessage = new RemindMessage();
         remindMessage.setCreateTime(LocalDateTime.now());
@@ -50,7 +51,6 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
         remindMessage.setType(type);
         remindMessage.setModelType(modelType);
         remindMessage.setRid(rid);
-        // todo 判断推送成功失败
         remindMessage.setSendState("1");
         remindMessage.setSendTime(LocalDateTime.now());
         // todo 获取当前在线人信息
@@ -58,7 +58,7 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
         remindMessage.setCreateUserId("admin");
         int result = this.baseMapper.insert(remindMessage);
         if(result > 0){
-            remindMessageReceiveService.insertRecord(userId,remindMessage.getRemindMessageId());
+            remindMessageReceiveService.insertRecord(userId,remindMessage.getRemindMessageId(),flag);
         }
     }
 
@@ -77,7 +77,6 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
         remindMessage.setType(type);
         remindMessage.setModelType(modelType);
         remindMessage.setRid(rid);
-        // todo 判断推送成功失败
         remindMessage.setSendState("1");
         remindMessage.setSendTime(LocalDateTime.now());
         // todo 获取当前在线人信息
@@ -91,6 +90,12 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
          * todo 存在逻辑缺陷： 此情况下如何判断群发消息中用户已读未读
          *  1.存入消息表中一个文本字段 记录已读人
          */
+    }
+
+
+    @Override
+    public List<RemindMessage> myNotReceiveMessages(String userId) {
+        return this.baseMapper.myNotReceiveMessages(userId);
     }
 
 

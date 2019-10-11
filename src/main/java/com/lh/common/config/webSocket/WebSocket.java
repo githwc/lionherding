@@ -1,7 +1,12 @@
 package com.lh.common.config.webSocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.modules.remind.entity.RemindMessage;
+import com.lh.modules.remind.entity.RemindMessageReceive;
+import com.lh.modules.remind.service.RemindMessageReceiveService;
+import com.lh.modules.remind.service.RemindMessageService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -11,6 +16,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -29,6 +35,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/websocket/{userId}")/*此注解相当于设置访问URL*/
 public class WebSocket {
 
+    @Autowired
+    private RemindMessageService remindMessageService;
+
+
     /*与某个客户端的连接会话，需要通过它来给客户端发送数据*/
     private Session session;
 
@@ -41,6 +51,7 @@ public class WebSocket {
 
     /**
      * 连接建立成功
+     *      【适当添加业务逻辑：监听用户登录后推送未成功接受的历史消息】
      * @param session
      * @param userId
      */
@@ -52,6 +63,14 @@ public class WebSocket {
             sessionPool.put(userId, session);
             this.userId=userId;
             log.info("【websocket消息】有新的连接，总数为:"+webSockets.size());
+            /*建立连接后主动推送未读消息*/
+            List<RemindMessage> myMessageList = remindMessageService.myNotReceiveMessages(this.userId);
+            if(myMessageList.size()>0){
+                log.info("新连接有"+myMessageList+"条未读消息,开始推送消息！");
+            }
+            myMessageList.forEach(currMessage->{
+                sendOneMessage(currMessage.getUserId(),currMessage.getContent());
+            });
         } catch (Exception e) {
             log.error("websocket 链接异常");
         }
@@ -104,19 +123,25 @@ public class WebSocket {
      * 单点消息
      * @param userId
      * @param message
+     * @return 是否推送成功 true: 成功
      */
-    public void sendOneMessage(String userId, String message) {
+    public boolean sendOneMessage(String userId, String message) {
+        boolean flag = false;
         Session session = sessionPool.get(userId);
         if (session != null && session.isOpen()) {
             try {
                 log.info("【websocket消息】 单点消息:"+message);
                 session.getAsyncRemote().sendText(message);
+                flag = true;
             } catch (Exception e) {
                 e.printStackTrace();
+            }finally {
+                return flag;
             }
+        }else{
+            return false;
         }
     }
-
 
     /**
      * 单点消息（多人）

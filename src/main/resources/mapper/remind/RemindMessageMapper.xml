@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lh.modules.remind.mapper.RemindMessageMapper">
 
+    <select id="myNotReceiveMessages" resultType="com.lh.modules.remind.entity.RemindMessage">
+        select
+            m.*,r.remind_message_receive_id,r.user_id
+        from remind_message_receive  r
+        left join remind_message m on r.message_id = m.remind_message_id
+        where r.receive_flag = '1' and r.user_id = #{userId}
+        ORDER BY m.create_time
+    </select>
+
 </mapper>

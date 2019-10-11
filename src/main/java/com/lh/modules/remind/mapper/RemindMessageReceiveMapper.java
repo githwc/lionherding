@@ -1,8 +1,9 @@
 package com.lh.modules.remind.mapper;
 
-import com.lh.modules.remind.entity.RemindMessageReceive;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.modules.remind.entity.RemindMessageReceive;
 import org.springframework.stereotype.Repository;
+
 /**
  *
  * 功能描述：

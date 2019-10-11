@@ -1,7 +1,7 @@
 package com.lh.modules.remind.service;
 
-import com.lh.modules.remind.entity.RemindMessageReceive;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lh.modules.remind.entity.RemindMessageReceive;
 
 /**
  * 功能描述：
@@ -22,7 +22,7 @@ public interface RemindMessageReceiveService extends IService<RemindMessageRecei
      * @param userId
      * @param messageId
      */
-    void insertRecord(String userId,String messageId);
+    void insertRecord(String userId,String messageId,boolean receiveFlag);
 
     /**
      * 标识已读

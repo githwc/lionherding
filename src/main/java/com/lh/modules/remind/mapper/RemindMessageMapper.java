@@ -1,8 +1,12 @@
 package com.lh.modules.remind.mapper;
 
-import com.lh.modules.remind.entity.RemindMessage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.modules.remind.entity.RemindMessage;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  *
  * 功能描述：
@@ -19,4 +23,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RemindMessageMapper extends BaseMapper<RemindMessage> {
 
+    List<RemindMessage> myNotReceiveMessages(@Param("userId")String userId);
 }
