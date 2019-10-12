@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -55,12 +54,12 @@ public class ApplicationTest {
 
     @Before
     public void before(){
-        System.out.println("当前类======ApplicationTest.before()开始了");
+        log.info("当前类======ApplicationTest.before()开始了");
     }
 
     @After
     public void after(){
-        System.out.println("当前类======ApplicationTest.after()结束了");
+        log.info("当前类======ApplicationTest.after()结束了");
     }
 
 
@@ -84,32 +83,32 @@ public class ApplicationTest {
         sysUser.setLastLoginTime(LocalDateTime.now());
         if (sysUser.getLastLoginTime().toString().substring(0, 10).equalsIgnoreCase(LocalDateTime.now().toString().substring(0, 10))) {
 
-            System.out.println("当前类======ApplicationTest.test21()hahahahhahahahhahaha");
+            log.info("当前类======ApplicationTest.test21()hahahahhahahahhahaha");
         }
-        System.out.println("当前类======ApplicationTest.test21()"+ sysUser.getLastLoginTime().toString().substring(0,10));
+        log.info("当前类======ApplicationTest.test21()"+ sysUser.getLastLoginTime().toString().substring(0,10));
     }
 
 
     @Test
     public void test222() throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        // // System.out.println(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+" 00:00:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        // // log.info(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+" 00:00:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         //
         // String dd = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+ " 00:00:00";
         // Date ddd = calculate(formatter.parse(dd),Calendar.DAY_OF_MONTH,1);
-        // System.out.println(formatter.format(ddd));
+        // log.info(formatter.format(ddd));
 
         String dd = "2019-10-11";
         Date ddd = calculate(formatter.parse(dd),Calendar.DAY_OF_MONTH,1);
-        System.out.println(formatter.format(ddd));
+        log.info(formatter.format(ddd));
         //
         //
         // String currentDay = formatter.format(new Date());
-        // System.out.println(formatter.format(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())));
+        // log.info(formatter.format(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())));
 
         // int day = dayDiff("2019-10-01",currentDay);
-        // System.out.println(day);
-        // System.out.println(currentDay);
+        // log.info(day);
+        // log.info(currentDay);
         // System.out.println(LocalDateTime.now());
         // String currentStartTime = currentDay + " 00:00:00";
         // String currentEndTime = currentDay + " 23:59:59";

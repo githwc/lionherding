@@ -74,7 +74,5 @@
 四、异常
     通过@RestControllerAdvice 和 @ExceptionHandler 自定义异常
     使用方式:throw new ParameterException("错误内容")
-五、druid
-    安全框架中配置不拦截规则,通过访问项目路径/druid 进入
-六、swagger2
-    安全框架中配置不拦截规则,通过访问项目路径/swagger-ui.html进入    
+五、shiro
+    

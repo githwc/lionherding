@@ -16,13 +16,14 @@ import java.util.Map;
 
 /**
  * 功能描述：shiro配置类
- *
- *      1.创建ShiroFilterFactoryBean
- *      2.创建DefaultWebSecurityManager
- *      3.创建Realm
+ *  (一)
+ *     1.创建ShiroFilterFactoryBean
+ *     2.创建DefaultWebSecurityManager
+ *     3.创建Realm
+ *  (二)
  *
  * <p>版权所有：</p>
- * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
+ * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: 紫色年华
  * @Author: xieyc
@@ -33,6 +34,8 @@ import java.util.Map;
 public class ShiroConfig {
 
     /**
+     *  @DESC:创建ShiroFilterFactoryBean
+     *
      * 定义Filter Chain,实现权限相关的拦截
      *  注: LinkedHashMap 顺序拦截
      *
@@ -81,10 +84,16 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    /**
+     * @DESC:创建DefaultWebSecurityManager
+     *
+     * @param shiroRealm
+     * @return
+     */
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager securityManager(ShiroRealm myRealm) {
+    public DefaultWebSecurityManager securityManager(@Qualifier("shiroRealm") ShiroRealm shiroRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myRealm);
+        securityManager.setRealm(shiroRealm);
 
         /*
          * 关闭shiro自带的session，详情见文档
@@ -99,15 +108,25 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
+    /**
+     * @DESC: 创建Realm
+     *
+     * @return
+     */
+    @Bean(name="shiroRealm")
+    public ShiroRealm shiroRealm(){
+        return new ShiroRealm();
     }
 
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
-    }
+    // @Bean
+    // public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    //     return new LifecycleBeanPostProcessor();
+    // }
+    //
+    // @Bean
+    // public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+    //     AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+    //     advisor.setSecurityManager(securityManager);
+    //     return advisor;
+    // }
 }

@@ -1,5 +1,7 @@
 package com.lh.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -22,13 +24,14 @@ import javax.imageio.ImageIO;
  *
  *
  * <p>版权所有：</p>
- * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
+ * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: 紫色年华
  * @Author: xieyc
  * @Datetime: 2019-06-17 15:13
  * @Version: 1.0.0
  */
+@Slf4j
 public class PictureValidateCode {
 
 	// 图片的宽度。
@@ -176,7 +179,7 @@ public class PictureValidateCode {
         PictureValidateCode vCode = new PictureValidateCode(160,40,5,150);
         try {
             String path="E:/"+new Date().getTime()+".png";
-            System.out.println(vCode.getCode()+" >"+path);
+            log.info(vCode.getCode()+" >"+path);
             vCode.write(path);
         } catch (IOException e) {
             e.printStackTrace();

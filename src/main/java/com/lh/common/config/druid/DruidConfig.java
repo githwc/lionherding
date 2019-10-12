@@ -15,8 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 功能描述：1初始化druid属性
- *         2配置Druid的监控 localhost:8080/druid
+ * 功能描述:
+ *    1.初始化druid属性
+ *    2.配置Druid的监控
+ *
+ *    安全框架中放行Druid,通过访问 "项目路径/druid" 进入
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *

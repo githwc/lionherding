@@ -1,6 +1,7 @@
 package com.lh.modules.TestTemp.controller;
 
 import com.lh.modules.TestTemp.service.TestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
  */
 @Component
 @EnableAsync
+@Slf4j
 public class TestScheduled {
 
     @Autowired
@@ -27,7 +29,7 @@ public class TestScheduled {
 
     @Scheduled(cron="0 */1 * * * ?")
     public void first() throws InterruptedException {
-        System.out.println("第一个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
+        log.info("第一个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
         // Thread.sleep(1000 * 10);
         // 定向推送消息
         testService.tempApi();
@@ -36,12 +38,12 @@ public class TestScheduled {
     // @Async
     // @Scheduled(fixedDelay = 2000)
     // public void second() {
-    //     System.out.println("第二个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
+    //     log.info("第二个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
     //     ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
     //     for (int i = 0; i < 10; i++) {
     //         scheduledThreadPool.schedule(new Runnable() {
     //             public void run() {
-    //                 System.out.println("delay 3 seconds=========================="  +  Thread.currentThread().getId() + Thread.currentThread().getName());
+    //                 log.info("delay 3 seconds=========================="  +  Thread.currentThread().getId() + Thread.currentThread().getName());
     //             }
     //         }, 3, TimeUnit.SECONDS);
     //     }
