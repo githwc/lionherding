@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Api(tags="测试接口")
-public class TestTempController {
+public class TestShiroController {
 
     @Autowired
     public SysUserService iSysUserService;

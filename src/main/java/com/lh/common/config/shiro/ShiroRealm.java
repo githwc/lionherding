@@ -37,7 +37,6 @@ import java.util.Set;
  * @Datetime: 2019-09-17 16:34
  * @Version: 1.0.0
  */
-// @Component
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 

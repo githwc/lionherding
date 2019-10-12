@@ -16,11 +16,6 @@ import java.util.Map;
 
 /**
  * 功能描述：shiro配置类
- *  (一)
- *     1.创建ShiroFilterFactoryBean
- *     2.创建DefaultWebSecurityManager
- *     3.创建Realm
- *  (二)
  *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -36,7 +31,7 @@ public class ShiroConfig {
     /**
      *  @DESC:创建ShiroFilterFactoryBean
      *
-     * 定义Filter Chain,实现权限相关的拦截
+     * 定义Filter Chain(Shiro 内置过滤器),实现权限相关的拦截
      *  注: LinkedHashMap 顺序拦截
      *
      *      anon: 无需认证即可访问
@@ -45,13 +40,15 @@ public class ShiroConfig {
      *      perms:必须得到资源权限才可以访问
      *      roles:必须得到角色权限才可以访问
      */
-    @Bean("shiroFilter")
+    @Bean
+    // @Bean("shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        // 配置不会被拦截的链接 顺序判断
-        filterChainDefinitionMap.put("/sysUser/login", "anon"); //登录接口
+        /*============  配置不会被拦截的链接 顺序判断 START ======*/
+        filterChainDefinitionMap.put("/sysUser/login", "anon"); /*登录接口*/
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/swagger**/**", "anon");
@@ -60,18 +57,13 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/login","anon");  //Temp APi
         filterChainDefinitionMap.put("/login2","anon");  //Temp APi
 
-        //权限访问
+        /* ======== 权限访问 START =============*/
         filterChainDefinitionMap.put("/add","perms[hr:BaseSettings]");
 
-        //认证后可访问
+        /*========== 认证后可访问 START ==========*/
         filterChainDefinitionMap.put("/*","authc");
         filterChainDefinitionMap.put("/add","authc");   // Temp API
         filterChainDefinitionMap.put("/update","authc");    //Temp API
-
-        //设置默认登录页面
-        shiroFilterFactoryBean.setLoginUrl("/toLogin");
-        //设置默认未授权页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
 
         // 添加自己的过滤器并且取名为jwt
         // Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
@@ -81,6 +73,8 @@ public class ShiroConfig {
         // filterChainDefinitionMap.put("/**", "jwt");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        shiroFilterFactoryBean.setLoginUrl("/toLogin"); /*设置默认登录页面*/
+        shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth"); /*设置默认未授权页面*/
         return shiroFilterFactoryBean;
     }
 
