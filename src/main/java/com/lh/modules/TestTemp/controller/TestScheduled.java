@@ -2,16 +2,11 @@ package com.lh.modules.TestTemp.controller;
 
 import com.lh.modules.TestTemp.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述：测试定时任务
@@ -25,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @EnableAsync
-@EnableScheduling
 public class TestScheduled {
 
     @Autowired

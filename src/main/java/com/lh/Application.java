@@ -39,7 +39,9 @@ public class Application {
     // todo 3 日志中记录当前操作人
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
-	public static void main(String[] args) {
+    // todo 12 Excel 导出导入
+    // todo 13 图表分析
+    public static void main(String[] args) {
 
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
         Environment env = application.getEnvironment();

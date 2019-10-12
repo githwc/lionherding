@@ -1,5 +1,7 @@
 package com.lh.modules.TestTemp.controller;
 
+import com.lh.modules.TestTemp.service.TestService;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/test/test")
+@EnableScheduling
 @Slf4j
 public class TestController {
 
-    // @Autowired
-    // public Testser iTestService;
+    @Autowired
+    public TestService iTestService;
 
 }
