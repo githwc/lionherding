@@ -22,12 +22,12 @@ import java.time.LocalDateTime;
 @Component
 @EnableAsync
 @Slf4j
-public class TestScheduled {
+public class TestScheduledController {
 
     @Autowired
     private TestService testService;
 
-    @Scheduled(cron="0 */1 * * * ?")
+    // @Scheduled(cron="0 */1 * * * ?")
     public void first() throws InterruptedException {
         log.info("第一个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
         // Thread.sleep(1000 * 10);
