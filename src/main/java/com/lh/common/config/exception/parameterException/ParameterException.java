@@ -2,7 +2,7 @@ package com.lh.common.config.exception.parameterException;
 
 import com.lh.common.config.exception.ApiException;
 import com.lh.common.config.response.ResponseCode;
-import com.lh.common.utils.ResultUtils;
+import com.lh.common.config.response.ResultUtils;
 
 /**
  * 功能描述：

@@ -7,7 +7,7 @@ import com.lh.common.config.exception.userException.UserNoExistException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
-import com.lh.common.utils.JwtUtil;
+import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysUserMapper;

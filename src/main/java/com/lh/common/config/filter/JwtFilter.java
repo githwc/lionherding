@@ -1,6 +1,5 @@
 package com.lh.common.config.filter;
 
-import com.lh.common.config.shiro.JwtToken;
 import com.lh.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;

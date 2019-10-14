@@ -36,11 +36,19 @@ import org.springframework.core.env.Environment;
 public class Application {
 
     // todo 1 检查点击重新登录后是否清除token
+    // TODO: 2019/10/13 整理一份初始化的表 
     // todo 3 日志中记录当前操作人
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
-    // todo 12 Excel 导出导入
+    // todo 12 Excel 导入, 打印功能
     // todo 13 图表分析
+
+    
+
+    // =========== shiro ===========
+    // TODO: 2019/10/13 何时触发认证接口(subject.login()后调用)，何时触发授权接口(config中配置，进行鉴权)
+    // TODO: 2019/10/13 权限资源如何传递给前端
+    // TODO: 2019/10/13 完成认证后如何保存认证信息及获取当前信息(token session等)
     public static void main(String[] args) {
 
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

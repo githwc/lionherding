@@ -2,7 +2,6 @@ package com.lh.common.config.response;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.lh.common.utils.ResultUtils;
 
 import java.util.HashMap;
 

@@ -8,7 +8,7 @@ import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
-import com.lh.common.utils.JwtUtil;
+import com.lh.common.config.filter.JwtUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionDataUtil;

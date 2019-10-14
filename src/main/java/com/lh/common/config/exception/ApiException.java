@@ -1,6 +1,6 @@
 package com.lh.common.config.exception;
 
-import com.lh.common.utils.ResultUtils;
+import com.lh.common.config.response.ResultUtils;
 import lombok.Data;
 
 /**
