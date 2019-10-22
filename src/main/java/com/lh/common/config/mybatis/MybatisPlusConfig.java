@@ -35,7 +35,7 @@ public class MybatisPlusConfig {
     /**
      * 执行分析插件(目前只支持 MYSQL-5.6.3 以上版本)
      *      分析处理 DELETE UPDATE 语句，防止恶意delete update 全表操作
-     *
+     *      stopProceed 设置true 为开启拦截
      *  【建议开发环境使用，生产环境关闭即可】
      * @return
      */
@@ -43,9 +43,6 @@ public class MybatisPlusConfig {
     public SqlExplainInterceptor sqlExplainInterceptor(){
         SqlExplainInterceptor sqlExplainInterceptor = new SqlExplainInterceptor();
         Properties prop = new Properties();
-        /**
-         * true 为开启拦截
-         */
         prop.setProperty("stopProceed","true");
         sqlExplainInterceptor.setProperties(prop);
         return sqlExplainInterceptor;

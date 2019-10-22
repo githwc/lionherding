@@ -189,9 +189,10 @@ public class SysPermissionController {
                 json.put("hidden", true);
             }
             // 聚合路由
-            if (permission.getAlwaysShow()) {
-                json.put("alwaysShow", true);
-            }
+            // TODO: 2019/10/19  此处应放开
+            // if (permission.getAlwaysShow()) {
+            //     json.put("alwaysShow", true);
+            // }
             json.put("component", permission.getComponent());
             JSONObject meta = new JSONObject();
             // 默认所有的菜单都加路由缓存，提高系统性能

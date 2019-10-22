@@ -64,13 +64,13 @@ public class WebSocket {
             this.userId=userId;
             log.info("【websocket消息】有新的连接，总数为:"+webSockets.size());
             /*建立连接后主动推送未读消息*/
-            List<RemindMessage> myMessageList = remindMessageService.myNotReceiveMessages(this.userId);
-            if(myMessageList.size()>0){
-                log.info("新连接有"+myMessageList+"条未读消息,开始推送消息！");
-            }
-            myMessageList.forEach(currMessage->{
-                sendOneMessage(currMessage.getUserId(),currMessage.getContent());
-            });
+            // List<RemindMessage> myMessageList = remindMessageService.myNotReceiveMessages(this.userId);
+            // if(myMessageList.size()>0){
+            //     log.info("新连接有"+myMessageList+"条未读消息,开始推送消息！");
+            // }
+            // myMessageList.forEach(currMessage->{
+            //     sendOneMessage(currMessage.getUserId(),currMessage.getContent());
+            // });
         } catch (Exception e) {
             log.error("websocket 链接异常");
         }

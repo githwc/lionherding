@@ -58,43 +58,14 @@ spring:
   #  mvc:
   #    date-format: yyyy-MM-dd
 
-  #=====quartz相关==========
-  #  quartz:
-  #    job-store-type: jdbc
-  #      #相关属性配置
-  #    properties:
-  #      org:
-  #        quartz:
-  #          scheduler:
-  #            instanceName: clusteredScheduler
-  #            instanceId: AUTO
-  #          jobStore:
-  #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-  #            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-  #            tablePrefix: QRTZ_
-  #            isClustered: true
-  #            clusterCheckinInterval: 10000
-  #            useProperties: false
-  #          threadPool:
-  #            class: org.quartz.simpl.SimpleThreadPool
-  #            threadCount: 10
-  #            threadPriority: 5
-  #            threadsInheritContextClassLoaderOfInitializingThread: true
-  #=====quartz相关==========
-
 #=====Mybatis相关=====
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*Mapper.xml
-  global-config:
-    banner: false #关闭MP 3.0 自带的banner
   type-aliases-package: com.lh.modules.*.entity,com.lh.system.entity
   configuration:
-    map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl    # 打印 sql 语句
-#=====日志相关=========
-logging:
-  config: classpath:logback-spring.xml
-
+    map-underscore-to-camel-case: true  # 驼峰
+  global-config:
+    banner: false #关闭MP 3.0 自带的banner
 #=====security相关======
 #lh:
 #  security:
