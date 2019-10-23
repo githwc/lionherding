@@ -61,7 +61,7 @@ public class SysPermission implements Serializable {
     /**
      * 菜单权限编码
      */
-    private String perms;
+    private String permsCode;
     /**
      * 权限策略1显示2禁用
      */
@@ -69,7 +69,7 @@ public class SysPermission implements Serializable {
     /**
      * 菜单排序
      */
-    private Integer sortNo;
+    private Integer sort;
     /**
      * 聚合子路由: 1是0否
      */
@@ -83,7 +83,7 @@ public class SysPermission implements Serializable {
      */
     private Boolean isRoute;
     /**
-     * 是否叶子节点:    1:是   0:不是
+     * 是否叶子结点:    1:是   0:不是
      */
     private Boolean isLeaf;
     /**
@@ -136,7 +136,7 @@ public class SysPermission implements Serializable {
             this.url="/dashboard/analysis";
             this.icon="home";
             this.menuType=0;
-            this.sortNo=0;
+            this.sort=0;
             this.ruleFlag=0;
             this.delFlag=0;
             this.alwaysShow=false;
@@ -144,7 +144,6 @@ public class SysPermission implements Serializable {
             this.isLeaf=true;
             this.hidden=0;
         }
-
     }
 
 }

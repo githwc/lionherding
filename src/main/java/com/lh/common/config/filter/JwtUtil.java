@@ -55,7 +55,7 @@ public class JwtUtil {
 	}
 
 	/**
-	 * 获得token中的信息无需secret解密也能获得
+     * @DESC: 获取当前用户名,无需secret解密
 	 *
 	 * @return token中包含的用户名
 	 */

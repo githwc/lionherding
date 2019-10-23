@@ -1,8 +1,10 @@
 package com.lh.system.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysPermission;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Set;
 
@@ -21,16 +23,12 @@ import java.util.Set;
 public interface SysPermissionService extends IService<SysPermission> {
 
     /**
-     * 获取用户权限 例如：admin,guest,xxx
+     * 获取用户权限码 例如：admin,guest,xxx
      * @param loginName
      * @return
      */
-    Set<String> getUserPermissions(String loginName);
+    Set<String> getUserPermCodes(String loginName);
 
-    /**
-     * 获取用户权限
-     * @param loginName
-     * @return
-     */
-    List<SysPermission> queryPermissionByUser(String loginName);
+
+    JSONObject getUserPermissionByToken(String token,HttpServletResponse response);
 }

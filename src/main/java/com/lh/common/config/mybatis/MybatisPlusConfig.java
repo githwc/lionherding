@@ -52,14 +52,14 @@ public class MybatisPlusConfig {
      * 性能分析插件 【建议开发环境使用，生产环境关闭即可】
      * @return
      */
-    @Bean
-    public PerformanceInterceptor performanceInterceptor(){
-        PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
-        //SQL 是否格式化，默认关闭
-        performanceInterceptor.setFormat(false);
-        /** sql 执行性能分析，开发环境使用，线上不推荐 MaxTime(1500) 指的是最大执行时长 */
-        // performanceInterceptor.setMaxTime(1500);
-        return performanceInterceptor;
-    }
+    // @Bean
+    // public PerformanceInterceptor performanceInterceptor(){
+    //     PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+    //     //SQL 是否格式化，默认关闭
+    //     performanceInterceptor.setFormat(false);
+    //     /** sql 执行性能分析，开发环境使用，线上不推荐 MaxTime(1500) 指的是最大执行时长 */
+    //     // performanceInterceptor.setMaxTime(1500);
+    //     return performanceInterceptor;
+    // }
 
 }

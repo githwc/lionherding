@@ -13,7 +13,7 @@
 		   		where p.sys_permission_id = a.permission_id AND d.login_name = #{loginName}
 		   )
 		   and p.del_flag = 0
-		   order by p.sort_no ASC
+		   order by p.sort ASC
 	</select>
 
 </mapper>

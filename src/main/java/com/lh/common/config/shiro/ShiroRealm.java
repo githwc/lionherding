@@ -108,7 +108,7 @@ public class ShiroRealm extends AuthorizingRealm {
         Set<String> roleSet = sysRoleService.getUserRoles(sysUser.getLoginName());
         info.setRoles(roleSet);
         //设置用户拥有的权限集合 比如sys:role:add
-        Set<String> permissionSet = sysPermissionService.getUserPermissions(sysUser.getLoginName());
+        Set<String> permissionSet = sysPermissionService.getUserPermCodes(sysUser.getLoginName());
         info.addStringPermissions(permissionSet);
         return info;
     }
