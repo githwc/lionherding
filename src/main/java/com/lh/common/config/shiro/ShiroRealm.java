@@ -133,10 +133,9 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 校验token是否超时失效 & 或者账号密码是否错误
-        // todo 暂时注释
-        // if (!jwtTokenRefresh(token, loginName, sysUser.getPassword())) {
-        //     throw new TokenException("Token失效，请重新登录!");
-        // }
+        if (!jwtTokenRefresh(token, loginName, sysUser.getPassword())) {
+            throw new TokenException("Token失效，请重新登录!");
+        }
 
         // 判断用户状态
         if (sysUser.getState() != 0) {

@@ -46,9 +46,7 @@ public class EncoderUtil {
         PBEParameterSpec parameterSpec = new PBEParameterSpec(salt.getBytes(), ITERATIONCOUNT);
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
-
             cipher.init(Cipher.ENCRYPT_MODE, key, parameterSpec);
-
             encipheredData = cipher.doFinal(plaintext.getBytes());
         } catch (Exception e) {
         }
@@ -65,15 +63,12 @@ public class EncoderUtil {
      * @throws Exception
      */
     public static String decrypt(String ciphertext, String password, String salt) {
-
         Key key = getPBEKey(password);
         byte[] passDec = null;
         PBEParameterSpec parameterSpec = new PBEParameterSpec(salt.getBytes(), ITERATIONCOUNT);
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
-
             cipher.init(Cipher.DECRYPT_MODE, key, parameterSpec);
-
             passDec = cipher.doFinal(hexStringToBytes(ciphertext));
         } catch (Exception e) {
         }

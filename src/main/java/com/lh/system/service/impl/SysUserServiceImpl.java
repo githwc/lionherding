@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.UserNoExistException;
+import com.lh.common.config.exception.userException.UserPasswordException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
@@ -54,17 +55,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new UserNoExistException("该用户不存在！");
         } else {
             // 密码验证
-            String requestPassword = EncoderUtil.encrypt(loginName, password, sysUser.getLoginName());
+            String requestPassword = EncoderUtil.encrypt(loginName, password, sysUser.getSalt());
             String sysPassword = sysUser.getPassword();
-            // todo 暂时注释
-            // if(!sysPassword.equals(requestPassword)) {
-            //     sysLogService.addLog("登录失败，用户:"+loginName+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
-            //     throw new UserPasswordException("密码错误！");
-            // }
+            if(!sysPassword.equals(requestPassword)) {
+                sysLogService.addLog("登录失败，用户:"+loginName+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
+                throw new UserPasswordException("密码错误,请重新输入！");
+            }
             JSONObject jsonObject = new JSONObject();
             // 生成token
-            // todo 暂时放置默认密码 此处应放置系统密码
-            String token = JwtUtil.sign(loginName, "123456");
+            String token = JwtUtil.sign(loginName, sysPassword);
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
             redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 30);
