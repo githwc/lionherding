@@ -5,21 +5,21 @@ import com.lh.common.config.response.ResponseCode;
 import com.lh.common.config.response.ResultUtils;
 
 /**
- * 功能描述：身份验证错误
+ * 功能描述：Token 错误
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: 紫色年华
  * @Author: xieyc
- * @Datetime: 2019-09-29
+ * @Datetime: 2019-09-25
  * @Version: 1.0.0
  */
-public class UserAuthException extends ApiException {
-    public UserAuthException() {
-        super(ResponseCode.NO_ACCESS_EXCEPTION, "身份验证失败");
+public class RunningException extends ApiException {
+    public RunningException() {
+        super(ResponseCode.SYSTEM_EXCEPTION, "运行时异常");
     }
 
-    public UserAuthException(String msg, Object... params) {
-        super(ResponseCode.NO_ACCESS_EXCEPTION, ResultUtils.formatMsg(msg, params));
+    public RunningException(String msg, Object... params) {
+        super(ResponseCode.SYSTEM_EXCEPTION, ResultUtils.formatMsg(msg, params));
     }
 }

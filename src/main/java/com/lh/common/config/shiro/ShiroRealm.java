@@ -1,11 +1,9 @@
 package com.lh.common.config.shiro;
 
-import com.lh.common.config.exception.userException.TokenException;
-import com.lh.common.config.exception.userException.UserDisableException;
-import com.lh.common.config.exception.userException.UserNoExistException;
+import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
-import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysPermissionService;
@@ -67,7 +65,7 @@ public class ShiroRealm extends AuthorizingRealm {
         log.info("————执行身份认证————");
         String token = (String)auth.getCredentials();
         if (token == null) {
-            throw new TokenException();
+            throw new RunningException("Token异常");
         }
         //检验token有效性
         SysUser sysUser = this.checkUserTokenIsEffect(token);
@@ -123,23 +121,23 @@ public class ShiroRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String loginName = JwtUtil.getUsername(token);
         if (loginName == null) {
-            throw new TokenException("token非法无效!");
+            throw new RunningException("token非法无效!");
         }
 
         // 查询用户信息
         SysUser sysUser = sysUserService.getUserByName(loginName);
         if (sysUser == null) {
-            throw new UserNoExistException("用户不存在!");
+            throw new RunningException("用户不存在!");
         }
 
         // 校验token是否超时失效 & 或者账号密码是否错误
         if (!jwtTokenRefresh(token, loginName, sysUser.getPassword())) {
-            throw new TokenException("Token失效，请重新登录!");
+            throw new RunningException("Token失效，请重新登录!");
         }
 
         // 判断用户状态
         if (sysUser.getState() != 0) {
-            throw new UserDisableException("账号已被锁定,请联系管理员!");
+            throw new RunningException("账号已被锁定,请联系管理员!");
         }
         return sysUser;
     }

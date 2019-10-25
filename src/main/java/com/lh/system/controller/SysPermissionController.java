@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
+import com.lh.common.config.response.ResponseCode;
 import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
@@ -51,7 +52,7 @@ public class SysPermissionController {
         try {
             jsonObject = service.getUserPermissionByToken(token,response);
         }catch (Exception e){
-            HttpResponseUtil.sendJson(response, ResponseBean.error(500,e.getMessage()!= "" ? e.getMessage() :"系统错误，请联系管理员！"));
+            HttpResponseUtil.sendJson(response, ResponseBean.error(ResponseCode.SYSTEM_EXCEPTION,e.getMessage()!= "" ? e.getMessage() :"系统错误，请联系管理员！"));
             log.error(e.getMessage(), e);
         }
         return jsonObject;

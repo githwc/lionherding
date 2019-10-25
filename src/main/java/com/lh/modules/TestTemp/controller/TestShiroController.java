@@ -1,11 +1,11 @@
 package com.lh.modules.TestTemp.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.common.config.exception.userException.UserNoExistException;
+import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.common.utils.EncoderUtil;
-import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysLogService;
@@ -99,7 +99,7 @@ public class TestShiroController {
         SysUser sysUser = new SysUser();
         sysUser = iSysUserService.getUserByName(name);
         if(sysUser==null) {
-            throw new UserNoExistException("该用户不存在！");
+            throw new RunningException("该用户不存在！");
         }else {
             // 密码验证
             String userpassword = EncoderUtil.encrypt(name, password, sysUser.getLoginName());

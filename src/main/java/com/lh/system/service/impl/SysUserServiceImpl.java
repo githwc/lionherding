@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lh.common.config.exception.userException.UserNoExistException;
-import com.lh.common.config.exception.userException.UserPasswordException;
+import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
@@ -55,14 +54,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser = this.getUserByName(loginName);
         if (sysUser == null) {
             sysLogService.addLog("登录失败，用户名:" + loginName + "不存在！", CommonConstant.LOG_TYPE_1, "sysUser/login", "loginName:" + loginName + ",password:" + password);
-            throw new UserNoExistException("该用户不存在！");
+            throw new RunningException("该用户不存在！");
         } else {
             // 密码验证
             String requestPassword = EncoderUtil.encrypt(loginName, password, sysUser.getSalt());
             String sysPassword = sysUser.getPassword();
             if(!sysPassword.equals(requestPassword)) {
                 sysLogService.addLog("登录失败，用户:"+loginName+"密码输入错误！", CommonConstant.LOG_TYPE_1, "sysUser/login","loginName:"+loginName+",password:"+password);
-                throw new UserPasswordException("密码错误,请重新输入！");
+                throw new RunningException("密码错误,请重新输入！");
             }
             JSONObject jsonObject = new JSONObject();
             // 生成token
