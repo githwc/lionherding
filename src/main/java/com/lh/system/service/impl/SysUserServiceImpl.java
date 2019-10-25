@@ -1,14 +1,17 @@
 package com.lh.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.UserNoExistException;
 import com.lh.common.config.exception.userException.UserPasswordException;
+import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
-import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysUserMapper;
@@ -118,6 +121,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         sysUser.setLastLoginTime(LocalDateTime.now());
         this.baseMapper.updateById(sysUser);
+    }
+
+    @Override
+    public IPage<SysUser> userList(Page<SysUser> page, JSONObject param) {
+        Integer[] arr = {0,1};
+        return this.baseMapper.selectPage(page,new LambdaQueryWrapper<SysUser>()
+                .in(SysUser::getState,arr)
+                .orderByAsc(SysUser::getSort));
     }
 
 }

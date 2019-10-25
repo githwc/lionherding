@@ -1,6 +1,8 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -53,5 +55,11 @@ public class SysUserController {
         iSysUserService.logout(request,response);
     }
 
+    @PostMapping("/list")
+    public IPage<SysUser> userList (@RequestBody JSONObject jsonObject){
+        int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
+        int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
+        return iSysUserService.userList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("param"));
+    }
 
 }

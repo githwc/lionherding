@@ -1,5 +1,8 @@
 package com.lh.common.constant;
 
+import javafx.print.PrintSides;
+import sun.net.httpserver.HttpsServerImpl;
+
 /**
  * 功能描述：
  * <p>版权所有：</p>
@@ -76,4 +79,17 @@ public class CommonConstant {
 
     /** XML编码 */
     public static String XML_CODE = "text/xml;charset=UTF-8";
+
+
+    // ================== 状态码 ===========================
+
+    /**
+     * 未删除
+     */
+    public static final Integer DEL_FLAG_0 = 0 ;
+
+    /**
+     * 已删除
+     */
+    public static final Integer DEL_FLAG_1 = 1;
 }

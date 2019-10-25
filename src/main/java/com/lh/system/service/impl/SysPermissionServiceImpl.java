@@ -6,19 +6,20 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.config.filter.JwtUtil;
-import com.lh.common.config.response.HttpResponseUtil;
-import com.lh.common.config.response.ResponseBean;
+import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.mapper.SysPermissionMapper;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionDataUtil;
+import com.lh.system.vo.SysPermissionTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,32 +56,27 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public JSONObject getUserPermissionByToken(String token, HttpServletResponse response) {
         JSONObject json = new JSONObject();
-        try {
-            if (BasisUtil.isEmpty(token)) {
-                throw new ParameterException("参数错误:TOKEN不允许为空");
-            }
-            String loginName = JwtUtil.getUsername(token);
-            List<SysPermission> metaList = this.baseMapper.queryPermissionByUser(loginName);
-            PermissionDataUtil.addIndexPage(metaList);
-            JSONArray menujsonArray = new JSONArray();
-            this.getMenuJsonArray(menujsonArray, metaList, null);
-            JSONArray authjsonArray = new JSONArray();
-            this.getAuthJsonArray(authjsonArray, metaList);
-            // 查询所有的权限
-            List<SysPermission> allAuthList = this.baseMapper.selectList(new LambdaQueryWrapper<SysPermission>()
-                    .eq(SysPermission::getDelFlag,0)
-                    .eq(SysPermission::getMenuType,2)
-                    .eq(SysPermission::getStatus,"1")
-            );
-            JSONArray allauthjsonArray = new JSONArray();
-            this.getAllAuthJsonArray(allauthjsonArray, allAuthList);
-            json.put("menu", menujsonArray);
-            json.put("auth", authjsonArray);
-            json.put("allAuth", allauthjsonArray);
-        } catch (Exception e) {
-            HttpResponseUtil.sendJson(response, ResponseBean.error(500,"系统错误，请联系管理员！"+e.getMessage()));
-            log.error(e.getMessage(), e);
+        if (BasisUtil.isEmpty(token)) {
+            throw new ParameterException("参数错误:TOKEN不允许为空");
         }
+        String loginName = JwtUtil.getUsername(token);
+        List<SysPermission> metaList = this.baseMapper.queryPermissionByUser(loginName);
+        PermissionDataUtil.addIndexPage(metaList);
+        JSONArray menujsonArray = new JSONArray();
+        this.getMenuJsonArray(menujsonArray, metaList, null);
+        JSONArray authjsonArray = new JSONArray();
+        this.getAuthJsonArray(authjsonArray, metaList);
+        // 查询所有的权限
+        List<SysPermission> allAuthList = this.baseMapper.selectList(new LambdaQueryWrapper<SysPermission>()
+                .eq(SysPermission::getDelFlag,0)
+                .eq(SysPermission::getMenuType,2)
+                .eq(SysPermission::getStatus,"1")
+        );
+        JSONArray allauthjsonArray = new JSONArray();
+        this.getAllAuthJsonArray(allauthjsonArray, allAuthList);
+        json.put("menu", menujsonArray);
+        json.put("auth", authjsonArray);
+        json.put("allAuth", allauthjsonArray);
         return json;
     }
 
@@ -244,7 +240,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     /**
      *  @DESC：判断是否外网URL
-     *  例如： http://localhost:8080/jeecg-boot/swagger-ui.html#/
+     *  例如： http://localhost:8080/lionherding/swagger-ui.html#/
      *  支持特殊格式： {{ *  window._CONFIG['domianURL'] }}/druid/ {{ JS代码片段 }}，前台解析会自动执行JS代码片段
      *
      * @param url
@@ -278,4 +274,39 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         }
     }
 
+    @Override
+    public List<SysPermissionTree> permissionlist() {
+        List<SysPermission> list = this.baseMapper.selectList(new LambdaQueryWrapper<SysPermission>()
+                .eq(SysPermission::getDelFlag,CommonConstant.DEL_FLAG_0)
+                .orderByAsc(SysPermission::getSort)
+        );
+        List<SysPermissionTree> treeList = new ArrayList<>();
+        getTreeList(treeList, list, null);
+        return treeList;
+    }
+
+    /**
+     *  组装菜单树
+     * @param treeList
+     * @param metaList
+     * @param temp
+     */
+    private void getTreeList(List<SysPermissionTree> treeList, List<SysPermission> metaList, SysPermissionTree temp) {
+        for (SysPermission permission : metaList) {
+            String tempPid = permission.getParentId();
+            SysPermissionTree tree = new SysPermissionTree(permission);
+            if (temp == null && BasisUtil.isEmpty(tempPid)) {
+                treeList.add(tree);
+                if (!tree.isLeaf()) {
+                    getTreeList(treeList, metaList, tree);
+                }
+            } else if (temp != null && tempPid != null && tempPid.equals(temp.getId())) {
+                temp.getChildren().add(tree);
+                if (!tree.isLeaf()) {
+                    getTreeList(treeList, metaList, tree);
+                }
+            }
+
+        }
+    }
 }

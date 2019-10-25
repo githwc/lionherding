@@ -1,12 +1,13 @@
 package com.lh.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 功能描述：
@@ -90,6 +91,12 @@ public class SysPermission implements Serializable {
      * 是否隐藏路由: 0否,1是
      */
     private Integer hidden;
+
+    /**
+     * 是否缓存页面: 0:不是  1:是（默认值1）
+     */
+    private boolean keepAlive;
+
     /**
      * 描述
      */
@@ -97,7 +104,7 @@ public class SysPermission implements Serializable {
     /**
      * 创建人
      */
-    private String createBy;
+    private String createUserId;
     /**
      * 创建时间
      */
@@ -105,7 +112,7 @@ public class SysPermission implements Serializable {
     /**
      * 更新人
      */
-    private String updateBy;
+    private String updateUserId;
     /**
      * 更新时间
      */
@@ -115,7 +122,7 @@ public class SysPermission implements Serializable {
      */
     private Integer delFlag;
     /**
-     * 是否添加数据权限1是0否
+     * 是否添加数据权限 1是 0否
      */
     private Integer ruleFlag;
     /**

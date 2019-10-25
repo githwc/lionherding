@@ -23,9 +23,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // @Configuration
 public class WebMvcConfiguration /*implements WebMvcConfigurer*/ {
 
-	// @Value("${jeecg.path.upload}")
+	// @Value("${lionherding.path.upload}")
 	// private String upLoadPath;
-	// @Value("${jeecg.path.webapp}")
+	// @Value("${lionherding.path.webapp}")
 	// private String webAppPath;
 	// @Value("${spring.resource.static-locations}")
 	// private String staticLocations;

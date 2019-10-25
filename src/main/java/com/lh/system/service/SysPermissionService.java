@@ -3,6 +3,7 @@ package com.lh.system.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysPermission;
+import com.lh.system.vo.SysPermissionTree;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -29,6 +30,15 @@ public interface SysPermissionService extends IService<SysPermission> {
      */
     Set<String> getUserPermCodes(String loginName);
 
-
+    /**
+     * 根据Token获取用户拥有的权限
+     * @param token
+     * @param response
+     * @return
+     */
     JSONObject getUserPermissionByToken(String token,HttpServletResponse response);
+
+    List<SysPermissionTree> permissionlist ();
+
+
 }

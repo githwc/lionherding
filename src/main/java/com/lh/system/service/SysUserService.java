@@ -1,6 +1,8 @@
 package com.lh.system.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUser;
 
@@ -45,4 +47,11 @@ public interface SysUserService extends IService<SysUser> {
      */
     void dealUser(SysUser sysUser);
 
+    /**
+     * 加载用户数据
+     * @param page
+     * @param param
+     * @return
+     */
+    IPage<SysUser> userList(Page<SysUser> page, JSONObject param);
 }

@@ -1,15 +1,22 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.lh.common.config.exception.parameterException.ParameterException;
+import com.lh.common.config.response.HttpResponseUtil;
+import com.lh.common.config.response.ResponseBean;
+import com.lh.common.constant.CommonConstant;
+import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
+import com.lh.system.service.SysUserService;
+import com.lh.system.vo.SysPermissionTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,17 +37,43 @@ import javax.servlet.http.HttpServletResponse;
 public class SysPermissionController {
 
     @Autowired
-    public SysPermissionService iSysPermissionService;
+    public SysPermissionService service;
 
     /**
-     *  查询用户拥有的菜单权限和按钮权限(根据TOKEN)
+     *  根据Token获取用户拥有的权限
      * @param token
      * @param response
      * @return
      */
     @GetMapping(value = "/getUserPermissionByToken")
     public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
-        return iSysPermissionService.getUserPermissionByToken(token,response);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = service.getUserPermissionByToken(token,response);
+        }catch (Exception e){
+            HttpResponseUtil.sendJson(response, ResponseBean.error(500,e.getMessage()!= "" ? e.getMessage() :"系统错误，请联系管理员！"));
+            log.error(e.getMessage(), e);
+        }
+        return jsonObject;
     }
+
+    /**
+    * @Description: 加载全部菜单有效数据
+    * @Date: 14:25 2019/10/25
+    * @Param:
+    * @Return:
+    * @throws:
+    */
+    @GetMapping(value = "/list")
+    public List<SysPermissionTree> list() {
+        List<SysPermissionTree> list = new ArrayList<>();
+        try {
+            list = service.permissionlist();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return list;
+    }
+
 
 }

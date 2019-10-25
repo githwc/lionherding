@@ -54,7 +54,7 @@ public class SysDictionary implements Serializable {
     /**
      * 创建人
      */
-    private String createId;
+    private String createUserId;
     /**
      * 创建时间
      */
@@ -62,7 +62,7 @@ public class SysDictionary implements Serializable {
     /**
      * 修改人
      */
-    private String updateId;
+    private String updateUserId;
     /**
      * 修改时间
      */

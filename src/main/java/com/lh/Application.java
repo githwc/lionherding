@@ -51,6 +51,7 @@ public class Application {
 
     // ============= VUE ============
     // TODO: 2019/10/23 permission -> 17 -> 认证成功后手动切换页面
+    // TODO: 2019/10/25  return new Promise((resolve, reject) => { 用法
     public static void main(String[] args) {
 
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
