@@ -54,8 +54,9 @@ public class SysPermissionController {
         }catch (Exception e){
             HttpResponseUtil.sendJson(response, ResponseBean.error(ResponseCode.SYSTEM_EXCEPTION,e.getMessage()!= "" ? e.getMessage() :"系统错误，请联系管理员！"));
             log.error(e.getMessage(), e);
+        }finally {
+            return jsonObject;
         }
-        return jsonObject;
     }
 
     /**
@@ -72,8 +73,9 @@ public class SysPermissionController {
             list = service.permissionlist();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+        }finally {
+            return list;
         }
-        return list;
     }
 
 

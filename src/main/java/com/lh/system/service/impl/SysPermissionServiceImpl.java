@@ -12,7 +12,7 @@ import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.mapper.SysPermissionMapper;
 import com.lh.system.service.SysPermissionService;
-import com.lh.system.utils.PermissionDataUtil;
+import com.lh.system.utils.PermissionOPUtil;
 import com.lh.system.vo.SysPermissionTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -61,7 +61,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         }
         String loginName = JwtUtil.getUsername(token);
         List<SysPermission> metaList = this.baseMapper.queryPermissionByUser(loginName);
-        PermissionDataUtil.addIndexPage(metaList);
+        PermissionOPUtil.addIndexPage(metaList);
         JSONArray menujsonArray = new JSONArray();
         this.getMenuJsonArray(menujsonArray, metaList, null);
         JSONArray authjsonArray = new JSONArray();

@@ -146,9 +146,13 @@ public class SysUser implements Serializable {
      */
     private Integer sort;
     /**
-     * 状态(0正常 1 冻结 2 已删除)
+     * 状态(0正常 1 冻结)
      */
     private Integer state;
+    /**
+     * 删除状态(0:未删除 1:已删除)
+     */
+    private Boolean delFlag;
     /**
      * 备注
      */
