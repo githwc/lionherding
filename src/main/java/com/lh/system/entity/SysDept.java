@@ -56,7 +56,7 @@ public class SysDept implements Serializable {
      */
     private String address;
     /**
-     * 机构类型(1.组织机构 2 岗位)
+     * 机构类型(1.公司 2.部门 3 岗位)
      */
     private String orgType;
     /**

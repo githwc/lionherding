@@ -123,11 +123,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public IPage<SysUser> userList(Page<SysUser> page, JSONObject params) {
-        return this.baseMapper.selectPage(page,new LambdaQueryWrapper<SysUser>()
-                .eq(SysUser::getDepartId,params.getString("deptId"))
-                .eq(SysUser::getDelFlag,CommonConstant.DEL_FLAG_0)
-                .orderByAsc(SysUser::getSort));
+    public Page<SysUser> departUserList(Page<SysUser> page, JSONObject params) {
+        return this.baseMapper.departUserList(page,params);
     }
 
 }

@@ -1,8 +1,5 @@
 package com.lh.common.constant;
 
-import javafx.print.PrintSides;
-import sun.net.httpserver.HttpsServerImpl;
-
 /**
  * 功能描述：
  * <p>版权所有：</p>

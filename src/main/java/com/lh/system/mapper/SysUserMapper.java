@@ -1,8 +1,12 @@
 package com.lh.system.mapper;
 
-import com.lh.system.entity.SysUser;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lh.system.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
 /**
  *
  * 功能描述：
@@ -18,5 +22,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
+
+    Page<SysUser> departUserList(@Param("page")Page<SysUser> page, @Param("params")JSONObject jsonObject);
 
 }

@@ -4,6 +4,7 @@ import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,5 +105,21 @@ public class DeptOPUtil {
         }
     }
 
+
+    /**
+     * 获取 DepartIdModel
+     * @param recordList
+     * @return
+     */
+    public static List<DepartIdModel> wrapTreeDataToDepartIdTreeList(List<SysDept> recordList) {
+        List<DepartIdModel> idList = new ArrayList<DepartIdModel>();
+        List<SysDeptTree> records = new ArrayList<>();
+        for (int i = 0; i < recordList.size(); i++) {
+            SysDept depart = recordList.get(i);
+            records.add(new SysDeptTree(depart));
+        }
+        findChildren(records, idList);
+        return idList;
+    }
 
 }

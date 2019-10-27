@@ -6,16 +6,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysUserService;
-import io.netty.handler.ipfilter.IpFilterRule;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
@@ -59,12 +60,12 @@ public class SysUserController {
      * 部门用户列表
      */
     @PostMapping(value = "/departUserList")
-    public IPage<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
-        IPage<SysUser> userList = new Page<SysUser>();
+    public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
+        Page<SysUser> userList = new Page<SysUser>();
         try {
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            userList = iSysUserService.userList(new Page<>(1, 10), jsonObject.getJSONObject("params"));
+            userList = iSysUserService.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
         }catch (Exception e){
             throw new RunningException("系统错误！"+e.getMessage());
         }finally {

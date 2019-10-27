@@ -2,6 +2,7 @@ package com.lh.system.service;
 
 import com.lh.system.entity.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface SysDeptService extends IService<SysDept> {
     List<SysDeptTree> queryTreeList();
 
     List<SysDeptTree> searhBy(String keyWord);
+
+    List<DepartIdModel> queryDepartIdTreeList();
 }

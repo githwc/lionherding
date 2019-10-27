@@ -53,5 +53,5 @@ public interface SysUserService extends IService<SysUser> {
      * @param param
      * @return
      */
-    IPage<SysUser> userList(Page<SysUser> page, JSONObject param);
+    Page<SysUser> departUserList(Page<SysUser> page, JSONObject param);
 }

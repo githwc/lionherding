@@ -2,13 +2,11 @@ package com.lh.system.controller;
 
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.system.service.SysDeptService;
+import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +66,21 @@ public class SysDeptController {
         }finally {
             return list;
         }
+    }
+
+    /**
+     * 添加或编辑页面对该方法发起请求,以树结构形式加载所有部门的名称
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryIdTree", method = RequestMethod.GET)
+    public List<DepartIdModel> queryIdTree() {
+        List<DepartIdModel> list = new ArrayList<>();
+        try {
+           list = service.queryDepartIdTreeList();
+        } catch (Exception e) {
+            throw new RunningException("系统运行错误");
+        }
+        return list;
     }
 }

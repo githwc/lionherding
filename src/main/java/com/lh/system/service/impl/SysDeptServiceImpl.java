@@ -2,12 +2,15 @@ package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
+import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +60,16 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             return newList;
         }
         return null;
+    }
+
+    @Cacheable(value = CacheConstant.SYS_DEPART_IDS_CACHE)
+    @Override
+    public List<DepartIdModel> queryDepartIdTreeList() {
+        List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
+            .eq(SysDept::getDelFlag,CommonConstant.DEL_FLAG_0)
+                .orderByAsc(SysDept::getSort)
+        );
+        return DeptOPUtil.wrapTreeDataToDepartIdTreeList(list);
     }
 
 }
