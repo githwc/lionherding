@@ -11,6 +11,7 @@ import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Api(tags="测试接口")
+@Slf4j
 public class TestShiroController {
 
     @Autowired
@@ -49,6 +51,7 @@ public class TestShiroController {
     @RequestMapping("/test")
     @WriteLog(opPosition = "测试日志点" ,optype = CommonConstant.OPTYPE_READ)
     public String test(){
+        log.info("执行test方法");
         return "test";
     }
 

@@ -7,6 +7,7 @@ import com.lh.system.vo.SysPermissionTree;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -38,7 +39,37 @@ public interface SysPermissionService extends IService<SysPermission> {
      */
     JSONObject getUserPermissionByToken(String token,HttpServletResponse response);
 
+    /**
+     * 加载全部菜单有效数据
+     * @return
+     */
     List<SysPermissionTree> permissionlist ();
+
+    /**
+     * 获取全部的权限树
+     *
+     * @return
+     */
+    Map<String,Object> queryTreeList ();
+
+    /**
+     * 添加数据
+     * @param sysPermission
+     * @return
+     */
+    void addPermission(SysPermission sysPermission);
+
+    /**
+     * 编辑数据
+     * @param sysPermission
+     */
+    void editPermission(SysPermission sysPermission);
+
+    /**
+     * 单个删除
+     * @param id
+     */
+    void deletePermission(String id);
 
 
 }

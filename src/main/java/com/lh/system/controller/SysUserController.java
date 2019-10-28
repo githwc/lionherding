@@ -1,22 +1,23 @@
 package com.lh.system.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.utils.BasisUtil;
+import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  *
@@ -72,5 +73,30 @@ public class SysUserController {
             return userList;
         }
     }
+
+
+    /**
+     * 用户添加
+     * @param jsonObject
+     */
+    @PostMapping(value = "/add")
+    public void add(@RequestBody JSONObject jsonObject) {
+        try {
+            iSysUserService.addUserWithRole(jsonObject);
+        } catch (Exception e) {
+            throw new RunningException( e.getMessage() == "" ? "操作失败" : e.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/edit")
+    public void edit(@RequestBody JSONObject jsonObject) {
+        try {
+            iSysUserService.editUserWithRole(jsonObject);
+        } catch (Exception e) {
+            throw new RunningException( e.getMessage() == "" ? "操作失败" : e.getMessage());
+        }
+    }
+
+
 
 }

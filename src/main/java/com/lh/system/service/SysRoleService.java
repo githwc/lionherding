@@ -3,6 +3,7 @@ package com.lh.system.service;
 import com.lh.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,4 +21,6 @@ import java.util.Set;
 public interface SysRoleService extends IService<SysRole> {
 
     Set<String> getUserRoles(String loginName);
+
+    List<SysRole> roleList();
 }

@@ -3,9 +3,13 @@ package com.lh.system.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.config.exception.ApiException;
 import com.lh.common.config.exception.parameterException.ParameterException;
+import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
+import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
@@ -14,15 +18,14 @@ import com.lh.system.mapper.SysPermissionMapper;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionOPUtil;
 import com.lh.system.vo.SysPermissionTree;
+import com.lh.system.vo.TreeModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
 * 功能描述：
@@ -285,6 +288,102 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         return treeList;
     }
 
+    @Override
+    public Map<String, Object> queryTreeList() {
+        Map<String, Object> resMap = new HashMap<String, Object>();
+        // 全部权限id
+        List<String> ids = new ArrayList<>();
+        List<SysPermission> list = this.baseMapper.selectList(new LambdaQueryWrapper<SysPermission>()
+            .eq(SysPermission::getDelFlag,CommonConstant.DEL_FLAG_0)
+                .orderByAsc(SysPermission::getSort)
+        );
+        for (SysPermission curr : list) {
+            ids.add(curr.getSysPermissionId());
+        }
+        //全部树节点
+        List<TreeModel> treeList = new ArrayList<>();
+        getTreeModelList(treeList, list, null);
+        resMap.put("treeList", treeList);
+        resMap.put("ids", ids);
+        return resMap;
+    }
+
+
+    @Override
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    public void addPermission(SysPermission sysPermission) throws ApiException {
+        //判断是否是一级菜单，是的话清空父菜单
+        if(CommonConstant.MENU_TYPE_0.equals(sysPermission.getMenuType())) {
+            sysPermission.setParentId(null);
+        }
+        String pid = sysPermission.getParentId();
+        //设置父节点不为叶子节点
+        if(BasisUtil.isNotEmpty(pid)) {
+            this.baseMapper.setMenuLeaf(pid, 0);
+        }
+        sysPermission.setDelFlag(0);
+        sysPermission.setIsLeaf(true);
+        this.save(sysPermission);
+    }
+
+    @Override
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    public void editPermission(SysPermission sysPermission) {
+        SysPermission oldPer = this.getById(sysPermission.getSysPermissionId());
+        if(oldPer==null) {
+            throw new ParameterException("未找到菜单信息");
+        }else {
+            //----------------------------------------------------------------------
+            //Step1.判断是否是一级菜单，是的话清空父菜单ID
+            if(CommonConstant.MENU_TYPE_0.equals(sysPermission.getMenuType())) {
+                sysPermission.setParentId(null);
+            }
+            //Step2.判断菜单下级是否有菜单，无则设置为叶子节点
+            int count = this.count(new QueryWrapper<SysPermission>().lambda().eq(SysPermission::getParentId, sysPermission.getSysPermissionId()));
+            if(count==0) {
+                sysPermission.setIsLeaf(true);
+            }
+            //----------------------------------------------------------------------
+            this.updateById(sysPermission);
+            //如果当前菜单的父菜单变了，则需要修改新父菜单和老父菜单的，叶子节点状态
+            String newPid = sysPermission.getParentId();
+            if((BasisUtil.isNotEmpty(newPid) && !newPid.equals(oldPer.getParentId())) || BasisUtil.isEmpty(newPid)&&BasisUtil.isNotEmpty(oldPer.getParentId())) {
+                //a.设置新的父菜单不为叶子节点
+                this.baseMapper.setMenuLeaf(newPid, 0);
+                //b.判断老的菜单下是否还有其他子菜单，没有的话则设置为叶子节点
+                int cc = this.count(new QueryWrapper<SysPermission>().lambda().eq(SysPermission::getParentId, oldPer.getParentId()));
+                if(cc==0) {
+                    if(BasisUtil.isNotEmpty(oldPer.getParentId())) {
+                        this.baseMapper.setMenuLeaf(oldPer.getParentId(), 1);
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Override
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    public void deletePermission(String id) throws RunningException{
+        SysPermission sysPermission = this.getById(id);
+        if(sysPermission==null) {
+            throw new RunningException("未找到菜单信息");
+        }
+        String pid = sysPermission.getParentId();
+        if(BasisUtil.isNotEmpty(pid)) {
+            int count = this.count(new QueryWrapper<SysPermission>().lambda().eq(SysPermission::getParentId, pid));
+            if(count==1) {
+                //若父节点无其他子节点，则该父节点是叶子节点
+                this.baseMapper.setMenuLeaf(pid, 1);
+            }
+        }
+        // 该节点可能是子节点但也可能是其它节点的父节点,所以需要级联删除
+        this.removeChildrenBy(sysPermission.getSysPermissionId());
+        //执行逻辑删除
+        sysPermission.setDelFlag(1);
+        this.baseMapper.updateById(sysPermission);
+    }
+
     /**
      *  组装菜单树
      * @param treeList
@@ -306,7 +405,54 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                     getTreeList(treeList, metaList, tree);
                 }
             }
+        }
+    }
 
+    private void getTreeModelList(List<TreeModel> treeList, List<SysPermission> metaList, TreeModel temp) {
+        for (SysPermission permission : metaList) {
+            String tempPid = permission.getParentId();
+            TreeModel tree = new TreeModel(permission);
+            if (temp == null && BasisUtil.isEmpty(tempPid)) {
+                treeList.add(tree);
+                if (!tree.isLeaf()) {
+                    getTreeModelList(treeList, metaList, tree);
+                }
+            } else if (temp != null && tempPid != null && tempPid.equals(temp.getKey())) {
+                temp.getChildren().add(tree);
+                if (!tree.isLeaf()) {
+                    getTreeModelList(treeList, metaList, tree);
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据父id删除其关联的子节点数据
+     *
+     * @return
+     */
+    public void removeChildrenBy(String parentId) {
+        // 查出该主键下的所有子级
+        List<SysPermission> permissionList = this.list(new LambdaQueryWrapper<SysPermission>()
+            .eq(SysPermission::getParentId,parentId)
+        );
+        if (permissionList != null && permissionList.size() > 0) {
+            SysPermission sysPermission = new SysPermission();
+            sysPermission.setDelFlag(1);
+            String id = ""; // id
+            int num = 0; // 查出的子级数量
+            // 如果查出的集合不为空, 则先删除所有
+            this.update(sysPermission,new LambdaQueryWrapper<SysPermission>()
+                    .eq(SysPermission::getParentId,parentId)
+            );
+            // 再遍历刚才查出的集合, 根据每个对象,查找其是否仍有子级
+            for (int i = 0, len = permissionList.size(); i < len; i++) {
+                id = permissionList.get(i).getSysPermissionId();
+                num = this.count(new LambdaQueryWrapper<SysPermission>().eq(SysPermission::getParentId, id));
+                if (num > 0) {// 如果有, 则递归
+                    this.removeChildrenBy(id);
+                }
+            }
         }
     }
 }

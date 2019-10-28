@@ -37,6 +37,10 @@ public class SysRole implements Serializable {
      */
     private String roleCode;
     /**
+     * 删除状态(0正常，1删除)
+     */
+    private Integer delFlag;
+    /**
      * 排序
      */
     private Integer sort;

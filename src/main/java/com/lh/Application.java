@@ -36,12 +36,16 @@ import org.springframework.core.env.Environment;
 public class Application {
 
     // todo 1 检查点击重新登录后是否清除token
-    // TODO: 2019/10/13 整理一份初始化的表
+    // TODO: 2 2019/10/13 整理一份初始化的表
     // todo 3 日志中记录当前操作人
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
+    // TODO: 6 2019/10/28 系统管理加权限 admin 和 administrator
+    // TODO: 2019/10/28 7 增删改查基础接口
     // todo 12 Excel 导入, 打印功能
     // todo 13 图表分析
+    // TODO: 2019/10/28 用户管理
+    //  职务，头像，登录账号唯一
 
     // =========== shiro ===========
     // TODO: 2019/10/13 何时触发认证接口(subject.login()后调用)，何时触发授权接口(config中配置，进行鉴权)
@@ -52,6 +56,7 @@ public class Application {
     // ============= VUE ============
     // TODO: 2019/10/23 permission -> 17 -> 认证成功后手动切换页面
     // TODO: 2019/10/25  return new Promise((resolve, reject) => { 用法
+    // TODO: 2019/10/28 crud 公共组件
     public static void main(String[] args) {
 
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

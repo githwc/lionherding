@@ -54,4 +54,15 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     Page<SysUser> departUserList(Page<SysUser> page, JSONObject param);
+
+    /**
+     * 添加用户
+     */
+    void addUserWithRole(JSONObject jsonObject);
+
+    /**
+     * 修改用户
+     * @param jsonObject
+     */
+    void editUserWithRole(JSONObject jsonObject);
 }

@@ -1,9 +1,8 @@
 package com.lh.system.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.RunningException;
@@ -13,7 +12,9 @@ import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
+import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserMapper;
+import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
@@ -46,6 +47,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysLogService sysLogService;
+
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public JSONObject login(SysUser sysUser) {
@@ -125,6 +129,48 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Page<SysUser> departUserList(Page<SysUser> page, JSONObject params) {
         return this.baseMapper.departUserList(page,params);
+    }
+
+    @Override
+    public void addUserWithRole(JSONObject jsonObject) {
+        SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
+        String salt = BasisUtil.randomGen(8);
+        user.setSalt(salt);
+        String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), user.getPassword(), salt);
+        user.setPassword(passwordEncode);
+        this.save(user);
+        String roles = jsonObject.getString("selectedroles");
+        if(BasisUtil.isNotEmpty(roles)) {
+            String[] arr = roles.split(",");
+            for (String roleId : arr) {
+                SysUserRole userRole = new SysUserRole(user.getSysUserId(), roleId);
+                sysUserRoleMapper.insert(userRole);
+            }
+        }
+    }
+
+    @Override
+    public void editUserWithRole(JSONObject jsonObject) throws RunningException{
+        SysUser sysUser = this.getById(jsonObject.getString("id"));
+        if(sysUser==null) {
+            throw new RunningException("未找到对应实体");
+        }else {
+            SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
+            user.setPassword(sysUser.getPassword());
+            String roles = jsonObject.getString("selectedroles");
+            // String departs = jsonObject.getString("selecteddeparts");
+            //修改用户
+            this.updateById(user);
+            // 角色先删后加
+            sysUserRoleMapper.delete(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, user.getSysUserId()));
+            if(BasisUtil.isNotEmpty(roles)) {
+                String[] arr = roles.split(",");
+                for (String roleId : arr) {
+                    SysUserRole userRole = new SysUserRole(user.getSysUserId(), roleId);
+                    sysUserRoleMapper.insert(userRole);
+                }
+            }
+        }
     }
 
 }

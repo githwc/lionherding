@@ -1,15 +1,14 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.lh.common.config.exception.parameterException.ParameterException;
+import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
 import com.lh.common.config.response.ResponseCode;
-import com.lh.common.constant.CommonConstant;
+import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
-import com.lh.system.service.SysUserService;
+import com.lh.system.utils.PermissionOPUtil;
 import com.lh.system.vo.SysPermissionTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -78,5 +79,84 @@ public class SysPermissionController {
         }
     }
 
+    /**
+     * 获取全部的权限树
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
+    public Map<String, Object> queryTreeList() {
+        Map<String, Object> result = new HashMap<>();
+        try{
+            result = service.queryTreeList();
+        }catch (Exception e){
+            throw new RunningException("系统运行错误");
+        }finally {
+            return result;
+        }
+    }
 
+    /**
+     * 添加菜单
+     * @param permission
+     * @return
+     */
+    @PostMapping(value = "/add")
+    public void add(@RequestBody SysPermission permission) {
+        try{
+            permission = PermissionOPUtil.intelligentProcessData(permission);
+            service.addPermission(permission);
+        }catch (Exception e){
+            throw new RunningException("操作失败");
+        }
+    }
+
+    /**
+     * 编辑菜单
+     * @param permission
+     * @return
+     */
+    @PutMapping(value = "/edit")
+    public void edit(@RequestBody SysPermission permission) {
+        try {
+            permission = PermissionOPUtil.intelligentProcessData(permission);
+            service.editPermission(permission);
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/delete")
+    public void delete(@RequestParam(name = "sysPermissionId", required = true) String id) {
+        try {
+            service.deletePermission(id);
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
+
+    /**
+     * 批量删除菜单
+     * @param ids
+     * @return
+     */
+    @DeleteMapping(value = "/deleteBatch")
+    public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+        try {
+            String[] arr = ids.split(",");
+            for (String id : arr) {
+                if (BasisUtil.isNotEmpty(id)) {
+                    service.deletePermission(id);
+                }
+            }
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
 }

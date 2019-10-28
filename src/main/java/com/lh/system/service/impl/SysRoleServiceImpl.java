@@ -1,6 +1,8 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysRole;
 import com.lh.system.mapper.SysRoleMapper;
@@ -38,4 +40,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         return new HashSet<String>(roleSet);
     }
+
+    @Override
+    public List<SysRole> roleList() {
+        return this.baseMapper.selectList(new LambdaQueryWrapper<SysRole>()
+                .eq(SysRole::getDelFlag, CommonConstant.DEL_FLAG_0)
+                .orderByAsc(SysRole::getSort)
+        );
+    }
+
+
 }

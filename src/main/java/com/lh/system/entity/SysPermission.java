@@ -95,7 +95,7 @@ public class SysPermission implements Serializable {
     /**
      * 是否缓存页面: 0:不是  1:是（默认值1）
      */
-    private boolean keepAlive;
+    private Boolean keepAlive;
 
     /**
      * 描述

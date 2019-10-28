@@ -88,14 +88,12 @@ public class SysPermissionTree implements Serializable {
     /**
      * 是否路由菜单: 0:不是  1:是（默认值1）
      */
-    private boolean route;
-
+    private boolean isRoute;
 
     /**
      * 是否路缓存页面: 0:不是  1:是（默认值1）
      */
-    private boolean keepAlive;
-
+    private Boolean keepAlive;
 
     /**
      * 描述
@@ -127,8 +125,10 @@ public class SysPermissionTree implements Serializable {
      */
     private LocalDateTime updateTime;
 
-    /**alwaysShow*/
-    private boolean alwaysShow;
+    /**
+     * 是否聚合路由
+     */
+    private Boolean alwaysShow;
 
     /**是否隐藏路由菜单: 0否,1是（默认值0）*/
     private Integer hidden;
@@ -137,11 +137,6 @@ public class SysPermissionTree implements Serializable {
     private String status;
 
     private List<SysPermissionTree> children;
-
-    /*update_begin author:wuxianquan date:20190908 for:model增加字段 */
-    /** 外链菜单打开方式 0/内部打开 1/外部打开 */
-    private boolean internalOrExternal;
-    /*update_end author:wuxianquan date:20190908 for:model增加字段 */
 
     public SysPermissionTree() {
     }
@@ -171,8 +166,8 @@ public class SysPermissionTree implements Serializable {
         this.redirect = permission.getRedirect();
         this.url = permission.getUrl();
         this.hidden = permission.getHidden();
-        this.route = permission.getIsRoute();
-        this.keepAlive = permission.isKeepAlive();
+        this.isRoute = permission.getIsRoute();
+        this.keepAlive = permission.getKeepAlive();
         this.alwaysShow= permission.getAlwaysShow();
         this.title=permission.getName();
         if (!permission.getIsLeaf()) {

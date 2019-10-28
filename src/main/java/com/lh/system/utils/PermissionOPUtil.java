@@ -28,7 +28,6 @@ public class PermissionOPUtil {
 		if (permission == null) {
 			return null;
 		}
-
 		// 组件
 		if (BasisUtil.isNotEmpty(permission.getComponent())) {
 			String component = permission.getComponent();

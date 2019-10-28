@@ -89,4 +89,18 @@ public class CommonConstant {
      * 已删除
      */
     public static final Integer DEL_FLAG_1 = 1;
+
+    //================ 菜单类型 ===========================
+    /**
+     *  0：一级菜单
+     */
+    public static final Integer MENU_TYPE_0  = 0;
+    /**
+     *  1：子菜单
+     */
+    public static final Integer MENU_TYPE_1  = 1;
+    /**
+     *  2：按钮权限
+     */
+    public static final Integer MENU_TYPE_2  = 2;
 }

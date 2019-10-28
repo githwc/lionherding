@@ -35,6 +35,11 @@ public class SysUserRole implements Serializable {
      */
     private String userId;
 
+    /////////////////////////////// 预定义方法 ///////////////////////////////
+    public SysUserRole(String userId, String roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 
     /////////////////////////////// 非表字段 ///////////////////////////////
 

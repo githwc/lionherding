@@ -21,10 +21,10 @@ public interface CacheConstant {
 	//  */
     // public static final String SYS_DICT_TABLE_CACHE = "sys:cache:dictTable";
     //
-	// /**
-	//  * 数据权限配置缓存
-	//  */
-    // public static final String SYS_DATA_PERMISSIONS_CACHE = "sys:cache:permission:datarules";
+	/**
+	 * 数据权限配置缓存
+	 */
+    public static final String SYS_DATA_PERMISSIONS_CACHE = "sys:cache:permission:datarules";
     //
 	// /**
 	//  * 缓存用户信息
