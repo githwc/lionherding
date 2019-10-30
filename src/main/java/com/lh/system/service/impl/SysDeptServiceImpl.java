@@ -10,6 +10,7 @@ import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +71,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .orderByAsc(SysDept::getSort)
         );
         return DeptOPUtil.wrapTreeDataToDepartIdTreeList(list);
+    }
+
+    @Override
+    @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
+    public void editByDeptId(SysDept sysDept) {
+        // TODO: 2019/10/30 修改人
+        // sysDept.setUpdateUserId(username);
+        this.updateById(sysDept);
     }
 
 }

@@ -117,13 +117,13 @@ public class SysUserController {
 
     /**
      * 删除用户
-     * @param id
+     * @param sysUserId
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public void delete(@RequestParam(name = "sysUserId", required = true) String id) {
+    public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
         try {
-            iSysUserService.deleteUser(id);
+            iSysUserService.deleteUser(sysUserId);
         } catch (Exception e) {
             throw new RunningException(e.getMessage());
         }
@@ -135,7 +135,7 @@ public class SysUserController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
         try {
             String[] arr = ids.split(",");
             for (String id : arr) {
