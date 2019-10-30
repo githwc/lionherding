@@ -74,7 +74,7 @@ public class SysDept implements Serializable {
     /**
      * 删除状态(0:未删除 1:已删除)
      */
-    private Boolean delFlag;
+    private Integer delFlag;
     /**
      * 排序
      */

@@ -2,6 +2,7 @@ package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysDept;
@@ -81,4 +82,42 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         this.updateById(sysDept);
     }
 
+    @Override
+    @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
+    public void deleteById(String id) {
+        List<String> idList = new ArrayList<String>();
+        SysDept sysDept = this.getById(id);
+        if(sysDept == null) {
+            throw new RunningException("未找到对应实体");
+        }else {
+            //逻辑删除子部门
+            idList.add(id);
+            this.checkChildrenExists(id, idList);
+            idList.forEach(currId->{
+                SysDept sysDept1 = new SysDept();
+                sysDept1.setDelFlag(CommonConstant.DEL_FLAG_1);
+                this.update(sysDept1,new LambdaQueryWrapper<SysDept>()
+                        .eq(SysDept::getSysDeptId,currId)
+                );
+            });
+        }
+    }
+
+    /**
+     * 查找子部门
+     * @param id
+     * @param idList
+     */
+    private void checkChildrenExists(String id, List<String> idList) {
+        List<SysDept> departList = this.list(new LambdaQueryWrapper<SysDept>()
+                .eq(SysDept::getParentId,id)
+                .eq(SysDept::getDelFlag,CommonConstant.DEL_FLAG_0)
+        );
+        if(departList != null && departList.size() > 0) {
+            for(SysDept depart : departList) {
+                idList.add(depart.getSysDeptId());
+                this.checkChildrenExists(depart.getSysDeptId(), idList);
+            }
+        }
+    }
 }

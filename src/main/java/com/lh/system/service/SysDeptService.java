@@ -26,4 +26,7 @@ public interface SysDeptService extends IService<SysDept> {
     List<SysDeptTree> searhBy(String keyWord);
 
     List<DepartIdModel> queryDepartIdTreeList();
+
+    void editByDeptId(SysDept sysDept);
+    void deleteById(String id);
 }

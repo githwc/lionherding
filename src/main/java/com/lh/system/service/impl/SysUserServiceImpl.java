@@ -199,7 +199,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //删除用户
         SysUser user = new SysUser();
         user.setSysUserId(id);
-        user.setDelFlag(1);
+        user.setDelFlag(CommonConstant.DEL_FLAG_1);
         this.baseMapper.updateById(user);
     }
 

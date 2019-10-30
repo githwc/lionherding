@@ -37,6 +37,7 @@ public class Application {
 
     // todo 1 检查点击重新登录后是否清除token
     // TODO: 2 2019/10/13 整理一份初始化的表
+    // TODO: 2019/10/30 设置操作是否成功
     // todo 3 日志中记录当前操作人
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)

@@ -321,7 +321,6 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         if(BasisUtil.isNotEmpty(pid)) {
             this.baseMapper.setMenuLeaf(pid, 0);
         }
-        sysPermission.setDelFlag(0);
         sysPermission.setIsLeaf(true);
         this.save(sysPermission);
     }
@@ -380,7 +379,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         // 该节点可能是子节点但也可能是其它节点的父节点,所以需要级联删除
         this.removeChildrenBy(sysPermission.getSysPermissionId());
         //执行逻辑删除
-        sysPermission.setDelFlag(1);
+        sysPermission.setDelFlag(CommonConstant.DEL_FLAG_1);
         this.baseMapper.updateById(sysPermission);
     }
 
@@ -438,7 +437,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         );
         if (permissionList != null && permissionList.size() > 0) {
             SysPermission sysPermission = new SysPermission();
-            sysPermission.setDelFlag(1);
+            sysPermission.setDelFlag(CommonConstant.DEL_FLAG_1);
             String id = ""; // id
             int num = 0; // 查出的子级数量
             // 如果查出的集合不为空, 则先删除所有
