@@ -65,4 +65,16 @@ public interface SysUserService extends IService<SysUser> {
      * @param jsonObject
      */
     void editUserWithRole(JSONObject jsonObject);
+
+    /**
+     * 登录账号唯一性检测
+     * @param loginName
+     */
+    void checkIsOnly(String loginName);
+
+    /**
+     * 单个删除
+     * @param id
+     */
+    void deleteUser(String id);
 }

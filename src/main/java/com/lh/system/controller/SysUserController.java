@@ -1,13 +1,13 @@
 package com.lh.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.userException.RunningException;
-import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
-import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysUser;
+import com.lh.system.entity.SysUserRole;
+import com.lh.system.service.SysUserRoleService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,6 +42,8 @@ public class SysUserController {
     @Autowired
     public SysUserService iSysUserService;
 
+    @Autowired
+    public SysUserRoleService sysUserRoleService;
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录",notes = "用户登录")
@@ -74,7 +77,6 @@ public class SysUserController {
         }
     }
 
-
     /**
      * 用户添加
      * @param jsonObject
@@ -88,6 +90,10 @@ public class SysUserController {
         }
     }
 
+    /**
+     * 用户修改
+     * @param jsonObject
+     */
     @PutMapping(value = "/edit")
     public void edit(@RequestBody JSONObject jsonObject) {
         try {
@@ -97,6 +103,67 @@ public class SysUserController {
         }
     }
 
+    /**
+     * 检测登录账号唯一性检验
+     */
+    @GetMapping("/checkIsOnly")
+    public void checkIsOnly(String loginName){
+        try {
+            iSysUserService.checkIsOnly(loginName);
+        }catch (Exception e){
+            throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
+        }
+    }
 
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/delete")
+    public void delete(@RequestParam(name = "sysUserId", required = true) String id) {
+        try {
+            iSysUserService.deleteUser(id);
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
 
+    /**
+     * 批量删除用户
+     * @param ids
+     * @return
+     */
+    @DeleteMapping(value = "/deleteBatch")
+    public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+        try {
+            String[] arr = ids.split(",");
+            for (String id : arr) {
+                if (BasisUtil.isNotEmpty(id)) {
+                    iSysUserService.deleteUser(id);
+                }
+            }
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
+
+    /**
+     * 查询用户拥有角色
+     * @param userid
+     * @return
+     */
+    @GetMapping(value = "/queryUserRole")
+    public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userid) {
+        List<String> list = new ArrayList<String>();
+        List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));
+        if (userRole == null || userRole.size() <= 0) {
+            throw new RunningException("未找到用户相关角色信息");
+        } else {
+            for (SysUserRole sysUserRole : userRole) {
+                list.add(sysUserRole.getRoleId());
+            }
+        }
+        return list;
+    }
 }

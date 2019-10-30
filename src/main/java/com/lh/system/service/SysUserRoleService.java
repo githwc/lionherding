@@ -3,6 +3,8 @@ package com.lh.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUserRole;
 
+import java.util.Map;
+
 /**
  * 功能描述：
  *
@@ -17,5 +19,5 @@ import com.lh.system.entity.SysUserRole;
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
 
-
+    Map<String,String> queryUserRole();
 }

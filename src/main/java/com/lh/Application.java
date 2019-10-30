@@ -44,8 +44,6 @@ public class Application {
     // TODO: 2019/10/28 7 增删改查基础接口
     // todo 12 Excel 导入, 打印功能
     // todo 13 图表分析
-    // TODO: 2019/10/28 用户管理
-    //  职务，头像，登录账号唯一
 
     // =========== shiro ===========
     // TODO: 2019/10/13 何时触发认证接口(subject.login()后调用)，何时触发授权接口(config中配置，进行鉴权)
@@ -57,6 +55,8 @@ public class Application {
     // TODO: 2019/10/23 permission -> 17 -> 认证成功后手动切换页面
     // TODO: 2019/10/25  return new Promise((resolve, reject) => { 用法
     // TODO: 2019/10/28 crud 公共组件
+    // TODO: 2019/10/28 用户管理 ->职务，头像
+
     public static void main(String[] args) {
 
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

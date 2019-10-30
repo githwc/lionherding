@@ -70,7 +70,7 @@ public class SysUser implements Serializable {
      */
     private Integer jobs;
     /**
-     * 性别(0女 1男)
+     * 性别(0女 1男 2保密 3未知)
      */
     private Integer sex;
     /**
@@ -152,7 +152,7 @@ public class SysUser implements Serializable {
     /**
      * 删除状态(0:未删除 1:已删除)
      */
-    private Boolean delFlag;
+    private Integer delFlag;
     /**
      * 备注
      */

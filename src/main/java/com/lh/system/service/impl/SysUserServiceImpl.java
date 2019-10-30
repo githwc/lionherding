@@ -2,11 +2,13 @@ package com.lh.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
+import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
@@ -20,12 +22,14 @@ import com.lh.system.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -136,8 +140,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
         String salt = BasisUtil.randomGen(8);
         user.setSalt(salt);
-        String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), user.getPassword(), salt);
+        String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
         user.setPassword(passwordEncode);
+        // TODO: 2019/10/29 当前登录人
+        user.setCreateUserId("admin");
+        user.setDepartId(jsonObject.getString("selecteddeparts"));
         this.save(user);
         String roles = jsonObject.getString("selectedroles");
         if(BasisUtil.isNotEmpty(roles)) {
@@ -151,14 +158,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void editUserWithRole(JSONObject jsonObject) throws RunningException{
-        SysUser sysUser = this.getById(jsonObject.getString("id"));
+        SysUser sysUser = this.getById(jsonObject.getString("sysUserId"));
         if(sysUser==null) {
             throw new RunningException("未找到对应实体");
         }else {
             SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
             user.setPassword(sysUser.getPassword());
             String roles = jsonObject.getString("selectedroles");
-            // String departs = jsonObject.getString("selecteddeparts");
             //修改用户
             this.updateById(user);
             // 角色先删后加
@@ -172,5 +178,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             }
         }
     }
+
+    @Override
+    public void checkIsOnly(String loginName) {
+        List<SysUser> list = this.baseMapper.selectList(new LambdaQueryWrapper<SysUser>()
+            .eq(SysUser::getLoginName,loginName)
+        );
+        if(list!= null && list.size()>0){
+            throw new RunningException("该账号已存在！");
+        }
+    }
+
+    @Override
+    @CacheEvict(value={CacheConstant.SYS_USERS_CACHE}, allEntries=true)
+    public void deleteUser(String id) {
+        // 删除用户角色关联关系
+        sysUserRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+            .eq(SysUserRole::getUserId,id)
+        );
+        //删除用户
+        SysUser user = new SysUser();
+        user.setSysUserId(id);
+        user.setDelFlag(1);
+        this.baseMapper.updateById(user);
+    }
+
 
 }

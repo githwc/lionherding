@@ -25,11 +25,11 @@ public interface CacheConstant {
 	 * 数据权限配置缓存
 	 */
     public static final String SYS_DATA_PERMISSIONS_CACHE = "sys:cache:permission:datarules";
-    //
-	// /**
-	//  * 缓存用户信息
-	//  */
-	// public static final String SYS_USERS_CACHE = "sys:cache:user";
+
+	/**
+	 * 缓存用户信息
+	 */
+	public static final String SYS_USERS_CACHE = "sys:cache:user";
     //
 	// /**
 	//  * 全部部门信息缓存
