@@ -6,7 +6,8 @@
         select
             role_code
         from sys_role
-        where sys_role_id in
+        where
+            del_flag = 0 AND sys_role_id in
             (select
                 role_id
                 from sys_user_role
@@ -14,4 +15,15 @@
                 (select sys_user_id from sys_user where login_name=#{loginName})
             )
     </select>
+
+    <select id="queryPageAll" resultType="com.lh.system.entity.SysRole">
+        select *
+        from sys_role r
+        <where>
+            r.del_flag = 0
+        </where>
+        order by r.sort
+    </select>
+
+
 </mapper>

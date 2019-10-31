@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +51,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
             sysLog.setCreateUserId(sysUser.getLoginName());
             sysLog.setCreateUserName(sysUser.getLoginName());
         }
-        sysLog.setCreateTime(LocalDateTime.now());
+        // TODO: 2019/10/31 当前登录人
+        sysLog.setCreateUserId("admin");
+        sysLog.setCreateUserName("admin");
         //保存系统日志
         this.baseMapper.insert(sysLog);
     }

@@ -67,15 +67,12 @@ public class SysUserController {
     @PostMapping(value = "/departUserList")
     @ApiOperation(value = "指定部门下的用户",notes = "指定部门下的用户")
     public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
-        Page<SysUser> userList = new Page<SysUser>();
         try {
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            userList = iSysUserService.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
+            return iSysUserService.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
         }catch (Exception e){
             throw new RunningException("系统错误！"+e.getMessage());
-        }finally {
-            return userList;
         }
     }
 

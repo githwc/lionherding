@@ -1,7 +1,8 @@
 package com.lh.system.service;
 
-import com.lh.system.entity.SysRole;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lh.system.entity.SysRole;
 
 import java.util.List;
 import java.util.Set;
@@ -23,4 +24,6 @@ public interface SysRoleService extends IService<SysRole> {
     Set<String> getUserRoles(String loginName);
 
     List<SysRole> roleList();
+
+    Page<SysRole> queryPageAll(Page<SysRole> page);
 }

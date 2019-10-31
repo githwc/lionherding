@@ -1,6 +1,7 @@
 package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
@@ -9,7 +10,6 @@ import com.lh.system.mapper.SysRoleMapper;
 import com.lh.system.service.SysRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,5 +49,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         );
     }
 
+    @Override
+    public Page<SysRole> queryPageAll(Page<SysRole> page) {
+        return this.baseMapper.queryPageAll(page);
+    }
 
 }

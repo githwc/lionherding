@@ -1,7 +1,8 @@
 package com.lh.system.mapper;
 
-import com.lh.system.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lh.system.entity.SysRole;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +25,6 @@ import java.util.List;
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> getUserRoles (@Param("loginName")String loginName);
+
+    Page<SysRole> queryPageAll(@Param("page")Page<SysRole> page);
 }
