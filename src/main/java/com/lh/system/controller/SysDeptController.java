@@ -2,15 +2,14 @@ package com.lh.system.controller;
 
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.config.exception.userException.RunningException;
-import com.lh.common.config.filter.JwtUtil;
-import com.lh.common.constant.CacheConstant;
 import com.lh.system.entity.SysDept;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sysDept")
 @Slf4j
+@Api(tags="系统部门")
 public class SysDeptController {
 
     @Autowired
@@ -44,6 +44,7 @@ public class SysDeptController {
      * @return
      */
     @GetMapping(value = "/queryTreeList")
+    @ApiOperation(value = "加载所有部门树",notes = "加载所有部门树")
     public List<SysDeptTree> queryTreeList(){
         List<SysDeptTree> list = new ArrayList<>();
         try {
@@ -64,6 +65,7 @@ public class SysDeptController {
      * @return
      */
     @GetMapping(value = "/searchBy")
+    @ApiOperation(value = "部门搜索",notes = "部门搜索")
     public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
         List<SysDeptTree> list = new ArrayList<SysDeptTree>();
         try {
@@ -76,10 +78,11 @@ public class SysDeptController {
     }
 
     /**
-     * 添加或编辑页面对该方法发起请求,以树结构形式加载所有部门的名称
+     * 添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称
      *
      * @return
      */
+    @ApiOperation(value = "部门树信息(部分信息)",notes = "部门树信息(部分信息)")
     @GetMapping(value = "/queryIdTree")
     public List<DepartIdModel> queryIdTree() {
         try {
@@ -96,6 +99,7 @@ public class SysDeptController {
      * @return
      */
     @PutMapping(value = "/edit")
+    @ApiOperation(value = "部门修改",notes = "部门修改")
     public void edit(@RequestBody SysDept sysDept, HttpServletRequest request) {
         try{
             service.editByDeptId(sysDept);
@@ -105,10 +109,11 @@ public class SysDeptController {
     }
 
     /**
-     *   通过id删除
+     *  通过id删除
      * @param id
      * @return
      */
+    @ApiOperation(value = "部门删除",notes = "部门删除")
     @DeleteMapping(value = "/delete")
     public void delete(@RequestParam(name="sysDeptId",required=true) String id) {
         service.deleteById(id);
@@ -121,6 +126,7 @@ public class SysDeptController {
      * @param ids
      * @return
      */
+    @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         if (ids == null || "".equals(ids.trim())) {
@@ -130,6 +136,22 @@ public class SysDeptController {
             list.forEach(curr->{
                 this.service.deleteById(curr);
             });
+        }
+    }
+
+    /**
+     * 添加新数据
+     *
+     * @param sysDept
+     * @return
+     */
+    @ApiOperation(value = "部门添加",notes = "部门添加")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public void add(@RequestBody SysDept sysDept, HttpServletRequest request) {
+        try {
+            service.create(sysDept,request);
+        } catch (Exception e) {
+            throw new RunningException("操作失败");
         }
     }
 

@@ -56,6 +56,7 @@ public class SysUserController {
      * @return
      */
     @PostMapping(value = "/logout")
+    @ApiOperation(value = "用户退出",notes = "用户退出")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         iSysUserService.logout(request,response);
     }
@@ -64,6 +65,7 @@ public class SysUserController {
      * 部门用户列表
      */
     @PostMapping(value = "/departUserList")
+    @ApiOperation(value = "指定部门下的用户",notes = "指定部门下的用户")
     public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
         Page<SysUser> userList = new Page<SysUser>();
         try {
@@ -82,6 +84,7 @@ public class SysUserController {
      * @param jsonObject
      */
     @PostMapping(value = "/add")
+    @ApiOperation(value = "用户添加",notes = "用户添加")
     public void add(@RequestBody JSONObject jsonObject) {
         try {
             iSysUserService.addUserWithRole(jsonObject);
@@ -95,6 +98,7 @@ public class SysUserController {
      * @param jsonObject
      */
     @PutMapping(value = "/edit")
+    @ApiOperation(value = "用户修改",notes = "用户修改")
     public void edit(@RequestBody JSONObject jsonObject) {
         try {
             iSysUserService.editUserWithRole(jsonObject);
@@ -107,6 +111,7 @@ public class SysUserController {
      * 检测登录账号唯一性检验
      */
     @GetMapping("/checkIsOnly")
+    @ApiOperation(value = "账号唯一性检测",notes = "账号唯一性检测")
     public void checkIsOnly(String loginName){
         try {
             iSysUserService.checkIsOnly(loginName);
@@ -121,6 +126,7 @@ public class SysUserController {
      * @return
      */
     @DeleteMapping(value = "/delete")
+    @ApiOperation(value = "删除用户",notes = "删除用户")
     public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
         try {
             iSysUserService.deleteUser(sysUserId);
@@ -135,6 +141,7 @@ public class SysUserController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
+    @ApiOperation(value = "批量删除用户",notes = "批量删除用户")
     public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
         try {
             String[] arr = ids.split(",");
@@ -154,6 +161,7 @@ public class SysUserController {
      * @return
      */
     @GetMapping(value = "/queryUserRole")
+    @ApiOperation(value = "查询用户拥有角色",notes = "查询用户拥有角色")
     public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userid) {
         List<String> list = new ArrayList<String>();
         List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));

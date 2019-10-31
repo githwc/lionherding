@@ -37,7 +37,7 @@ public class Application {
 
     // todo 1 检查点击重新登录后是否清除token
     // TODO: 2 2019/10/13 整理一份初始化的表
-    // TODO: 2019/10/30 设置操作是否成功
+    // TODO: 2019/10/30 设置操作是否成功，返回形式
     // todo 3 日志中记录当前操作人
     // todo 4 log （参考jeecg 和 lionherding）
     // todo 5 redis (参考jeecg)
@@ -55,7 +55,7 @@ public class Application {
     // ============= VUE ============
     // TODO: 2019/10/23 permission -> 17 -> 认证成功后手动切换页面
     // TODO: 2019/10/25  return new Promise((resolve, reject) => { 用法
-    // TODO: 2019/10/28 crud 公共组件
+    // TODO: 2019/10/28 crud 公共组件，CURD 通用模式
     // TODO: 2019/10/28 用户管理 ->职务，头像
 
     public static void main(String[] args) {

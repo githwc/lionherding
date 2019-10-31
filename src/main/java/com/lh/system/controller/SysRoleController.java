@@ -3,6 +3,8 @@ package com.lh.system.controller;
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.system.entity.SysRole;
 import com.lh.system.service.SysRoleService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sysRole")
 @Slf4j
+@Api(tags = "系统角色")
 public class SysRoleController {
 
     @Autowired
@@ -37,6 +40,7 @@ public class SysRoleController {
      * @return
      */
     @GetMapping(value = "/queryall")
+    @ApiOperation(value = "查询所有角色",notes = "查询所有角色")
     public List<SysRole> queryall() {
         List<SysRole> list = new ArrayList<SysRole>();
         try{

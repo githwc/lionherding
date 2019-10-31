@@ -7,11 +7,11 @@ import com.lh.common.config.response.ResponseBean;
 import com.lh.common.config.response.ResponseCode;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
-import com.lh.system.service.SysDeptService;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionOPUtil;
-import com.lh.system.vo.SysDeptTree;
 import com.lh.system.vo.SysPermissionTree;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +38,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/sysPermission")
 @Slf4j
+@Api(tags = "系统权限")
 public class SysPermissionController {
 
     @Autowired
@@ -50,6 +51,7 @@ public class SysPermissionController {
      * @return
      */
     @GetMapping(value = "/getUserPermissionByToken")
+    @ApiOperation(value = "根据Token获取用户拥有的权限",notes = "根据Token获取用户拥有的权限")
     public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -69,6 +71,7 @@ public class SysPermissionController {
     * @Return:
     * @throws:
     */
+    @ApiOperation(value = "查询全部菜单",notes = "查询全部菜单")
     @GetMapping(value = "/list")
     public List<SysPermissionTree> list() {
         List<SysPermissionTree> list = new ArrayList<>();
@@ -86,6 +89,7 @@ public class SysPermissionController {
      *
      * @return
      */
+    @ApiOperation(value = "获取全部的权限树",notes = "获取全部的权限树")
     @RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
     public Map<String, Object> queryTreeList() {
         Map<String, Object> result = new HashMap<>();
@@ -104,6 +108,7 @@ public class SysPermissionController {
      * @return
      */
     @PostMapping(value = "/add")
+    @ApiOperation(value = "添加菜单",notes = "添加菜单")
     public void add(@RequestBody SysPermission permission) {
         try{
             permission = PermissionOPUtil.intelligentProcessData(permission);
@@ -119,6 +124,7 @@ public class SysPermissionController {
      * @return
      */
     @PutMapping(value = "/edit")
+    @ApiOperation(value = "编辑菜单",notes = "编辑菜单")
     public void edit(@RequestBody SysPermission permission) {
         try {
             permission = PermissionOPUtil.intelligentProcessData(permission);
@@ -135,6 +141,7 @@ public class SysPermissionController {
      * @return
      */
     @DeleteMapping(value = "/delete")
+    @ApiOperation(value = "删除菜单",notes = "删除菜单")
     public void delete(@RequestParam(name = "sysPermissionId", required = true) String id) {
         try {
             service.deletePermission(id);
@@ -149,6 +156,7 @@ public class SysPermissionController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
+    @ApiOperation(value = "批量删除菜单" ,notes = "批量删除菜单")
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         try {
             String[] arr = ids.split(",");

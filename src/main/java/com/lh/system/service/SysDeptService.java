@@ -1,10 +1,13 @@
 package com.lh.system.service;
 
+import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.system.entity.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+import org.springframework.http.HttpRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,5 +31,8 @@ public interface SysDeptService extends IService<SysDept> {
     List<DepartIdModel> queryDepartIdTreeList();
 
     void editByDeptId(SysDept sysDept);
+
     void deleteById(String id);
+
+    void create(SysDept sysDept, HttpServletRequest request);
 }

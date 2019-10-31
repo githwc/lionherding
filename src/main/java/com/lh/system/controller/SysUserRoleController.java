@@ -2,14 +2,13 @@ package com.lh.system.controller;
 
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.system.service.SysUserRoleService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/sysUserRole")
 @Slf4j
+@Api(tags = "系统(用户-角色)")
 public class SysUserRoleController {
 
     @Autowired
@@ -40,10 +40,8 @@ public class SysUserRoleController {
      */
     @GetMapping(value = "/queryUserRoleMap")
     public Map<String, String> queryUserRole() {
-        Map<String, String> result = new HashMap<String,String>();
         try{
-            Map<String, String> map = service.queryUserRole();
-            return result;
+            return service.queryUserRole();
         }catch (Exception e){
             throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
         }

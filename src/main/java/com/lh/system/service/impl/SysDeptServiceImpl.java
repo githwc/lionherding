@@ -5,17 +5,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
+import io.netty.util.internal.StringUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +106,24 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         }
     }
 
+    @Override
+    @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
+    public void create(SysDept sysDept, HttpServletRequest request) {
+        if (sysDept != null ) {
+            if (sysDept.getParentId() == null) {
+                sysDept.setParentId("");
+            }
+            String parentId = sysDept.getParentId();
+            String[] codeArray = generateOrgCode(parentId);
+            sysDept.setUniqueCoding(codeArray[0]);
+            String orgType = codeArray[1];
+            sysDept.setOrgType(String.valueOf(orgType));
+            // TODO: 2019/10/31 当前人
+            sysDept.setCreateUserId("admin");
+            this.save(sysDept);
+        }
+    }
+
     /**
      * 查找子部门
      * @param id
@@ -119,5 +140,67 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 this.checkChildrenExists(depart.getSysDeptId(), idList);
             }
         }
+    }
+
+    /**
+     * 生成部门编码和部门类型
+     *
+     * @param parentId
+     * @return
+     */
+    private String[] generateOrgCode(String parentId) {
+        String[] strArray = new String[2];
+        // 创建一个List集合,存储查询返回的所有SysDepart对象
+        List<SysDept> departList = new ArrayList<>();
+        // 定义新编码字符串
+        String newOrgCode = "";
+        // 定义旧编码字符串
+        String oldOrgCode = "";
+        // 定义部门类型
+        String orgType = "";
+        // 如果是最高级,则查询出同级的org_code, 调用工具类生成编码并返回
+        if (StringUtil.isNullOrEmpty(parentId)) {
+            // 先判断数据库中的表是否为空,空则直接返回初始编码
+            departList = this.list(new LambdaQueryWrapper<SysDept>()
+                    .eq(SysDept::getParentId, "").or().isNull(SysDept::getParentId)
+                    .orderByDesc(SysDept::getUniqueCoding)
+            );
+            if(departList == null || departList.size() == 0) {
+                strArray[0] = YouBianCodeUtil.getNextYouBianCode(null);
+                strArray[1] = "1";
+                return strArray;
+            }else {
+                SysDept depart = departList.get(0);
+                oldOrgCode = depart.getUniqueCoding();
+                orgType = depart.getOrgType();
+                newOrgCode = YouBianCodeUtil.getNextYouBianCode(oldOrgCode);
+            }
+        } else { // 反之则查询出所有同级的部门,获取结果后有两种情况,有同级和没有同级
+            // 查询出同级部门的集合
+            List<SysDept> parentList = this.list(new LambdaQueryWrapper<SysDept>()
+                .eq(SysDept::getParentId,parentId)
+                    .orderByDesc(SysDept::getUniqueCoding)
+            );
+            // 查询出父级部门
+            SysDept depart = this.getById(parentId);
+            // 获取父级部门的Code
+            String parentCode = depart.getUniqueCoding();
+            // 根据父级部门类型算出当前部门的类型
+            orgType = String.valueOf(Integer.valueOf(depart.getOrgType()) + 1);
+            // 处理同级部门为null的情况
+            if (parentList == null || parentList.size() == 0) {
+                // 直接生成当前的部门编码并返回
+                newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, null);
+            } else { //处理有同级部门的情况
+                // 获取同级部门的编码,利用工具类
+                String subCode = parentList.get(0).getUniqueCoding();
+                // 返回生成的当前部门编码
+                newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, subCode);
+            }
+        }
+        // 返回最终封装了部门编码和部门类型的数组
+        strArray[0] = newOrgCode;
+        strArray[1] = orgType;
+        return strArray;
     }
 }
