@@ -53,10 +53,7 @@ spring:
     mode: HTML5
   #======静态资源相关 ===========
   resource:
-    static-locations: classpath:/static/,classpath:/public/
-  #=====日期格式相关=========
-  #  mvc:
-  #    date-format: yyyy-MM-dd
+      static-locations: classpath:/static/,classpath:/public/
 
 #=====Mybatis相关=====
 mybatis-plus:

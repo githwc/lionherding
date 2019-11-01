@@ -1,6 +1,6 @@
 package com.lh.common.config.shiro;
 
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;

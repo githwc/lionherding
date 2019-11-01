@@ -1,7 +1,7 @@
 package com.lh.system.controller;
 
 import com.lh.common.config.exception.parameterException.ParameterException;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.system.entity.SysDept;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.vo.DepartIdModel;

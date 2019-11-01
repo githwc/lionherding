@@ -21,6 +21,9 @@
         from sys_role r
         <where>
             r.del_flag = 0
+            <if test="params.roleName != null and params.roleName != '' ">
+                and r.role_name like concat('%',#{params.roleName},'%')
+            </if>
         </where>
         order by r.sort
     </select>

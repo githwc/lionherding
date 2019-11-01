@@ -1,7 +1,7 @@
 package com.lh.modules.TestTemp.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;

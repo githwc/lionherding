@@ -37,6 +37,15 @@ public class SysRolePermission implements Serializable {
     private String permissionId;
 
 
+    /////////////////////////////// 自定义方法 ///////////////////////////////
+
+    public SysRolePermission() {}
+
+    public SysRolePermission(String sysRoleId, String permissionId) {
+        this.roleId = sysRoleId;
+        this.permissionId = permissionId;
+    }
+
     /////////////////////////////// 非表字段 ///////////////////////////////
 
 }

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;

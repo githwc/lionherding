@@ -3,7 +3,7 @@ package com.lh.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;

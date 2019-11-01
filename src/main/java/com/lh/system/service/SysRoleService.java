@@ -1,10 +1,12 @@
 package com.lh.system.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysRole;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,5 +27,9 @@ public interface SysRoleService extends IService<SysRole> {
 
     List<SysRole> roleList();
 
-    Page<SysRole> queryPageAll(Page<SysRole> page);
+    Page<SysRole> queryPageAll(Page<SysRole> page, JSONObject jsonObject);
+
+    void duplicate(String roleCode);
+
+    Map<String,Object> queryTreeList();
 }

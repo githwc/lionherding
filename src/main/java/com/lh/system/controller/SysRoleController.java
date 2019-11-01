@@ -2,7 +2,7 @@ package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysRole;
 import com.lh.system.service.SysRoleService;
@@ -12,9 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -65,7 +67,7 @@ public class SysRoleController {
         try{
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            return service.queryPageAll(new Page<>(pageNo, pageSize));
+            return service.queryPageAll(new Page<>(pageNo, pageSize),jsonObject.getJSONObject("params"));
         }catch (Exception e){
             throw new RunningException(e.getMessage() == "" ? "系统运行错误" : e.getMessage());
         }
@@ -80,6 +82,8 @@ public class SysRoleController {
     @PostMapping(value = "/add")
     public void add(@RequestBody SysRole sysRole) {
         try {
+            // TODO: 2019/11/1 当前操作人
+            sysRole.setCreateUserId("admin");
             service.save(sysRole);
         } catch (Exception e) {
             throw new RunningException("系统错误!");
@@ -137,6 +141,30 @@ public class SysRoleController {
             });
         }catch (Exception e) {
             throw new RunningException("系统错误");
+        }
+    }
+
+    /**
+     * 重复校验
+     */
+    @GetMapping("/duplicate")
+    @ApiOperation(value = "重复校验",notes = "重复校验(检验角色代码唯一性)")
+    public void duplicate(@RequestParam("roleCode") String roleCode){
+        try {
+            service.duplicate(roleCode);
+        }catch (Exception e){
+            throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
+        }
+    }
+
+
+    @GetMapping(value = "/queryTreeList")
+    @ApiOperation(value = "查看菜单权限树",notes = "查看菜单权限树")
+    public Map<String,Object> queryTreeList(HttpServletRequest request) {
+        try {
+            return service.queryTreeList();
+        }catch (Exception e){
+            throw new RunningException(e.getMessage()!= "" ? e.getMessage():"系统错误");
         }
     }
 

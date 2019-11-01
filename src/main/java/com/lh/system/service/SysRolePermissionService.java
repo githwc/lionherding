@@ -17,4 +17,11 @@ import com.lh.system.entity.SysRolePermission;
  */
 public interface SysRolePermissionService extends IService<SysRolePermission> {
 
+    /**
+     * 保存授权 将上次的权限和这次作比较 差异处理提高效率
+     * @param roleId
+     * @param permissionIds
+     * @param lastPermissionIds
+     */
+    public void saveRolePermission(String roleId,String permissionIds,String lastPermissionIds);
 }

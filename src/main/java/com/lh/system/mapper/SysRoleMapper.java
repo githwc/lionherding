@@ -1,5 +1,6 @@
 package com.lh.system.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.system.entity.SysRole;
@@ -26,5 +27,5 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> getUserRoles (@Param("loginName")String loginName);
 
-    Page<SysRole> queryPageAll(@Param("page")Page<SysRole> page);
+    Page<SysRole> queryPageAll(@Param("page")Page<SysRole> page,@Param("params") JSONObject jsonObject);
 }

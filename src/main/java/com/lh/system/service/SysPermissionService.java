@@ -71,5 +71,8 @@ public interface SysPermissionService extends IService<SysPermission> {
      */
     void deletePermission(String id);
 
+    List<String> queryRolePermission(String roleId);
+
+    void saveRolePermission(JSONObject json);
 
 }

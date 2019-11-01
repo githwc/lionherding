@@ -1,6 +1,6 @@
 package com.lh.system.controller;
 
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.system.service.SysUserRoleService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

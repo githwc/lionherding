@@ -1,7 +1,7 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.common.config.exception.userException.RunningException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
 import com.lh.common.config.response.ResponseCode;
@@ -42,7 +42,7 @@ import java.util.Map;
 public class SysPermissionController {
 
     @Autowired
-    public SysPermissionService service;
+    private SysPermissionService service;
 
     /**
      *  根据Token获取用户拥有的权限
@@ -169,4 +169,32 @@ public class SysPermissionController {
             throw new RunningException(e.getMessage());
         }
     }
+
+
+    @GetMapping(value = "/queryRolePermission")
+    @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
+    public List<String> queryRolePermission(@RequestParam(name = "sysRoleId", required = true) String roleId) {
+        try {
+            return service.queryRolePermission(roleId);
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 保存角色授权
+     *
+     * @return
+     */
+    @PostMapping(value = "/saveRolePermission")
+    @ApiOperation(value = "保存角色授权", notes = "保存角色拥有的权限")
+    public void saveRolePermission(@RequestBody JSONObject json) {
+        try {
+            service.saveRolePermission(json);
+        } catch (Exception e) {
+            throw new RunningException(e.getMessage());
+        }
+    }
+
 }

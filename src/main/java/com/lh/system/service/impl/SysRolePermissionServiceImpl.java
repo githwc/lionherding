@@ -1,11 +1,15 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysRolePermissionMapper;
 import com.lh.system.service.SysRolePermissionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 /**
 * 功能描述：
@@ -22,5 +26,55 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission> implements SysRolePermissionService {
+
+    @Override
+    public void saveRolePermission(String roleId, String permissionIds, String lastPermissionIds) {
+        List<String> add = getDiff(lastPermissionIds,permissionIds);
+        if(add!=null && add.size()>0) {
+            List<SysRolePermission> list = new ArrayList<SysRolePermission>();
+            for (String p : add) {
+                if(BasisUtil.isNotEmpty(p)) {
+                    SysRolePermission rolepms = new SysRolePermission(roleId, p);
+                    list.add(rolepms);
+                }
+            }
+            this.saveBatch(list);
+        }
+        List<String> delete = getDiff(permissionIds,lastPermissionIds);
+        if(delete!=null && delete.size()>0) {
+            for (String permissionId : delete) {
+                this.remove(new QueryWrapper<SysRolePermission>().lambda().eq(SysRolePermission::getRoleId, roleId).eq(SysRolePermission::getPermissionId, permissionId));
+            }
+        }
+    }
+
+
+    /**
+     * 从diff中找出main中没有的元素
+     * @param main
+     * @param diff
+     * @return
+     */
+    private List<String> getDiff(String main,String diff){
+        if(BasisUtil.isEmpty(diff)) {
+            return null;
+        }
+        if(BasisUtil.isEmpty(main)) {
+            return Arrays.asList(diff.split(","));
+        }
+        String[] mainArr = main.split(",");
+        String[] diffArr = diff.split(",");
+        Map<String, Integer> map = new HashMap<>();
+        for (String string : mainArr) {
+            map.put(string, 1);
+        }
+        List<String> res = new ArrayList<String>();
+        for (String key : diffArr) {
+            if(BasisUtil.isNotEmpty(key) && !map.containsKey(key)) {
+                res.add(key);
+            }
+        }
+        return res;
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.lh.common.config.exception.userException;
+package com.lh.common.config.exception.RunException;
 
 import com.lh.common.config.exception.ApiException;
 import com.lh.common.config.response.ResponseCode;

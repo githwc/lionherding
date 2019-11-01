@@ -6,26 +6,30 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.ApiException;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.exception.parameterException.ParameterException;
-import com.lh.common.config.exception.userException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
+import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysPermissionMapper;
 import com.lh.system.service.SysPermissionService;
+import com.lh.system.service.SysRolePermissionService;
 import com.lh.system.utils.PermissionOPUtil;
 import com.lh.system.vo.SysPermissionTree;
 import com.lh.system.vo.TreeModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
 * 功能描述：
@@ -43,6 +47,9 @@ import java.util.*;
 @Transactional(rollbackFor = Exception.class)
 @Slf4j
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
 
     @Override
     public Set<String> getUserPermCodes(String loginName) {
@@ -381,6 +388,22 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         //执行逻辑删除
         sysPermission.setDelFlag(CommonConstant.DEL_FLAG_1);
         this.baseMapper.updateById(sysPermission);
+    }
+
+    @Override
+    public List<String> queryRolePermission(String roleId) {
+        List<SysRolePermission> list = sysRolePermissionService.list(new LambdaQueryWrapper<SysRolePermission>()
+                .eq(SysRolePermission::getRoleId, roleId));
+        return list.stream().map(SysRolePermission ->
+                String.valueOf(SysRolePermission.getPermissionId())).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveRolePermission(JSONObject json) {
+        String roleId = json.getString("sysRoleId");
+        String permissionIds = json.getString("permissionIds");
+        String lastPermissionIds = json.getString("lastPermissionIds");
+        this.sysRolePermissionService.saveRolePermission(roleId, permissionIds, lastPermissionIds);
     }
 
     /**

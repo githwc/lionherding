@@ -45,6 +45,8 @@ public class Application {
     // TODO: 2019/10/28 7 增删改查基础接口
     // todo 12 Excel 导入, 打印功能
     // todo 13 图表分析
+    // TODO: 2019/11/1 多角色、多部门、多账号情景
+    // TODO: 2019/11/1 注释统一化 controller 增加到 ApiOperation 模板注解放在service 中
 
     // =========== shiro ===========
     // TODO: 2019/10/13 何时触发认证接口(subject.login()后调用)，何时触发授权接口(config中配置，进行鉴权)
