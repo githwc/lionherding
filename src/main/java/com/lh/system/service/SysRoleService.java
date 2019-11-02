@@ -25,11 +25,29 @@ public interface SysRoleService extends IService<SysRole> {
 
     Set<String> getUserRoles(String loginName);
 
+    /**
+     * 加载有效角色
+     * @return
+     */
     List<SysRole> roleList();
 
+    /**
+     * 分页查询所有角色
+     * @param page
+     * @param jsonObject
+     * @return
+     */
     Page<SysRole> queryPageAll(Page<SysRole> page, JSONObject jsonObject);
 
+    /**
+     * 角色代码唯一性校验
+     * @param roleCode
+     */
     void duplicate(String roleCode);
 
+    /**
+     * 查看菜单权限树
+     * @return
+     */
     Map<String,Object> queryTreeList();
 }

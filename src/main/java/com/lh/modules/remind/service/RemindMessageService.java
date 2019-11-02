@@ -25,7 +25,6 @@ public interface RemindMessageService extends IService<RemindMessage> {
      *
      *  userId: 接收人
      *  content:消息内容
-     *
      *  level: 消息级别(0:INFO 1.WARNING 2.ERROR)
      *  type: 消息类型(0:通知公告 1: 系统消息)
      *  modelType 模块类型
@@ -52,4 +51,5 @@ public interface RemindMessageService extends IService<RemindMessage> {
      * @return
      */
     List<RemindMessage> myNotReceiveMessages(String userId);
+
 }

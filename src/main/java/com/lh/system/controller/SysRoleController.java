@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -40,29 +39,8 @@ public class SysRoleController {
     @Autowired
     public SysRoleService service;
 
-    /**
-     * 加载有效角色
-     * @return
-     */
-    @GetMapping(value = "/queryall")
-    @ApiOperation(value = "查询所有角色",notes = "查询所有角色")
-    public List<SysRole> queryall() {
-        List<SysRole> list = new ArrayList<SysRole>();
-        try{
-            list = service.roleList();
-        }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统运行错误" : e.getMessage());
-        }finally {
-            return list;
-        }
-    }
-
-    /**
-     * 加载有效角色
-     * @return
-     */
     @PostMapping(value = "/queryPageAll")
-    @ApiOperation(value = "查询所有角色",notes = "查询所有角色")
+    @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")
     public Page<SysRole> queryPageAll(@RequestBody JSONObject jsonObject) {
         try{
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
@@ -73,11 +51,16 @@ public class SysRoleController {
         }
     }
 
-    /**
-     *   添加
-     * @param sysRole
-     * @return
-     */
+    @GetMapping(value = "/queryall")
+    @ApiOperation(value = "查询所有角色",notes = "查询所有角色(新增用户时调用)")
+    public List<SysRole> queryall() {
+        try{
+            return service.roleList();
+        }catch (Exception e){
+            throw new RunningException(e.getMessage() == "" ? "系统运行错误" : e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "角色添加",notes = "角色添加")
     @PostMapping(value = "/add")
     public void add(@RequestBody SysRole sysRole) {
@@ -90,11 +73,6 @@ public class SysRoleController {
         }
     }
 
-    /**
-     *  编辑
-     * @param role
-     * @return
-     */
     @PutMapping(value = "/edit")
     @ApiOperation(value = "角色修改",notes = "角色修改")
     public void edit(@RequestBody SysRole role) {
@@ -105,11 +83,6 @@ public class SysRoleController {
         }
     }
 
-    /**
-     *   通过id删除
-     * @param id
-     * @return
-     */
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "角色删除",notes = "角色删除")
     public void delete(@RequestParam(name="sysRoleId",required=true) String id) {
@@ -123,11 +96,6 @@ public class SysRoleController {
         }
     }
 
-    /**
-     *  批量删除
-     * @param ids
-     * @return
-     */
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "角色批量删除",notes = "角色批量删除")
     public void deleteBatch(@RequestParam(name="ids",required=true) String ids) {
@@ -144,11 +112,8 @@ public class SysRoleController {
         }
     }
 
-    /**
-     * 重复校验
-     */
     @GetMapping("/duplicate")
-    @ApiOperation(value = "重复校验",notes = "重复校验(检验角色代码唯一性)")
+    @ApiOperation(value = "重复校验",notes = "角色代码唯一性校验")
     public void duplicate(@RequestParam("roleCode") String roleCode){
         try {
             service.duplicate(roleCode);
@@ -156,7 +121,6 @@ public class SysRoleController {
             throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
         }
     }
-
 
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "查看菜单权限树",notes = "查看菜单权限树")

@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  *
- * 功能描述：
+ * 功能描述：权限控制器 (菜单 按钮)
  *
  *  <p>版权所有：</p>
  *  未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -44,14 +43,8 @@ public class SysPermissionController {
     @Autowired
     private SysPermissionService service;
 
-    /**
-     *  根据Token获取用户拥有的权限
-     * @param token
-     * @param response
-     * @return
-     */
     @GetMapping(value = "/getUserPermissionByToken")
-    @ApiOperation(value = "根据Token获取用户拥有的权限",notes = "根据Token获取用户拥有的权限")
+    @ApiOperation(value = "获取用户权限",notes = "根据Token获取用户拥有的权限")
     public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -64,14 +57,7 @@ public class SysPermissionController {
         }
     }
 
-    /**
-    * @Description: 加载全部菜单有效数据
-    * @Date: 14:25 2019/10/25
-    * @Param:
-    * @Return:
-    * @throws:
-    */
-    @ApiOperation(value = "查询全部菜单",notes = "查询全部菜单")
+    @ApiOperation(value = "查询全部权限",notes = "查询全部权限")
     @GetMapping(value = "/list")
     public List<SysPermissionTree> list() {
         List<SysPermissionTree> list = new ArrayList<>();
@@ -84,29 +70,17 @@ public class SysPermissionController {
         }
     }
 
-    /**
-     * 获取全部的权限树
-     *
-     * @return
-     */
-    @ApiOperation(value = "获取全部的权限树",notes = "获取全部的权限树")
+
+    @ApiOperation(value = "获取权限树",notes = "获取权限树")
     @RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
     public Map<String, Object> queryTreeList() {
-        Map<String, Object> result = new HashMap<>();
         try{
-            result = service.queryTreeList();
+            return service.queryTreeList();
         }catch (Exception e){
             throw new RunningException("系统运行错误");
-        }finally {
-            return result;
         }
     }
 
-    /**
-     * 添加菜单
-     * @param permission
-     * @return
-     */
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加菜单",notes = "添加菜单")
     public void add(@RequestBody SysPermission permission) {
@@ -118,11 +92,6 @@ public class SysPermissionController {
         }
     }
 
-    /**
-     * 编辑菜单
-     * @param permission
-     * @return
-     */
     @PutMapping(value = "/edit")
     @ApiOperation(value = "编辑菜单",notes = "编辑菜单")
     public void edit(@RequestBody SysPermission permission) {
@@ -134,12 +103,6 @@ public class SysPermissionController {
         }
     }
 
-
-    /**
-     * 删除菜单
-     * @param id
-     * @return
-     */
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除菜单",notes = "删除菜单")
     public void delete(@RequestParam(name = "sysPermissionId", required = true) String id) {
@@ -150,11 +113,6 @@ public class SysPermissionController {
         }
     }
 
-    /**
-     * 批量删除菜单
-     * @param ids
-     * @return
-     */
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除菜单" ,notes = "批量删除菜单")
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
@@ -170,7 +128,6 @@ public class SysPermissionController {
         }
     }
 
-
     @GetMapping(value = "/queryRolePermission")
     @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
     public List<String> queryRolePermission(@RequestParam(name = "sysRoleId", required = true) String roleId) {
@@ -181,12 +138,6 @@ public class SysPermissionController {
         }
     }
 
-
-    /**
-     * 保存角色授权
-     *
-     * @return
-     */
     @PostMapping(value = "/saveRolePermission")
     @ApiOperation(value = "保存角色授权", notes = "保存角色拥有的权限")
     public void saveRolePermission(@RequestBody JSONObject json) {

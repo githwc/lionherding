@@ -19,5 +19,10 @@ import java.util.Map;
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
 
+    /**
+     * 查询用户所对应的角色信息
+     *
+     * @return
+     */
     Map<String,String> queryUserRole();
 }

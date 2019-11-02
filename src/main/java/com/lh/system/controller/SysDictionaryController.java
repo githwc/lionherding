@@ -28,6 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysDictionaryController {
 
     @Autowired
-    public SysDictionaryService iSysDictionaryService;
+    public SysDictionaryService service;
 
 }

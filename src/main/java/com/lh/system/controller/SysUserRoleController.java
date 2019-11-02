@@ -33,11 +33,6 @@ public class SysUserRoleController {
     @Autowired
     public SysUserRoleService service;
 
-    /**
-     * 查询所有用户所对应的角色信息
-     *
-     * @return
-     */
     @GetMapping(value = "/queryUserRoleMap")
     public Map<String, String> queryUserRole() {
         try{

@@ -1,6 +1,7 @@
 package com.lh.modules.remind.controller;
 
 import com.lh.modules.remind.service.RemindMessageReceiveService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/remind/remind-message-receive")
 @Slf4j
+@Api(tags = "消息提醒接收")
 public class RemindMessageReceiveController {
 
     @Autowired
-    public RemindMessageReceiveService iRemindMessageReceiveService;
+    public RemindMessageReceiveService service;
 
 }

@@ -30,18 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysLogController {
 
     @Autowired
-    public SysLogService iSysLogService;
+    public SysLogService service;
 
-
-    /**
-     * 获取系统日志
-     * @return
-     */
     @GetMapping("/logInfo")
     @ApiOperation(value = "获取系统日志",notes = "获取系统日志")
     public JSONObject logInfo(){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("logInfo",iSysLogService.logInfo());
+        jsonObject.put("logInfo",service.logInfo());
         return jsonObject;
     }
 

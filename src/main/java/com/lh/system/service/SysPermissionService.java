@@ -40,7 +40,7 @@ public interface SysPermissionService extends IService<SysPermission> {
     JSONObject getUserPermissionByToken(String token,HttpServletResponse response);
 
     /**
-     * 加载全部菜单有效数据
+     * 加载全部权限
      * @return
      */
     List<SysPermissionTree> permissionlist ();
@@ -53,26 +53,36 @@ public interface SysPermissionService extends IService<SysPermission> {
     Map<String,Object> queryTreeList ();
 
     /**
-     * 添加数据
+     * 添加
      * @param sysPermission
      * @return
      */
     void addPermission(SysPermission sysPermission);
 
     /**
-     * 编辑数据
+     * 编辑
      * @param sysPermission
      */
     void editPermission(SysPermission sysPermission);
 
     /**
-     * 单个删除
+     * 删除
      * @param id
      */
     void deletePermission(String id);
 
+    /**
+     * 查询角色拥有的权限
+     * @param roleId
+     * @return
+     */
     List<String> queryRolePermission(String roleId);
 
+    /**
+     * 保存角色授权
+     *
+     * @return
+     */
     void saveRolePermission(JSONObject json);
 
 }

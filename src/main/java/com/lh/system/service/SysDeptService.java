@@ -24,15 +24,41 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDept> {
 
+    /**
+     * 查出所有部门,并以树结构格式返回前端
+     * @return
+     */
     List<SysDeptTree> queryTreeList();
 
+    /**
+     * 部门搜索功能方法,根据关键字模糊搜索相关部门
+     * @param keyWord
+     * @return
+     */
     List<SysDeptTree> searhBy(String keyWord);
 
+    /**
+     * 添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称
+     * @return
+     */
     List<DepartIdModel> queryDepartIdTreeList();
 
+    /**
+     * 根据部门Id修改
+     * @param sysDept
+     */
     void editByDeptId(SysDept sysDept);
 
+    /**
+     * 根据部门ID删除
+     * @param id
+     */
     void deleteById(String id);
 
+    /**
+     * 创建部门
+     * @param sysDept
+     * @param request
+     */
     void create(SysDept sysDept, HttpServletRequest request);
 }

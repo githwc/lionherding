@@ -1,7 +1,7 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.utils.BasisUtil;
@@ -51,21 +51,14 @@ public class SysUserController {
         return iSysUserService.login(sysUser);
     }
 
-    /**
-     * 退出登录
-     * @return
-     */
     @PostMapping(value = "/logout")
-    @ApiOperation(value = "用户退出",notes = "用户退出")
+    @ApiOperation(value = "用户登出",notes = "用户登出")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         iSysUserService.logout(request,response);
     }
 
-    /**
-     * 部门用户列表
-     */
     @PostMapping(value = "/departUserList")
-    @ApiOperation(value = "指定部门下的用户",notes = "指定部门下的用户")
+    @ApiOperation(value = "加载用户",notes = "查询某个部门下的有效用户")
     public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
         try {
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
@@ -76,10 +69,6 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 用户添加
-     * @param jsonObject
-     */
     @PostMapping(value = "/add")
     @ApiOperation(value = "用户添加",notes = "用户添加")
     public void add(@RequestBody JSONObject jsonObject) {
@@ -90,10 +79,6 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 用户修改
-     * @param jsonObject
-     */
     @PutMapping(value = "/edit")
     @ApiOperation(value = "用户修改",notes = "用户修改")
     public void edit(@RequestBody JSONObject jsonObject) {
@@ -104,11 +89,8 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 检测登录账号唯一性检验
-     */
     @GetMapping("/checkIsOnly")
-    @ApiOperation(value = "账号唯一性检测",notes = "账号唯一性检测")
+    @ApiOperation(value = "账号唯一性检测",notes = "登录账号唯一性检测")
     public void checkIsOnly(String loginName){
         try {
             iSysUserService.checkIsOnly(loginName);
@@ -117,11 +99,6 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 删除用户
-     * @param sysUserId
-     * @return
-     */
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除用户",notes = "删除用户")
     public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
@@ -132,11 +109,6 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 批量删除用户
-     * @param ids
-     * @return
-     */
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除用户",notes = "批量删除用户")
     public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
@@ -152,16 +124,12 @@ public class SysUserController {
         }
     }
 
-    /**
-     * 查询用户拥有角色
-     * @param userid
-     * @return
-     */
     @GetMapping(value = "/queryUserRole")
     @ApiOperation(value = "查询用户拥有角色",notes = "查询用户拥有角色")
     public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userid) {
         List<String> list = new ArrayList<String>();
-        List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));
+        List<SysUserRole> userRole = sysUserRoleService.list(new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, userid));
         if (userRole == null || userRole.size() <= 0) {
             throw new RunningException("未找到用户相关角色信息");
         } else {

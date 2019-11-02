@@ -27,6 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysRolePermissionController {
 
     @Autowired
-    public SysRolePermissionService iSysRolePermissionService;
+    public SysRolePermissionService service;
 
 }

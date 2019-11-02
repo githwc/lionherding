@@ -2,6 +2,8 @@ package com.lh.modules.remind.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lh.modules.remind.service.RemindMessageService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,26 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("/remind/remind-message")
+@RequestMapping("/remindMessage")
 @Slf4j
+@Api(tags = "消息提醒")
 public class RemindMessageController {
 
     @Autowired
     public RemindMessageService iRemindMessageService;
 
-    /**
-     * 发送消息给指定人
-     *
-     *  userId: 接收人
-     *  content:消息内容
-     *
-     *  level: 消息级别(0:INFO 1.WARNING 2.ERROR)
-     *  type: 消息类型(0:通知公告 1: 系统消息)
-     *  modelType 模块类型
-     *  rid: 关联ID
-     * @param jsonObject
-     */
     @PostMapping("/sendUser")
+    @ApiOperation(value = "发送消息(点对点)", notes = "发送消息给具体的某个人")
     public void sendUser(@RequestBody JSONObject jsonObject){
         iRemindMessageService.sendUser(jsonObject.getString("userId"),
                 jsonObject.getString("content"),
@@ -54,18 +46,8 @@ public class RemindMessageController {
     }
 
 
-    /**
-     * 群发消息
-     *
-     *  content:消息内容
-     *
-     *  level: 消息级别(0:INFO 1.WARNING 2.ERROR)
-     *  type: 消息类型(0:通知公告 1: 系统消息)
-     *  modelType 模块类型
-     *  rid: 关联ID
-     * @param jsonObject
-     */
     @PostMapping("/sendAll")
+    @ApiOperation(value = "群发消息", notes = "发送消息给多个人")
     public void sendAll(@RequestBody JSONObject jsonObject){
         iRemindMessageService.sendAllUser(jsonObject.getString("content"),
                 jsonObject.getString("level"),

@@ -28,6 +28,10 @@ public interface SysLogService extends IService<SysLog> {
      */
     void addLog(String LogContent, Integer logType, String requestMethod,String requestParams);
 
+    /**
+     * 获取系统日志
+     * @return
+     */
     Map<String,Object> logInfo();
 
 }
