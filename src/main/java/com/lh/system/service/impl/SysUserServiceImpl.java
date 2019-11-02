@@ -3,7 +3,6 @@ package com.lh.system.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
@@ -105,8 +104,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser getUserByName(String loginName) {
-        return this.baseMapper.selectOne(new QueryWrapper<SysUser>()
-                .eq("login_name", loginName));
+        return this.baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getLoginName, loginName)
+                .eq(SysUser::getDelFlag,CommonConstant.DEL_FLAG_0)
+        );
     }
 
     @Override
