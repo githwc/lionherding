@@ -1,6 +1,6 @@
 package com.lh.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysRolePermission;
@@ -43,7 +43,9 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         List<String> delete = getDiff(permissionIds,lastPermissionIds);
         if(delete!=null && delete.size()>0) {
             for (String permissionId : delete) {
-                this.remove(new QueryWrapper<SysRolePermission>().lambda().eq(SysRolePermission::getRoleId, roleId).eq(SysRolePermission::getPermissionId, permissionId));
+                this.remove(new LambdaQueryWrapper<SysRolePermission>()
+                        .eq(SysRolePermission::getRoleId, roleId)
+                        .eq(SysRolePermission::getPermissionId, permissionId));
             }
         }
     }
