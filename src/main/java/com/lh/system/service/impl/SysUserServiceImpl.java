@@ -168,7 +168,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             //修改用户
             this.updateById(user);
             // 角色先删后加
-            sysUserRoleMapper.delete(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, user.getSysUserId()));
+            sysUserRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+                    .eq(SysUserRole::getUserId, user.getSysUserId()));
             if(BasisUtil.isNotEmpty(roles)) {
                 String[] arr = roles.split(",");
                 for (String roleId : arr) {
