@@ -7,12 +7,14 @@ import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
+import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
 import io.netty.util.internal.StringUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -80,8 +82,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
     public void editByDeptId(SysDept sysDept) {
-        // TODO: 2019/10/30 修改人
-        // sysDept.setUpdateUserId(username);
+        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        sysDept.setUpdateUserId(currUser.getSysUserId());
         this.updateById(sysDept);
     }
 
@@ -118,8 +120,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             sysDept.setUniqueCoding(codeArray[0]);
             String orgType = codeArray[1];
             sysDept.setOrgType(String.valueOf(orgType));
-            // TODO: 2019/10/31 当前人
-            sysDept.setCreateUserId("admin");
+            SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+            sysDept.setCreateUserId(currUser.getSysUserId());
             this.save(sysDept);
         }
     }

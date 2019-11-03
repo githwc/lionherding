@@ -44,16 +44,14 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         } catch (Exception e) {
             sysLog.setIpAdress("异常地址");
         }
-        //获取登录用户信息
-        // todo 验证是否能获取到信息
-        SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-        if(sysUser!=null){
-            sysLog.setCreateUserId(sysUser.getLoginName());
-            sysLog.setCreateUserName(sysUser.getLoginName());
+        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        if(currUser != null ){
+            sysLog.setCreateUserId(currUser.getSysUserId());
+            sysLog.setCreateUserName(currUser.getUserName());
+        }else {
+            sysLog.setCreateUserId("");
+            sysLog.setCreateUserName("");
         }
-        // TODO: 2019/10/31 当前登录人
-        sysLog.setCreateUserId("admin");
-        sysLog.setCreateUserName("admin");
         //保存系统日志
         this.baseMapper.insert(sysLog);
     }

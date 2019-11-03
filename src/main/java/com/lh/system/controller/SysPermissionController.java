@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,13 +59,10 @@ public class SysPermissionController {
     @ApiOperation(value = "查询全部权限",notes = "查询全部权限")
     @GetMapping(value = "/list")
     public List<SysPermissionTree> list() {
-        List<SysPermissionTree> list = new ArrayList<>();
         try {
-            list = service.permissionlist();
+            return service.permissionlist();
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }finally {
-            return list;
+            throw new RunningException(e.getMessage());
         }
     }
 

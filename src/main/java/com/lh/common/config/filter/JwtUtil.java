@@ -9,7 +9,9 @@ import com.lh.common.config.exception.ApiException;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.SpringContextUtils;
-
+import com.lh.system.entity.SysUser;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -45,7 +47,7 @@ public class JwtUtil {
 		try {
 			// 根据密码生成JWT效验器
 			Algorithm algorithm = Algorithm.HMAC256(secret);
-			JWTVerifier verifier = JWT.require(algorithm).withClaim("username", username).build();
+			JWTVerifier verifier = JWT.require(algorithm).withClaim("loginName", username).build();
 			// 校验TOKEN
 			DecodedJWT jwt = verifier.verify(token);
 			return true;

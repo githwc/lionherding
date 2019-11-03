@@ -7,6 +7,8 @@ import com.lh.modules.remind.entity.RemindMessage;
 import com.lh.modules.remind.mapper.RemindMessageMapper;
 import com.lh.modules.remind.service.RemindMessageReceiveService;
 import com.lh.modules.remind.service.RemindMessageService;
+import com.lh.system.entity.SysUser;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,9 +55,9 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
         remindMessage.setRid(rid);
         remindMessage.setSendState("1");
         remindMessage.setSendTime(LocalDateTime.now());
-        // todo 获取当前在线人信息
-        remindMessage.setCreateUser("admin");
-        remindMessage.setCreateUserId("admin");
+        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        remindMessage.setCreateUser(currUser.getUserName());
+        remindMessage.setCreateUserId(currUser.getSysUserId());
         int result = this.baseMapper.insert(remindMessage);
         if(result > 0){
             remindMessageReceiveService.insertRecord(userId,remindMessage.getRemindMessageId(),flag);
@@ -79,9 +81,9 @@ public class RemindMessageServiceImpl extends ServiceImpl<RemindMessageMapper, R
         remindMessage.setRid(rid);
         remindMessage.setSendState("1");
         remindMessage.setSendTime(LocalDateTime.now());
-        // todo 获取当前在线人信息
-        remindMessage.setCreateUser("admin");
-        remindMessage.setCreateUserId("admin");
+        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        remindMessage.setCreateUser(currUser.getUserName());
+        remindMessage.setCreateUserId(currUser.getSysUserId());
         this.baseMapper.insert(remindMessage);
         /**
          * 群发消息不记录接收人

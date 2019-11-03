@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysRole;
+import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,8 +67,8 @@ public class SysRoleController {
     @PostMapping(value = "/add")
     public void add(@RequestBody SysRole sysRole) {
         try {
-            // TODO: 2019/11/1 当前操作人
-            sysRole.setCreateUserId("admin");
+            SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+            sysRole.setCreateUserId(currUser.getSysUserId());
             service.save(sysRole);
         } catch (Exception e) {
             throw new RunningException("系统错误!");

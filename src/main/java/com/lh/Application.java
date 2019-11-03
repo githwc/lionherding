@@ -34,21 +34,21 @@ import org.springframework.core.env.Environment;
 @Slf4j
 public class Application {
 
-    // todo 1 检查点击重新登录后是否清除token
+    // todo 检查点击重新登录后是否清除token
     // TODO: 2019/10/30 设置操作是否成功，返回形式
-    // todo 3 日志中记录当前操作人
-    // todo 4 log （参考jeecg 和 lionherding）
-    // todo 5 redis (参考jeecg)
-    // TODO: 6 2019/10/28 系统管理加权限 admin 和 administrator
-    // TODO: 2019/10/28 7 增删改查基础接口
-    // todo 12 Excel 导入, 打印功能
-    // todo 13 图表分析
+    // todo log （参考jeecg 和 lionherding）
+    // todo redis (参考jeecg)
+    // TODO 2019/10/28 系统管理加权限 admin 和 administrator
+    // TODO 2019/10/28 7 增删改查基础接口
+    // todo  Excel 导入, 打印功能
+    // todo 图表分析
     // TODO: 2019/11/1 多角色、多部门、多账号情景
+    // TODO: 2019/11/3 对权限进行拦截 基于菜单，角色的配置
 
     // =========== shiro ===========
-    // TODO: 2019/10/13 何时触发认证接口(subject.login()后调用)，何时触发授权接口(config中配置，进行鉴权)
-    // TODO: 2019/10/13 权限资源如何传递给前端
+    // TODO: 2019/10/13 何时触发授权接口(config中配置，进行鉴权)
     // TODO: 2019/10/13 完成认证后如何保存认证信息及获取当前信息(token session等)
+    // TODO: 2019/11/3 记住我
 
     // ============= VUE ============
     // TODO: 2019/10/23 src/permission.js -> 17 -> 认证成功后手动切换的页面
@@ -56,6 +56,7 @@ public class Application {
     // TODO: 2019/10/28 crud 公共组件，CURD 通用模式
     // TODO: 2019/10/28 用户管理 ->职务，头像
     // TODO: 2019/11/2  构建统一部门树vo
+    // TODO: 2019/11/3 点击登录后验证码失效，并且一段时间后也会失效 
 
     public static void main(String[] args) {
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

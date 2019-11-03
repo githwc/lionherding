@@ -18,6 +18,7 @@ import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired
@@ -63,6 +65,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysLogService.addLog("登录失败，用户名:" + loginName + "不存在！", CommonConstant.LOG_TYPE_1, "sysUser/login", "loginName:" + loginName + ",password:" + password);
             throw new RunningException("该用户不存在！");
         } else {
+            // 是否冻结
+            if(sysUser.getDelFlag() == CommonConstant.DEL_FLAG_1){
+                sysLogService.addLog("登录失败，用户名:" + loginName + "已被冻结！", CommonConstant.LOG_TYPE_1, "sysUser/login", "loginName:" + loginName + ",password:" + password);
+                throw new RunningException("账号已被锁定,请联系管理员！");
+            }
             // 密码验证
             String requestPassword = EncoderUtil.encrypt(loginName, password, sysUser.getSalt());
             String sysPassword = sysUser.getPassword();
@@ -73,9 +80,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             JSONObject jsonObject = new JSONObject();
             // 生成token
             String token = JwtUtil.sign(loginName, sysPassword);
+            //设置token缓存时间
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
-            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 30);
+            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME*2 / 1000);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
             this.dealUser(sysUser);  // 记录登录数据
@@ -86,27 +94,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        //用户退出逻辑
         Subject subject = SecurityUtils.getSubject();
-        // todo 暂时放置
-        // SysUser sysUser = (SysUser)subject.getPrincipal();
-        // sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
+        SysUser sysUser = (SysUser)subject.getPrincipal();
+        sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
         subject.logout();
 
         String token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
         //清空用户Token缓存
         redisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
         //清空用户权限缓存：权限Perms和角色集合
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + /*sysUser.getLoginName()*/ "admin");
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + /*sysUser.getLoginName()*/ "admin");
-        //    todo 记录日志 和用户信息
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
+        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
     }
 
     @Override
     public SysUser getUserByName(String loginName) {
         return this.baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getLoginName, loginName)
-                .eq(SysUser::getDelFlag,CommonConstant.DEL_FLAG_0)
         );
     }
 
@@ -143,8 +147,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setSalt(salt);
         String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
         user.setPassword(passwordEncode);
-        // TODO: 2019/10/29 当前登录人
-        user.setCreateUserId("admin");
+        SysUser currUser = (SysUser)SecurityUtils.getSubject().getPrincipal();
+        user.setCreateUserId(currUser.getSysUserId());
         user.setDepartId(jsonObject.getString("selecteddeparts"));
         this.save(user);
         String roles = jsonObject.getString("selectedroles");
