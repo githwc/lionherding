@@ -56,7 +56,7 @@ public class Application {
     // TODO: 2019/10/28 crud 公共组件，CURD 通用模式
     // TODO: 2019/10/28 用户管理 ->职务，头像
     // TODO: 2019/11/2  构建统一部门树vo
-    // TODO: 2019/11/3 点击登录后验证码失效，并且一段时间后也会失效 
+    // TODO: 2019/11/3 点击登录后验证码失效，并且一段时间后也会失效
 
     public static void main(String[] args) {
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

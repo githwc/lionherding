@@ -1,8 +1,11 @@
 package com.lh.system.controller;
 
 import com.lh.common.config.exception.RunException.RunningException;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.system.service.SysUserRoleService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,8 @@ public class SysUserRoleController {
     public SysUserRoleService service;
 
     @GetMapping(value = "/queryUserRoleMap")
+    @ApiOperation(value = "查询用户所对应的角色信息",notes = "查询用户所对应的角色信息")
+    @WriteLog(opPosition = "查询用户所对应的角色信息" ,optype = CommonConstant.OPTYPE_READ)
     public Map<String, String> queryUserRole() {
         try{
             return service.queryUserRole();

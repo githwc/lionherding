@@ -5,6 +5,8 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.response.HttpResponseUtil;
 import com.lh.common.config.response.ResponseBean;
 import com.lh.common.config.response.ResponseCode;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
@@ -44,6 +46,7 @@ public class SysPermissionController {
 
     @GetMapping(value = "/getUserPermissionByToken")
     @ApiOperation(value = "获取用户权限",notes = "根据Token获取用户拥有的权限")
+    @WriteLog(opPosition = "获取指定用户权限" ,optype = CommonConstant.OPTYPE_READ)
     public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -56,8 +59,9 @@ public class SysPermissionController {
         }
     }
 
-    @ApiOperation(value = "查询全部权限",notes = "查询全部权限")
     @GetMapping(value = "/list")
+    @ApiOperation(value = "查询全部权限",notes = "查询全部权限")
+    @WriteLog(opPosition = "查询全部权限" ,optype = CommonConstant.OPTYPE_READ)
     public List<SysPermissionTree> list() {
         try {
             return service.permissionlist();
@@ -66,9 +70,9 @@ public class SysPermissionController {
         }
     }
 
-
+    @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "获取权限树",notes = "获取权限树")
-    @RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
+    @WriteLog(opPosition = "获取权限树" ,optype = CommonConstant.OPTYPE_READ)
     public Map<String, Object> queryTreeList() {
         try{
             return service.queryTreeList();
@@ -79,6 +83,7 @@ public class SysPermissionController {
 
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加菜单",notes = "添加菜单")
+    @WriteLog(opPosition = "添加菜单" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody SysPermission permission) {
         try{
             permission = PermissionOPUtil.intelligentProcessData(permission);
@@ -90,6 +95,7 @@ public class SysPermissionController {
 
     @PutMapping(value = "/edit")
     @ApiOperation(value = "编辑菜单",notes = "编辑菜单")
+    @WriteLog(opPosition = "编辑菜单" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody SysPermission permission) {
         try {
             permission = PermissionOPUtil.intelligentProcessData(permission);
@@ -101,6 +107,7 @@ public class SysPermissionController {
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除菜单",notes = "删除菜单")
+    @WriteLog(opPosition = "删除菜单" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name = "sysPermissionId", required = true) String id) {
         try {
             service.deletePermission(id);
@@ -111,6 +118,7 @@ public class SysPermissionController {
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除菜单" ,notes = "批量删除菜单")
+    @WriteLog(opPosition = "批量删除菜单" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         try {
             String[] arr = ids.split(",");
@@ -126,6 +134,7 @@ public class SysPermissionController {
 
     @GetMapping(value = "/queryRolePermission")
     @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
+    @WriteLog(opPosition = "查询角色授权" ,optype = CommonConstant.OPTYPE_READ)
     public List<String> queryRolePermission(@RequestParam(name = "sysRoleId", required = true) String roleId) {
         try {
             return service.queryRolePermission(roleId);
@@ -136,6 +145,7 @@ public class SysPermissionController {
 
     @PostMapping(value = "/saveRolePermission")
     @ApiOperation(value = "保存角色授权", notes = "保存角色拥有的权限")
+    @WriteLog(opPosition = "保存角色授权" ,optype = CommonConstant.OPTYPE_CREATE)
     public void saveRolePermission(@RequestBody JSONObject json) {
         try {
             service.saveRolePermission(json);

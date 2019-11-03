@@ -2,6 +2,8 @@ package com.lh.system.controller;
 
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.exception.parameterException.ParameterException;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysDept;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.vo.DepartIdModel;
@@ -40,6 +42,7 @@ public class SysDeptController {
 
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "加载部门树",notes = "加载所有部门树")
+    @WriteLog(opPosition = "加载部门树" ,optype = CommonConstant.OPTYPE_READ)
     public List<SysDeptTree> queryTreeList(){
         try {
             return service.queryTreeList();
@@ -50,6 +53,7 @@ public class SysDeptController {
 
     @GetMapping(value = "/searchBy")
     @ApiOperation(value = "部门搜索",notes = "部门搜索,根据部门名称模糊搜索")
+    @WriteLog(opPosition = "部门搜索" ,optype = CommonConstant.OPTYPE_READ)
     public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
         try {
             return service.searhBy(keyWord);
@@ -60,6 +64,7 @@ public class SysDeptController {
 
     @ApiOperation(value = "部门树信息",notes = "添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称")
     @GetMapping(value = "/queryIdTree")
+    @WriteLog(opPosition = "部门树信息" ,optype = CommonConstant.OPTYPE_READ)
     public List<DepartIdModel> queryIdTree() {
         try {
            return service.queryDepartIdTreeList();
@@ -70,6 +75,7 @@ public class SysDeptController {
 
     @PutMapping(value = "/edit")
     @ApiOperation(value = "部门修改",notes = "部门修改")
+    @WriteLog(opPosition = "部门修改" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody SysDept sysDept, HttpServletRequest request) {
         try{
             service.editByDeptId(sysDept);
@@ -78,15 +84,16 @@ public class SysDeptController {
         }
     }
 
-    @ApiOperation(value = "部门删除",notes = "部门删除")
     @DeleteMapping(value = "/delete")
+    @ApiOperation(value = "部门删除",notes = "部门删除")
+    @WriteLog(opPosition = "部门删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name="sysDeptId",required=true) String id) {
         service.deleteById(id);
     }
 
-
-    @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
     @DeleteMapping(value = "/deleteBatch")
+    @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
+    @WriteLog(opPosition = "部门批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         if (ids == null || "".equals(ids.trim())) {
             throw new ParameterException("参数不识别！");
@@ -100,6 +107,7 @@ public class SysDeptController {
 
     @ApiOperation(value = "部门添加",notes = "部门添加")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @WriteLog(opPosition = "部门添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody SysDept sysDept, HttpServletRequest request) {
         try {
             service.create(sysDept,request);

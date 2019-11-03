@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
@@ -59,6 +61,7 @@ public class SysUserController {
 
     @PostMapping(value = "/departUserList")
     @ApiOperation(value = "加载用户",notes = "查询某个部门下的有效用户")
+    @WriteLog(opPosition = "加载用户" ,optype = CommonConstant.OPTYPE_READ)
     public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
         try {
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
@@ -71,6 +74,7 @@ public class SysUserController {
 
     @PostMapping(value = "/add")
     @ApiOperation(value = "用户添加",notes = "用户添加")
+    @WriteLog(opPosition = "用户添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody JSONObject jsonObject) {
         try {
             iSysUserService.addUserWithRole(jsonObject);
@@ -81,6 +85,7 @@ public class SysUserController {
 
     @PutMapping(value = "/edit")
     @ApiOperation(value = "用户修改",notes = "用户修改")
+    @WriteLog(opPosition = "用户修改" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody JSONObject jsonObject) {
         try {
             iSysUserService.editUserWithRole(jsonObject);
@@ -91,6 +96,7 @@ public class SysUserController {
 
     @GetMapping("/checkIsOnly")
     @ApiOperation(value = "账号唯一性检测",notes = "登录账号唯一性检测")
+    @WriteLog(opPosition = "账号唯一性检测" ,optype = CommonConstant.OPTYPE_READ)
     public void checkIsOnly(String loginName){
         try {
             iSysUserService.checkIsOnly(loginName);
@@ -101,6 +107,7 @@ public class SysUserController {
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除用户",notes = "删除用户")
+    @WriteLog(opPosition = "删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
         try {
             iSysUserService.deleteUser(sysUserId);
@@ -111,6 +118,7 @@ public class SysUserController {
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除用户",notes = "批量删除用户")
+    @WriteLog(opPosition = "批量删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
         try {
             String[] arr = ids.split(",");
@@ -126,6 +134,7 @@ public class SysUserController {
 
     @GetMapping(value = "/queryUserRole")
     @ApiOperation(value = "查询用户拥有角色",notes = "查询用户拥有角色")
+    @WriteLog(opPosition = "查询用户拥有角色" ,optype = CommonConstant.OPTYPE_READ)
     public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userid) {
         List<String> list = new ArrayList<String>();
         List<SysUserRole> userRole = sysUserRoleService.list(new LambdaQueryWrapper<SysUserRole>()

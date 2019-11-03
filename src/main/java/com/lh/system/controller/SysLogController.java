@@ -1,6 +1,8 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.system.service.SysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +36,7 @@ public class SysLogController {
 
     @GetMapping("/logInfo")
     @ApiOperation(value = "获取系统日志",notes = "获取系统日志")
+    @WriteLog(opPosition = "获取系统日志" ,optype = CommonConstant.OPTYPE_READ)
     public JSONObject logInfo(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("logInfo",service.logInfo());

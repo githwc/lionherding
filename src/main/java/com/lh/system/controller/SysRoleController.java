@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysRole;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysRoleService;
@@ -43,6 +44,7 @@ public class SysRoleController {
 
     @PostMapping(value = "/queryPageAll")
     @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")
+    @WriteLog(opPosition = "查询所有角色" ,optype = CommonConstant.OPTYPE_READ)
     public Page<SysRole> queryPageAll(@RequestBody JSONObject jsonObject) {
         try{
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
@@ -55,6 +57,7 @@ public class SysRoleController {
 
     @GetMapping(value = "/queryall")
     @ApiOperation(value = "查询所有角色",notes = "查询所有角色(新增用户时调用)")
+    @WriteLog(opPosition = "查询所有角色" ,optype = CommonConstant.OPTYPE_READ)
     public List<SysRole> queryall() {
         try{
             return service.roleList();
@@ -63,8 +66,9 @@ public class SysRoleController {
         }
     }
 
-    @ApiOperation(value = "角色添加",notes = "角色添加")
     @PostMapping(value = "/add")
+    @ApiOperation(value = "角色添加",notes = "角色添加")
+    @WriteLog(opPosition = "角色添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody SysRole sysRole) {
         try {
             SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
@@ -77,6 +81,7 @@ public class SysRoleController {
 
     @PutMapping(value = "/edit")
     @ApiOperation(value = "角色修改",notes = "角色修改")
+    @WriteLog(opPosition = "角色修改" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody SysRole role) {
         try {
             service.updateById(role);
@@ -87,6 +92,7 @@ public class SysRoleController {
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "角色删除",notes = "角色删除")
+    @WriteLog(opPosition = "角色删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name="sysRoleId",required=true) String id) {
         try {
             SysRole sysRole = new SysRole();
@@ -100,6 +106,7 @@ public class SysRoleController {
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "角色批量删除",notes = "角色批量删除")
+    @WriteLog(opPosition = "角色批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name="ids",required=true) String ids) {
         try {
             List<String> list_id = Arrays.asList(ids.split(","));
@@ -116,6 +123,7 @@ public class SysRoleController {
 
     @GetMapping("/duplicate")
     @ApiOperation(value = "重复校验",notes = "角色代码唯一性校验")
+    @WriteLog(opPosition = "重复校验" ,optype = CommonConstant.OPTYPE_READ)
     public void duplicate(@RequestParam("roleCode") String roleCode){
         try {
             service.duplicate(roleCode);
@@ -126,6 +134,7 @@ public class SysRoleController {
 
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "查看菜单权限树",notes = "查看菜单权限树")
+    @WriteLog(opPosition = "查看菜单权限树" ,optype = CommonConstant.OPTYPE_READ)
     public Map<String,Object> queryTreeList(HttpServletRequest request) {
         try {
             return service.queryTreeList();

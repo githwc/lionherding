@@ -1,6 +1,8 @@
 package com.lh.modules.remind.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.common.constant.CommonConstant;
+import com.lh.common.log.WriteLog;
 import com.lh.modules.remind.service.RemindMessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +37,7 @@ public class RemindMessageController {
 
     @PostMapping("/sendUser")
     @ApiOperation(value = "发送消息(点对点)", notes = "发送消息给具体的某个人")
+    @WriteLog(opPosition = "发送消息(单点)" ,optype = CommonConstant.OPTYPE_CREATE)
     public void sendUser(@RequestBody JSONObject jsonObject){
         iRemindMessageService.sendUser(jsonObject.getString("userId"),
                 jsonObject.getString("content"),
@@ -48,6 +51,7 @@ public class RemindMessageController {
 
     @PostMapping("/sendAll")
     @ApiOperation(value = "群发消息", notes = "发送消息给多个人")
+    @WriteLog(opPosition = "群发消息" ,optype = CommonConstant.OPTYPE_CREATE)
     public void sendAll(@RequestBody JSONObject jsonObject){
         iRemindMessageService.sendAllUser(jsonObject.getString("content"),
                 jsonObject.getString("level"),
