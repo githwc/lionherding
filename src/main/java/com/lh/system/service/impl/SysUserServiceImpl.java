@@ -9,6 +9,7 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.common.utils.RedisUtil;
@@ -55,6 +56,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
+
+    @Autowired
+    private DaoApi daoApi;
 
     @Override
     public JSONObject login(SysUser sysUser) {
@@ -116,7 +120,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void dealUser(SysUser sysUser) {
-        // todo 验证此处几个参数是否准确
         sysUser.setLoginCount(sysUser.getLoginCount() + 1);
         if (BasisUtil.isNotEmpty(sysUser.getLastLoginTime())) {
             if (!sysUser.getLastLoginTime().toString().substring(0, 10)
@@ -147,8 +150,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setSalt(salt);
         String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
         user.setPassword(passwordEncode);
-        SysUser currUser = (SysUser)SecurityUtils.getSubject().getPrincipal();
-        user.setCreateUserId(currUser.getSysUserId());
+        user.setCreateUserId(daoApi.getCurrentUserId());
         user.setDepartId(jsonObject.getString("selecteddeparts"));
         this.save(user);
         String roles = jsonObject.getString("selectedroles");

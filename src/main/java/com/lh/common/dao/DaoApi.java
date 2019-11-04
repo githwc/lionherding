@@ -23,4 +23,9 @@ public interface DaoApi {
      */
     SysUser getCurrentUser();
 
+    /**
+     * 获取当前用户的ID
+     */
+    String getCurrentUserId();
+
 }

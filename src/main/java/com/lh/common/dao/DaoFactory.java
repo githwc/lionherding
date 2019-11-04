@@ -1,5 +1,6 @@
 package com.lh.common.dao;
 
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.system.entity.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,19 @@ public class DaoFactory implements DaoApi {
 
     @Override
     public SysUser getCurrentUser() {
-        return (SysUser) SecurityUtils.getSubject().getPrincipal();
+        try {
+            return (SysUser) SecurityUtils.getSubject().getPrincipal();
+        }catch (Exception e) {
+            throw new RunningException("系统错误");
+        }
+    }
+
+    @Override
+    public String getCurrentUserId() {
+        try {
+            return ((SysUser) SecurityUtils.getSubject().getPrincipal()).getSysUserId();
+        }catch (Exception e) {
+            throw new RunningException("系统错误");
+        }
     }
 }

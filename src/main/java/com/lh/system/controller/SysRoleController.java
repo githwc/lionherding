@@ -4,14 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.dao.DaoApi;
 import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysRole;
-import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +39,10 @@ import java.util.Map;
 public class SysRoleController {
 
     @Autowired
-    public SysRoleService service;
+    private SysRoleService service;
+
+    @Autowired
+    private DaoApi daoApi;
 
     @PostMapping(value = "/queryPageAll")
     @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")
@@ -71,8 +73,7 @@ public class SysRoleController {
     @WriteLog(opPosition = "角色添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody SysRole sysRole) {
         try {
-            SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-            sysRole.setCreateUserId(currUser.getSysUserId());
+            sysRole.setCreateUserId(daoApi.getCurrentUserId());
             service.save(sysRole);
         } catch (Exception e) {
             throw new RunningException("系统错误!");

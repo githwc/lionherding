@@ -35,7 +35,7 @@ import org.springframework.core.env.Environment;
 public class Application {
 
     // todo 检查点击重新登录后是否清除token
-    // TODO: 2019/10/30 设置操作是否成功，返回形式
+    // TODO: 2019/10/30 设置操作是否成功，返回形式；统一异常返回
     // todo log （参考jeecg 和 lionherding）
     // todo redis (参考jeecg)
     // TODO 2019/10/28 系统管理加权限 admin 和 administrator

@@ -11,6 +11,7 @@ import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
@@ -50,6 +51,9 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     @Autowired
     private SysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private DaoApi daoApi;
 
     @Override
     public Set<String> getUserPermCodes(String loginName) {
@@ -329,6 +333,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             this.baseMapper.setMenuLeaf(pid, 0);
         }
         sysPermission.setIsLeaf(true);
+        sysPermission.setCreateUserId(daoApi.getCurrentUser().getSysUserId());
         this.save(sysPermission);
     }
 

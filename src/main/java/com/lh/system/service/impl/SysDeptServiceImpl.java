@@ -5,16 +5,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
+import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
-import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
 import io.netty.util.internal.StringUtil;
-import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,9 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
+
+    @Autowired
+    private DaoApi daoApi;
 
     @Override
     public List<SysDeptTree> queryTreeList() {
@@ -82,8 +85,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
     public void editByDeptId(SysDept sysDept) {
-        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-        sysDept.setUpdateUserId(currUser.getSysUserId());
+        sysDept.setUpdateUserId(daoApi.getCurrentUserId());
         this.updateById(sysDept);
     }
 
@@ -120,8 +122,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             sysDept.setUniqueCoding(codeArray[0]);
             String orgType = codeArray[1];
             sysDept.setOrgType(String.valueOf(orgType));
-            SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-            sysDept.setCreateUserId(currUser.getSysUserId());
+            sysDept.setCreateUserId(daoApi.getCurrentUserId());
             this.save(sysDept);
         }
     }

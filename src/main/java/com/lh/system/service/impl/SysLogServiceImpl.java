@@ -1,13 +1,14 @@
 package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.LocalHostUtil;
 import com.lh.common.utils.SpringContextUtils;
 import com.lh.system.entity.SysLog;
 import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysLogMapper;
 import com.lh.system.service.SysLogService;
-import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
+    @Autowired
+    private DaoApi daoApi;
+
     @Override
     public void addLog(String LogContent, Integer logType, String requestMethod,String requestParams) {
         SysLog sysLog = new SysLog();
@@ -44,14 +48,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         } catch (Exception e) {
             sysLog.setIpAdress("异常地址");
         }
-        SysUser currUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
-        if(currUser != null ){
-            sysLog.setCreateUserId(currUser.getSysUserId());
-            sysLog.setCreateUserName(currUser.getUserName());
-        }else {
-            sysLog.setCreateUserId("");
-            sysLog.setCreateUserName("");
-        }
+        SysUser currUser = daoApi.getCurrentUser();
+        sysLog.setCreateUserId(currUser == null ? "" : currUser.getSysUserId());
+        sysLog.setCreateUserName(currUser == null ? "" : currUser.getUserName());
         //保存系统日志
         this.baseMapper.insert(sysLog);
     }
