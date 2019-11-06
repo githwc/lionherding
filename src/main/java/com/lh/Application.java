@@ -34,12 +34,9 @@ import org.springframework.core.env.Environment;
 @Slf4j
 public class Application {
 
-    // todo 检查点击重新登录后是否清除token
-    // TODO: 2019/10/30 设置操作是否成功，返回形式；统一异常返回
-    // todo log （参考jeecg 和 lionherding）
-    // todo redis (参考jeecg)
+    // TODO: 2019/10/30 设置操作是否成功，返回形式；统一异常返回； 全局异常拦截
+    // TODO: 2019/11/5 前端规范
     // TODO 2019/10/28 系统管理加权限 admin 和 administrator
-    // TODO 2019/10/28 7 增删改查基础接口
     // todo  Excel 导入, 打印功能
     // todo 图表分析
     // TODO: 2019/11/1 多角色、多部门、多账号情景
@@ -51,12 +48,12 @@ public class Application {
     // TODO: 2019/11/3 记住我
 
     // ============= VUE ============
-    // TODO: 2019/10/23 src/permission.js -> 17 -> 认证成功后手动切换的页面
     // TODO: 2019/10/25  return new Promise((resolve, reject) => { 用法
     // TODO: 2019/10/28 crud 公共组件，CURD 通用模式
     // TODO: 2019/10/28 用户管理 ->职务，头像
     // TODO: 2019/11/2  构建统一部门树vo
-    // TODO: 2019/11/3 点击登录后验证码失效，并且一段时间后也会失效
+    // TODO: 2019/11/5 整理store
+    // TODO: 2019/11/5 配置 404，500 等页面
 
     public static void main(String[] args) {
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);

@@ -172,7 +172,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
             user.setPassword(sysUser.getPassword());
             String roles = jsonObject.getString("selectedroles");
-            //修改用户
             this.updateById(user);
             // 角色先删后加
             sysUserRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
