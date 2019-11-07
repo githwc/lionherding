@@ -45,8 +45,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     public List<SysDeptTree> queryTreeList() {
-        String[] arr = {"1"};
-        System.out.println(arr[2]);
         List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
                 .eq(SysDept::getDelFlag,CommonConstant.DEL_FLAG_0)
                 .orderByAsc(SysDept::getSort)

@@ -36,11 +36,14 @@ public class Application {
 
     // TODO: 2019/10/30 设置操作是否成功，返回形式；统一异常返回； 全局异常拦截
     // TODO: 2019/11/5 前端规范
+
     // TODO 2019/10/28 系统管理加权限 admin 和 administrator
     // todo  Excel 导入, 打印功能
     // todo 图表分析
     // TODO: 2019/11/1 多角色、多部门、多账号情景
     // TODO: 2019/11/3 对权限进行拦截 基于菜单，角色的配置
+
+    // TODO: 2019/11/7 偶尔会出现系统错误，请稍后重试，  检查响应超时
 
     // =========== shiro ===========
     // TODO: 2019/10/13 何时触发授权接口(config中配置，进行鉴权)
@@ -52,8 +55,7 @@ public class Application {
     // TODO: 2019/10/28 crud 公共组件，CURD 通用模式
     // TODO: 2019/10/28 用户管理 ->职务，头像
     // TODO: 2019/11/2  构建统一部门树vo
-    // TODO: 2019/11/5 整理store
-    // TODO: 2019/11/5 配置 404，500 等页面
+    // TODO: 2019/11/5 整理 store
 
     public static void main(String[] args) {
         ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
