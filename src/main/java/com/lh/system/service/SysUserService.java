@@ -76,4 +76,10 @@ public interface SysUserService extends IService<SysUser> {
      * @param id
      */
     void deleteUser(String id);
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    void deleteBatch(String ids);
 }

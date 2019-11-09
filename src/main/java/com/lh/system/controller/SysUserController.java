@@ -42,7 +42,7 @@ import java.util.List;
 public class SysUserController {
 
     @Autowired
-    public SysUserService iSysUserService;
+    public SysUserService service;
 
     @Autowired
     public SysUserRoleService sysUserRoleService;
@@ -50,13 +50,21 @@ public class SysUserController {
     @PostMapping("/login")
     @ApiOperation(value = "用户登录",notes = "用户登录")
     public JSONObject login(@RequestBody SysUser sysUser){
-        return iSysUserService.login(sysUser);
+        try{
+            return service.login(sysUser);
+        }catch(Exception e){
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
     }
 
     @PostMapping(value = "/logout")
     @ApiOperation(value = "用户登出",notes = "用户登出")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        iSysUserService.logout(request,response);
+        try{
+            service.logout(request,response);
+        }catch(Exception e){
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
     }
 
     @PostMapping(value = "/departUserList")
@@ -66,9 +74,9 @@ public class SysUserController {
         try {
             int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            return iSysUserService.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
+            return service.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
         }catch (Exception e){
-            throw new RunningException("系统错误！"+e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -77,9 +85,9 @@ public class SysUserController {
     @WriteLog(opPosition = "用户添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody JSONObject jsonObject) {
         try {
-            iSysUserService.addUserWithRole(jsonObject);
+            service.addUserWithRole(jsonObject);
         } catch (Exception e) {
-            throw new RunningException( e.getMessage() == "" ? "操作失败" : e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -88,9 +96,9 @@ public class SysUserController {
     @WriteLog(opPosition = "用户修改" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody JSONObject jsonObject) {
         try {
-            iSysUserService.editUserWithRole(jsonObject);
+            service.editUserWithRole(jsonObject);
         } catch (Exception e) {
-            throw new RunningException( e.getMessage() == "" ? "操作失败" : e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -99,9 +107,9 @@ public class SysUserController {
     @WriteLog(opPosition = "账号唯一性检测" ,optype = CommonConstant.OPTYPE_READ)
     public void checkIsOnly(String loginName){
         try {
-            iSysUserService.checkIsOnly(loginName);
+            service.checkIsOnly(loginName);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -110,9 +118,9 @@ public class SysUserController {
     @WriteLog(opPosition = "删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
         try {
-            iSysUserService.deleteUser(sysUserId);
+            service.deleteUser(sysUserId);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -121,14 +129,9 @@ public class SysUserController {
     @WriteLog(opPosition = "批量删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
         try {
-            String[] arr = ids.split(",");
-            for (String id : arr) {
-                if (BasisUtil.isNotEmpty(id)) {
-                    iSysUserService.deleteUser(id);
-                }
-            }
+            service.deleteBatch(ids);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

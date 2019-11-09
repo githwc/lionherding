@@ -210,5 +210,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.baseMapper.updateById(user);
     }
 
+    @Override
+    public void deleteBatch(String ids) {
+        String[] arr = ids.split(",");
+        for (String id : arr) {
+            if (BasisUtil.isNotEmpty(id)) {
+                this.deleteUser(id);
+            }
+        }
+    }
 
 }
