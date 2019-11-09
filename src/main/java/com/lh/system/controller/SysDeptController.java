@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +46,7 @@ public class SysDeptController {
         try {
             return service.queryTreeList();
         }catch (Exception e){
-            throw new RunningException("系统错误,请联系管理员！");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -56,9 +55,9 @@ public class SysDeptController {
     @WriteLog(opPosition = "部门搜索" ,optype = CommonConstant.OPTYPE_READ)
     public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
         try {
-            return service.searhBy(keyWord);
+            return service.searchBy(keyWord);
         } catch (Exception e) {
-            throw new RunningException("系统错误!");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -69,7 +68,7 @@ public class SysDeptController {
         try {
            return service.queryDepartIdTreeList();
         } catch (Exception e) {
-            throw new RunningException("系统运行错误");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -80,7 +79,7 @@ public class SysDeptController {
         try{
             service.editByDeptId(sysDept);
         }catch (Exception e){
-            throw new RunningException("系统错误");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -88,20 +87,21 @@ public class SysDeptController {
     @ApiOperation(value = "部门删除",notes = "部门删除")
     @WriteLog(opPosition = "部门删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam(name="sysDeptId",required=true) String id) {
-        service.deleteById(id);
+        try{
+            service.deleteById(id);
+        }catch(Exception e){
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
     }
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
     @WriteLog(opPosition = "部门批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        if (ids == null || "".equals(ids.trim())) {
-            throw new ParameterException("参数不识别！");
-        } else {
-            List<String> list = Arrays.asList(ids.split(","));
-            list.forEach(curr->{
-                this.service.deleteById(curr);
-            });
+        try{
+            service.deleteBatch(ids);
+        }catch(Exception e){
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -112,7 +112,7 @@ public class SysDeptController {
         try {
             service.create(sysDept,request);
         } catch (Exception e) {
-            throw new RunningException("操作失败");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

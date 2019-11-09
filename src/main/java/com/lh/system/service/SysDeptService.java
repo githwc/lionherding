@@ -35,7 +35,7 @@ public interface SysDeptService extends IService<SysDept> {
      * @param keyWord
      * @return
      */
-    List<SysDeptTree> searhBy(String keyWord);
+    List<SysDeptTree> searchBy(String keyWord);
 
     /**
      * 添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称
@@ -54,6 +54,12 @@ public interface SysDeptService extends IService<SysDept> {
      * @param id
      */
     void deleteById(String id);
+
+    /**
+     * 部门批量删除
+     * @param ids
+     */
+    void deleteBatch(String ids);
 
     /**
      * 创建部门

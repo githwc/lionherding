@@ -48,14 +48,10 @@ public class SysPermissionController {
     @ApiOperation(value = "获取用户权限",notes = "根据Token获取用户拥有的权限")
     @WriteLog(opPosition = "获取指定用户权限" ,optype = CommonConstant.OPTYPE_READ)
     public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
-        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject = service.getUserPermissionByToken(token,response);
+            return service.getUserPermissionByToken(token,response);
         }catch (Exception e){
-            HttpResponseUtil.sendJson(response, ResponseBean.error(ResponseCode.SYSTEM_EXCEPTION,e.getMessage()!= "" ? e.getMessage() :"系统错误，请联系管理员！"));
-            log.error(e.getMessage(), e);
-        }finally {
-            return jsonObject;
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -66,7 +62,7 @@ public class SysPermissionController {
         try {
             return service.permissionlist();
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -77,7 +73,7 @@ public class SysPermissionController {
         try{
             return service.queryTreeList();
         }catch (Exception e){
-            throw new RunningException("系统运行错误");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -89,7 +85,7 @@ public class SysPermissionController {
             permission = PermissionOPUtil.intelligentProcessData(permission);
             service.addPermission(permission);
         }catch (Exception e){
-            throw new RunningException("操作失败");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -101,7 +97,7 @@ public class SysPermissionController {
             permission = PermissionOPUtil.intelligentProcessData(permission);
             service.editPermission(permission);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -112,7 +108,7 @@ public class SysPermissionController {
         try {
             service.deletePermission(id);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -121,14 +117,9 @@ public class SysPermissionController {
     @WriteLog(opPosition = "批量删除菜单" ,optype = CommonConstant.OPTYPE_DELETE)
     public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         try {
-            String[] arr = ids.split(",");
-            for (String id : arr) {
-                if (BasisUtil.isNotEmpty(id)) {
-                    service.deletePermission(id);
-                }
-            }
+            service.deleteBatch(ids);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -139,7 +130,7 @@ public class SysPermissionController {
         try {
             return service.queryRolePermission(roleId);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -150,7 +141,7 @@ public class SysPermissionController {
         try {
             service.saveRolePermission(json);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

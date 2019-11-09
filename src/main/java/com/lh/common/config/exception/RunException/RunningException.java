@@ -5,7 +5,7 @@ import com.lh.common.config.response.ResponseCode;
 import com.lh.common.config.response.ResultUtils;
 
 /**
- * 功能描述：Token 错误
+ * 功能描述：运行异常
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *

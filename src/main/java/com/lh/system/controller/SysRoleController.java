@@ -53,7 +53,7 @@ public class SysRoleController {
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
             return service.queryPageAll(new Page<>(pageNo, pageSize),jsonObject.getJSONObject("params"));
         }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统运行错误" : e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class SysRoleController {
         try{
             return service.roleList();
         }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统运行错误" : e.getMessage());
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ public class SysRoleController {
             sysRole.setCreateUserId(daoApi.getCurrentUserId());
             service.save(sysRole);
         } catch (Exception e) {
-            throw new RunningException("系统错误!");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class SysRoleController {
         try {
             service.updateById(role);
         }catch (Exception e){
-            throw new RunningException("系统错误");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class SysRoleController {
             sysRole.setDelFlag(CommonConstant.DEL_FLAG_1);
             service.updateById(sysRole);
         }catch (Exception e) {
-            throw new RunningException("系统错误");
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -118,7 +118,7 @@ public class SysRoleController {
                 service.updateById(sysRole);
             });
         }catch (Exception e) {
-            throw new RunningException("系统错误");
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -129,7 +129,7 @@ public class SysRoleController {
         try {
             service.duplicate(roleCode);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public class SysRoleController {
         try {
             return service.queryTreeList();
         }catch (Exception e){
-            throw new RunningException(e.getMessage()!= "" ? e.getMessage():"系统错误");
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

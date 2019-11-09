@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.LocalHostUtil;
@@ -56,12 +57,14 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public Map<String, Object> logInfo() {
+    public JSONObject logInfo() {
+        JSONObject jsonObject = new JSONObject();
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("totalVisitCount", 120);
         map.put("todayVisitCount", 19);
         map.put("todayIp", "192.168.0.283");
-        return map;
+        jsonObject.put("logInfo",map);
+        return jsonObject;
     }
 
 }

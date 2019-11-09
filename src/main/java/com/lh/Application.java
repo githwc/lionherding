@@ -34,7 +34,6 @@ import org.springframework.core.env.Environment;
 @Slf4j
 public class Application {
 
-    // TODO: 2019/10/30 全局异常拦截
     // TODO 2019/10/28 系统管理加权限拦截  admin 和 administrator -- 基于菜单，角色的配置
     // TODO: 2019/10/13 何时触发授权接口(config中配置，进行鉴权)
     // TODO: 2019/10/13 完成认证后如何保存认证信息及获取当前信息(token session等)

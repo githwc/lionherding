@@ -396,6 +396,16 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
+    public void deleteBatch(String ids) {
+        String[] arr = ids.split(",");
+        for (String id : arr) {
+            if (BasisUtil.isNotEmpty(id)) {
+                this.deletePermission(id);
+            }
+        }
+    }
+
+    @Override
     public List<String> queryRolePermission(String roleId) {
         List<SysRolePermission> list = sysRolePermissionService.list(new LambdaQueryWrapper<SysRolePermission>()
                 .eq(SysRolePermission::getRoleId, roleId));

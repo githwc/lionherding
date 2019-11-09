@@ -1,5 +1,6 @@
 package com.lh.system.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysLog;
 
@@ -32,6 +33,6 @@ public interface SysLogService extends IService<SysLog> {
      * 获取系统日志
      * @return
      */
-    Map<String,Object> logInfo();
+    JSONObject logInfo();
 
 }

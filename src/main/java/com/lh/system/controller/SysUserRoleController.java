@@ -43,7 +43,7 @@ public class SysUserRoleController {
         try{
             return service.queryUserRole();
         }catch (Exception e){
-            throw new RunningException(e.getMessage() == "" ? "系统错误" : e.getMessage());
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

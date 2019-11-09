@@ -61,9 +61,7 @@ public class SystemLogService {
      */
     public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult, Exception ex) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
-        //如果抛出异常则将异常信息写入到文件日志中，否则仅仅记录操作日志不会写文件日志
-        log.error(message, ex);
-        //将系统异常信息写入文件日志中后，写用户系统操作日志，返回日志操作状态
+        //将系统异常信息在全局异常拦截中写入日志文件后，写用户系统操作日志，返回日志操作状态
         String requestParams = JSONObject.fromObject(request.getParameterMap()).toString();
         return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
     }

@@ -1,6 +1,7 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.system.service.SysLogService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  *
@@ -38,9 +41,11 @@ public class SysLogController {
     @ApiOperation(value = "获取系统日志",notes = "获取系统日志")
     @WriteLog(opPosition = "获取系统日志" ,optype = CommonConstant.OPTYPE_READ)
     public JSONObject logInfo(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("logInfo",service.logInfo());
-        return jsonObject;
+        try{
+            return service.logInfo();
+        }catch(Exception e){
+            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
     }
 
 }

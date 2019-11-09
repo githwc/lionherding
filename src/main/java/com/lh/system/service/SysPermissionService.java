@@ -72,6 +72,12 @@ public interface SysPermissionService extends IService<SysPermission> {
     void deletePermission(String id);
 
     /**
+     * 批量删除
+     * @param ids
+     */
+    void deleteBatch(String ids);
+
+    /**
      * 查询角色拥有的权限
      * @param roleId
      * @return

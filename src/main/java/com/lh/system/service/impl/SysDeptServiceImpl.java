@@ -3,6 +3,7 @@ package com.lh.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
+import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,7 +55,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public List<SysDeptTree> searhBy(String keyWord) {
+    public List<SysDeptTree> searchBy(String keyWord) {
         List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
                 .like(SysDept::getDepartName,keyWord)
                 .eq(SysDept::getDelFlag, CommonConstant.DEL_FLAG_0)
@@ -106,6 +108,18 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 this.update(sysDept1,new LambdaQueryWrapper<SysDept>()
                         .eq(SysDept::getSysDeptId,currId)
                 );
+            });
+        }
+    }
+
+    @Override
+    public void deleteBatch(String ids) {
+        if (ids == null || "".equals(ids.trim())) {
+            throw new ParameterException("参数不识别！");
+        } else {
+            List<String> list = Arrays.asList(ids.split(","));
+            list.forEach(curr->{
+                this.deleteById(curr);
             });
         }
     }
