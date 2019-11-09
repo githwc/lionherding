@@ -138,17 +138,11 @@ public class SysUserController {
     @GetMapping(value = "/queryUserRole")
     @ApiOperation(value = "查询用户拥有角色",notes = "查询用户拥有角色")
     @WriteLog(opPosition = "查询用户拥有角色" ,optype = CommonConstant.OPTYPE_READ)
-    public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userid) {
-        List<String> list = new ArrayList<String>();
-        List<SysUserRole> userRole = sysUserRoleService.list(new LambdaQueryWrapper<SysUserRole>()
-                .eq(SysUserRole::getUserId, userid));
-        if (userRole == null || userRole.size() <= 0) {
-            throw new RunningException("未找到用户相关角色信息");
-        } else {
-            for (SysUserRole sysUserRole : userRole) {
-                list.add(sysUserRole.getRoleId());
-            }
+    public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userId) {
+        try{
+            return service.queryUserRole(userId);
+        }catch(Exception e){
+            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
-        return list;
     }
 }

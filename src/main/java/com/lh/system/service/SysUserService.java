@@ -7,6 +7,7 @@ import com.lh.system.entity.SysUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -82,4 +83,11 @@ public interface SysUserService extends IService<SysUser> {
      * @param ids
      */
     void deleteBatch(String ids);
+
+    /**
+     * 查询用户拥有角色
+     * @param userId
+     * @return
+     */
+    List<String> queryUserRole(String userId);
 }

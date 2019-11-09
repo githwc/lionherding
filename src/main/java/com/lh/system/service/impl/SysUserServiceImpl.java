@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -220,4 +221,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
     }
 
+    @Override
+    public List<String> queryUserRole(String userId) {
+        List<String> list = new ArrayList<String>();
+        List<SysUserRole> userRole = sysUserRoleMapper.selectList(new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, userId));
+        if (userRole == null || userRole.size() <= 0) {
+            throw new RunningException("未找到用户相关角色信息");
+        } else {
+            for (SysUserRole sysUserRole : userRole) {
+                list.add(sysUserRole.getRoleId());
+            }
+        }
+        return list;
+    }
 }
