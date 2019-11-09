@@ -1,14 +1,11 @@
 package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
-import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysUser;
-import com.lh.system.entity.SysUserRole;
 import com.lh.system.service.SysUserRoleService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
