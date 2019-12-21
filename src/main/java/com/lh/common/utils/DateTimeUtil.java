@@ -19,6 +19,13 @@ import java.util.Date;
 public class DateTimeUtil {
 
     /**
+     * 日期类型 *
+     */
+    public static final String yyyyMMDD = "yyyy-MM-dd";
+    public static final String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
+    public static final String HHmmss = "HH:mm:ss";
+
+    /**
      * 计算2个日期之间相差多少年月日
      *
      * @param beginDate 开始时间
@@ -38,10 +45,10 @@ public class DateTimeUtil {
         int toYear = to.get(Calendar.YEAR);
         int toMonth = to.get(Calendar.MONTH);
         int toDay = to.get(Calendar.DAY_OF_MONTH);
-        int year = toYear  -  fromYear;
-        int month = toMonth  - fromMonth;
-        int day = toDay  - fromDay;
-        return year+"年"+month+"个月"+day+"天";
+        int year = toYear - fromYear;
+        int month = toMonth - fromMonth;
+        int day = toDay - fromDay;
+        return year+","+month+","+day;
     }
 
     /**
@@ -67,7 +74,7 @@ public class DateTimeUtil {
         int toYear = to.get(Calendar.YEAR);
         int toMonth = to.get(Calendar.MONTH);
 
-        int year = toYear  -  fromYear;
+        int year = toYear - fromYear;
         int month = toYear *  12  + toMonth  -  (fromYear  *  12  +  fromMonth);
         int day = (int) ((to.getTimeInMillis()  -  from.getTimeInMillis())  /  (24  *  3600  *  1000));
         return year+","+month+","+day;
