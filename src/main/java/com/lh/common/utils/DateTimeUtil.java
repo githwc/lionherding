@@ -81,26 +81,6 @@ public class DateTimeUtil {
     }
 
     /**
-     * @Description:按标准格式格式化指定时间
-     * @Date: 19:14 2019/5/9
-     * @Param: date:java.util.date; format:时间格式："yyyy-MM-dd HH:mm:ss"
-     * @Return: 指定时间字符串
-     */
-    public static String formatDate(Date date, String format) {
-        if (date != null) {
-            SimpleDateFormat sdf = null;
-            try {
-                sdf = new SimpleDateFormat(format);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Illegal date";
-            }
-            return sdf.format(date);
-        }
-        return "";
-    }
-
-    /**
      * @Description:阿拉伯数字为中文数字(按指定格式)
      * @Param date:  java.util.Date
      * @Param format:   时间格式："yyyy-MM-dd HH:mm:ss"
