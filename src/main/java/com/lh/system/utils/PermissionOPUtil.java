@@ -1,7 +1,7 @@
 package com.lh.system.utils;
 
 import com.lh.system.entity.SysPermission;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 

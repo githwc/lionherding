@@ -1,5 +1,6 @@
 package com.lh.common.log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.LocalHostUtil;
@@ -7,7 +8,6 @@ import com.lh.system.entity.SysLog;
 import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class SystemLogService {
      */
     public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
-        String requestParams = JSONObject.fromObject(request.getParameterMap()).toString();
+        String requestParams = JSONObject.toJSONString(request.getParameterMap());
         return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
     }
 
@@ -62,7 +62,7 @@ public class SystemLogService {
     public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult, Exception ex) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
         //将系统异常信息在全局异常拦截中写入日志文件后，写用户系统操作日志，返回日志操作状态
-        String requestParams = JSONObject.fromObject(request.getParameterMap()).toString();
+        String requestParams = JSONObject.toJSONString(request.getParameterMap());
         return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
     }
 
