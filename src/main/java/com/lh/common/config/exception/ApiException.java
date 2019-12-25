@@ -2,6 +2,7 @@ package com.lh.common.config.exception;
 
 import com.lh.common.config.response.ResultUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 功能描述：
@@ -14,6 +15,7 @@ import lombok.Data;
  * @Version: 1.0.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ApiException extends RuntimeException {
     /**
      * 错误码

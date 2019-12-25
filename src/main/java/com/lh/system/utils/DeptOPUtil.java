@@ -1,6 +1,6 @@
 package com.lh.system.utils;
 
-import com.lh.common.utils.BasisUtil;
+import com.alibaba.druid.util.StringUtils;
 import com.lh.system.entity.SysDept;
 import com.lh.system.vo.DepartIdModel;
 import com.lh.system.vo.SysDeptTree;
@@ -51,7 +51,7 @@ public class DeptOPUtil {
         List<SysDeptTree> treeList = new ArrayList<>();
         for (int i = 0; i < recordList.size(); i++) {
             SysDeptTree branch = recordList.get(i);
-            if (BasisUtil.isEmpty(branch.getParentId())) {
+            if (StringUtils.isEmpty(branch.getParentId())) {
                 treeList.add(branch);
                 DepartIdModel departIdModel = new DepartIdModel().convert(branch);
                 departIdList.add(departIdModel);

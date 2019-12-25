@@ -4,13 +4,13 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtToken;
 import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CommonConstant;
-import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.service.SysRoleService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -150,7 +150,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     public boolean jwtTokenRefresh(String token, String loginName, String passWord) {
         String cacheToken = String.valueOf(redisUtil.get(CommonConstant.PREFIX_USER_TOKEN + token));
-        if (BasisUtil.isNotEmpty(cacheToken)) {
+        if (StringUtils.isNotEmpty(cacheToken)) {
             // 校验token有效性
             if (!JwtUtil.verifyToken(token, loginName, passWord)) {
                 String newAuthorization = JwtUtil.sign(loginName, passWord);

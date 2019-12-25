@@ -29,6 +29,7 @@
         <json-lib.version>1.0.2</json-lib.version>
         <jeecg-poi.version>1.0.2</jeecg-poi.version>
         <jwt.version>3.7.0</jwt.version>
+        <hutool.version>5.0.0</hutool.version>
     </properties>
 
     <dependencies>
@@ -92,7 +93,7 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!--thymeleaf场景启动器-->
+        <!--thymeleaf-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -102,13 +103,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
-        <!--配置文件处理器：用于编写yml时的提示信息-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <!--JWT-->
@@ -125,13 +119,6 @@
             <version>${lombok.version}</version>
         </dependency>
 
-        <!-- POI -->
-        <dependency>
-            <groupId>org.jeecgframework</groupId>
-            <artifactId>autopoi-web</artifactId>
-            <version>${jeecg-poi.version}</version>
-        </dependency>
-
         <!--Swagger 相关：核心包:扫描程序,生成文档数据;swagger生成可视化界面-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -144,18 +131,43 @@
             <version>${swagger.version}</version>
         </dependency>
 
-        <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
-                  常见的编码解码工具Base64、MD5、Hex、SHA1、DES等-->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>${commons-codec.version}</version>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <!--配置文件处理器：用于编写yml时的提示信息-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- POI -->
+        <dependency>
+            <groupId>org.jeecgframework</groupId>
+            <artifactId>autopoi-web</artifactId>
+            <version>${jeecg-poi.version}</version>
+        </dependency>
+
+        <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
+                  常见的编码解码工具Base64、MD5、Hex、SHA1、DES等-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
         </dependency>
 
         <!-- Jackson jar START -->
@@ -178,11 +190,6 @@
             <version>${json-lib.version}</version>
         </dependency>
         <!-- Jackson jar END -->
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

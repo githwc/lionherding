@@ -23,6 +23,7 @@ import com.lh.system.utils.PermissionOPUtil;
 import com.lh.system.vo.SysPermissionTree;
 import com.lh.system.vo.TreeModel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         Set<String> permissionSet = new HashSet<String>();
         List<SysPermission> permissionList = this.baseMapper.queryPermissionByUser(loginName);
         for (SysPermission po : permissionList) {
-            if (BasisUtil.isNotEmpty(po.getPermsCode())) {
+            if (StringUtils.isNotEmpty(po.getPermsCode())) {
                 permissionSet.add(po.getPermsCode());
             }
         }
@@ -70,7 +71,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public JSONObject getUserPermissionByToken(String token, HttpServletResponse response) {
         JSONObject json = new JSONObject();
-        if (BasisUtil.isEmpty(token)) {
+        if (StringUtils.isEmpty(token)) {
             throw new ParameterException("参数错误:TOKEN不允许为空");
         }
         String loginName = JwtUtil.getUsername(token);
@@ -119,13 +120,13 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                 continue;
             }
             //@2
-            if (parentJson == null && BasisUtil.isEmpty(tempPid)) {
+            if (parentJson == null && StringUtils.isEmpty(tempPid)) {
                 jsonArray.add(json);
                 if (!permission.getIsLeaf()) {
                     getMenuJsonArray(jsonArray, metaList, json);
                 }
                 // @3
-            } else if (parentJson != null && BasisUtil.isNotEmpty(tempPid) && tempPid.equals(parentJson.getString("id"))) {
+            } else if (parentJson != null && StringUtils.isNotEmpty(tempPid) && tempPid.equals(parentJson.getString("id"))) {
                 if (permission.getMenuType() == 2) {
                     JSONObject metaJson = parentJson.getJSONObject("meta");
                     if (metaJson.containsKey("permissionList")) {
@@ -175,7 +176,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                 json.put("path", permission.getUrl());
             }
             // 重要规则：路由name (通过URL生成路由name,路由name供前端开发，页面跳转使用)
-            if (BasisUtil.isNotEmpty(permission.getComponentName())) {
+            if (StringUtils.isNotEmpty(permission.getComponentName())) {
                 json.put("name", permission.getComponentName());
             } else {
                 json.put("name", urlToRouteName(permission.getUrl()));
@@ -193,14 +194,14 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             // 默认所有的菜单都加路由缓存，提高系统性能
             meta.put("keepAlive", "true");
             meta.put("title", permission.getName());
-            if (BasisUtil.isEmpty(permission.getParentId())) {
+            if (StringUtils.isEmpty(permission.getParentId())) {
                 // 一级菜单跳转地址
                 json.put("redirect", permission.getRedirect());
-                if (BasisUtil.isNotEmpty(permission.getIcon())) {
+                if (StringUtils.isNotEmpty(permission.getIcon())) {
                     meta.put("icon", permission.getIcon());
                 }
             } else {
-                if (BasisUtil.isNotEmpty(permission.getIcon())) {
+                if (StringUtils.isNotEmpty(permission.getIcon())) {
                     meta.put("icon", permission.getIcon());
                 }
             }
@@ -276,7 +277,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      * @return
      */
     private String urlToRouteName(String url) {
-        if (BasisUtil.isNotEmpty(url)) {
+        if (StringUtils.isNotEmpty(url)) {
             if (url.startsWith("/")) {
                 url = url.substring(1);
             }
@@ -329,7 +330,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         }
         String pid = sysPermission.getParentId();
         //设置父节点不为叶子节点
-        if(BasisUtil.isNotEmpty(pid)) {
+        if(StringUtils.isNotEmpty(pid)) {
             this.baseMapper.setMenuLeaf(pid, 0);
         }
         sysPermission.setIsLeaf(true);
@@ -358,13 +359,13 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             this.updateById(sysPermission);
             //如果当前菜单的父菜单变了，则需要修改新父菜单和老父菜单的，叶子节点状态
             String newPid = sysPermission.getParentId();
-            if((BasisUtil.isNotEmpty(newPid) && !newPid.equals(oldPer.getParentId())) || BasisUtil.isEmpty(newPid)&&BasisUtil.isNotEmpty(oldPer.getParentId())) {
+            if((StringUtils.isNotEmpty(newPid) && !newPid.equals(oldPer.getParentId())) || StringUtils.isEmpty(newPid)&& StringUtils.isNotEmpty(oldPer.getParentId())) {
                 //a.设置新的父菜单不为叶子节点
                 this.baseMapper.setMenuLeaf(newPid, 0);
                 //b.判断老的菜单下是否还有其他子菜单，没有的话则设置为叶子节点
                 int cc = this.count(new QueryWrapper<SysPermission>().lambda().eq(SysPermission::getParentId, oldPer.getParentId()));
                 if(cc==0) {
-                    if(BasisUtil.isNotEmpty(oldPer.getParentId())) {
+                    if(StringUtils.isNotEmpty(oldPer.getParentId())) {
                         this.baseMapper.setMenuLeaf(oldPer.getParentId(), 1);
                     }
                 }
@@ -381,7 +382,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             throw new RunningException("未找到菜单信息");
         }
         String pid = sysPermission.getParentId();
-        if(BasisUtil.isNotEmpty(pid)) {
+        if(StringUtils.isNotEmpty(pid)) {
             int count = this.count(new QueryWrapper<SysPermission>().lambda().eq(SysPermission::getParentId, pid));
             if(count==1) {
                 //若父节点无其他子节点，则该父节点是叶子节点
@@ -399,7 +400,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public void deleteBatch(String ids) {
         String[] arr = ids.split(",");
         for (String id : arr) {
-            if (BasisUtil.isNotEmpty(id)) {
+            if (StringUtils.isNotEmpty(id)) {
                 this.deletePermission(id);
             }
         }
@@ -431,7 +432,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         for (SysPermission permission : metaList) {
             String tempPid = permission.getParentId();
             SysPermissionTree tree = new SysPermissionTree(permission);
-            if (temp == null && BasisUtil.isEmpty(tempPid)) {
+            if (temp == null && StringUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
                 if (!tree.isLeaf()) {
                     getTreeList(treeList, metaList, tree);
@@ -449,7 +450,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         for (SysPermission permission : metaList) {
             String tempPid = permission.getParentId();
             TreeModel tree = new TreeModel(permission);
-            if (temp == null && BasisUtil.isEmpty(tempPid)) {
+            if (temp == null && StringUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
                 if (!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);

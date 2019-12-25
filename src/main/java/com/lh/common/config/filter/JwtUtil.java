@@ -7,11 +7,9 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lh.common.config.exception.ApiException;
 import com.lh.common.config.exception.RunException.RunningException;
-import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.SpringContextUtils;
-import com.lh.system.entity.SysUser;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -95,7 +93,7 @@ public class JwtUtil {
 	public static String getUserNameByToken(HttpServletRequest request) throws ApiException {
 		String accessToken = request.getHeader("X-Access-Token");
 		String username = getUsername(accessToken);
-		if (BasisUtil.isEmpty(username)) {
+		if (StringUtils.isEmpty(username)) {
 			throw new RunningException();
 		}
 		return username;
@@ -117,7 +115,7 @@ public class JwtUtil {
 		if (key.contains("#{")) {
 			key = key.substring(2,key.indexOf("}"));
 		}
-		if (BasisUtil.isNotEmpty(key)) {
+		if (StringUtils.isNotEmpty(key)) {
 			HttpSession session = SpringContextUtils.getHttpServletRequest().getSession();
 			returnValue = (String) session.getAttribute(key);
 		}

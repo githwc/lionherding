@@ -1,7 +1,7 @@
 package com.lh.system.utils;
 
-import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class PermissionOPUtil {
 			return null;
 		}
 		// 组件
-		if (BasisUtil.isNotEmpty(permission.getComponent())) {
+		if (StringUtils.isNotEmpty(permission.getComponent())) {
 			String component = permission.getComponent();
 			if (component.startsWith("/")) {
 				component = component.substring(1);
@@ -47,7 +47,7 @@ public class PermissionOPUtil {
 		}
 
 		// 请求URL
-		if (BasisUtil.isNotEmpty(permission.getUrl())) {
+		if (StringUtils.isNotEmpty(permission.getUrl())) {
 			String url = permission.getUrl();
 			if (url.endsWith(".vue")) {
 				url = url.replace(".vue", "");
@@ -59,7 +59,7 @@ public class PermissionOPUtil {
 		}
 
 		// 一级菜单默认组件
-		if (0 == permission.getMenuType() && BasisUtil.isEmpty(permission.getComponent())) {
+		if (0 == permission.getMenuType() && StringUtils.isEmpty(permission.getComponent())) {
 			// 一级菜单默认组件
 			permission.setComponent("layouts/RouteView");
 		}

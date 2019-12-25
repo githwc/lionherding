@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,6 +21,7 @@ import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +124,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void dealUser(SysUser sysUser) {
         sysUser.setLoginCount(sysUser.getLoginCount() + 1);
-        if (BasisUtil.isNotEmpty(sysUser.getLastLoginTime())) {
+        if (ObjectUtil.isNotNull(sysUser.getLastLoginTime())) {
             if (!sysUser.getLastLoginTime().toString().substring(0, 10)
                     .equalsIgnoreCase(LocalDateTime.now().toString().substring(0, 10))) {// 判断上一次登录时间是当前时间的前一天或更多天则证明今天没登陆过
                 sysUser.setTodayLoginCount(1);
@@ -132,7 +134,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         } else {
             sysUser.setTodayLoginCount(1);
         }
-        if (BasisUtil.isEmpty(sysUser.getFirstLoginTime())) {
+        if (ObjectUtil.isNotNull(sysUser.getFirstLoginTime())) {
             sysUser.setFirstLoginTime(LocalDateTime.now());
         }
         sysUser.setLastLoginTime(LocalDateTime.now());
@@ -155,7 +157,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setDepartId(jsonObject.getString("selecteddeparts"));
         this.save(user);
         String roles = jsonObject.getString("selectedroles");
-        if(BasisUtil.isNotEmpty(roles)) {
+        if(StringUtils.isNotEmpty(roles)) {
             String[] arr = roles.split(",");
             for (String roleId : arr) {
                 SysUserRole userRole = new SysUserRole(user.getSysUserId(), roleId);
@@ -177,7 +179,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             // 角色先删后加
             sysUserRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
                     .eq(SysUserRole::getUserId, user.getSysUserId()));
-            if(BasisUtil.isNotEmpty(roles)) {
+            if(StringUtils.isNotEmpty(roles)) {
                 String[] arr = roles.split(",");
                 for (String roleId : arr) {
                     SysUserRole userRole = new SysUserRole(user.getSysUserId(), roleId);
@@ -215,7 +217,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void deleteBatch(String ids) {
         String[] arr = ids.split(",");
         for (String id : arr) {
-            if (BasisUtil.isNotEmpty(id)) {
+            if (StringUtils.isNotEmpty(id)) {
                 this.deleteUser(id);
             }
         }

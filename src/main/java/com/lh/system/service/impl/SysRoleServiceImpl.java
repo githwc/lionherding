@@ -6,13 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
-import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.entity.SysRole;
 import com.lh.system.mapper.SysRoleMapper;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.service.SysRoleService;
 import com.lh.system.vo.TreeModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         Set<String> roleSet = new HashSet<String>();
         List<SysRole> rolesList = this.baseMapper.getUserRoles(loginName);
         for (SysRole po : rolesList) {
-            if (BasisUtil.isNotEmpty(po.getRoleCode())) {
+            if (StringUtils.isNotEmpty(po.getRoleCode())) {
                 roleSet.add(po.getRoleCode());
             }
         }
@@ -95,7 +95,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         for (SysPermission permission : metaList) {
             String tempPid = permission.getParentId();
             TreeModel tree = new TreeModel(permission.getSysPermissionId(), tempPid, permission.getName(),permission.getRuleFlag(), permission.getIsLeaf());
-            if(temp==null && BasisUtil.isEmpty(tempPid)) {
+            if(temp==null && StringUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
                 if(!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);

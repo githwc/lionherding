@@ -6,6 +6,7 @@ import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysRolePermissionMapper;
 import com.lh.system.service.SysRolePermissionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         if(add!=null && add.size()>0) {
             List<SysRolePermission> list = new ArrayList<SysRolePermission>();
             for (String p : add) {
-                if(BasisUtil.isNotEmpty(p)) {
+                if(StringUtils.isNotEmpty(p)) {
                     SysRolePermission rolepms = new SysRolePermission(roleId, p);
                     list.add(rolepms);
                 }
@@ -58,10 +59,10 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
      * @return
      */
     private List<String> getDiff(String main,String diff){
-        if(BasisUtil.isEmpty(diff)) {
+        if(StringUtils.isEmpty(diff)) {
             return null;
         }
-        if(BasisUtil.isEmpty(main)) {
+        if(StringUtils.isEmpty(main)) {
             return Arrays.asList(diff.split(","));
         }
         String[] mainArr = main.split(",");
@@ -72,7 +73,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         }
         List<String> res = new ArrayList<String>();
         for (String key : diffArr) {
-            if(BasisUtil.isNotEmpty(key) && !map.containsKey(key)) {
+            if(StringUtils.isNotEmpty(key) && !map.containsKey(key)) {
                 res.add(key);
             }
         }
