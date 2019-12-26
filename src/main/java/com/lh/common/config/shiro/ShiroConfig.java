@@ -50,12 +50,6 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        try {
-
-            Subject s = SecurityUtils.getSubject();
-        }catch (Exception e){
-
-        }
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         /*============  配置不会被拦截的链接 顺序判断 START ======*/
         filterChainDefinitionMap.put("/sysUser/login", "anon"); /*登录接口*/
@@ -64,8 +58,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger**/**", "anon");
 
         filterChainDefinitionMap.put("/test","anon");   //Temp APi
+        filterChainDefinitionMap.put("/test2","anon");   //Temp APi
         filterChainDefinitionMap.put("/login","anon");  //Temp APi
         filterChainDefinitionMap.put("/login2","anon");  //Temp APi
+        filterChainDefinitionMap.put("/sysDept/queryTreeList2","anon");  //Temp APi
 
         /* ======== 权限访问 START =============*/
         filterChainDefinitionMap.put("/add","perms[hr:BaseSettings]");

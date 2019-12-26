@@ -5,10 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 功能描述：JAVA日期时间工具包
- * 日期数据获取与转换、
- * 关于时间的相关方法
- * <p>
+ * 功能描述：日期时间工具包
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -67,7 +65,7 @@ public class DateTimeUtil {
         from.setTime(fromDate);
         Calendar to = Calendar.getInstance();
         to.setTime(toDate);
-        //只要年月
+
         int fromYear = from.get(Calendar.YEAR);
         int fromMonth = from.get(Calendar.MONTH);
 

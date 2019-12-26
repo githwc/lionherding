@@ -7,6 +7,7 @@ import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
+import com.lh.common.tree.TreeNode;
 import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
@@ -52,6 +53,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .orderByAsc(SysDept::getSort)
         );
         return DeptOPUtil.deptToTree(list);
+    }
+
+    @Override
+    public List<TreeNode> queryTreeList2() {
+        return this.baseMapper.queryTreeList2();
     }
 
     @Override

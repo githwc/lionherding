@@ -86,8 +86,6 @@ public class YouBianCodeUtil {
 		return parentCode;
 	}
 
-
-
 	/**
 	 * 将数字前面位数补零
 	 *

@@ -48,8 +48,14 @@ public class TestShiroController {
     @Autowired
     private RedisUtil redisUtil;
 
-    @RequestMapping("/test")
+    @RequestMapping("/test2")
     @WriteLog(opPosition = "测试日志点" ,optype = CommonConstant.OPTYPE_READ)
+    public String test2(){
+        log.info("执行test方法");
+        return "test";
+    }
+
+    @RequestMapping("/test")
     public String test(){
         log.info("执行test方法");
         return "test";

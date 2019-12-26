@@ -1,6 +1,7 @@
 package com.lh.system.service;
 
 import com.lh.common.config.response.HttpResponseUtil;
+import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.vo.DepartIdModel;
@@ -29,6 +30,9 @@ public interface SysDeptService extends IService<SysDept> {
      * @return
      */
     List<SysDeptTree> queryTreeList();
+
+
+    List<TreeNode> queryTreeList2();
 
     /**
      * 部门搜索功能方法,根据关键字模糊搜索相关部门

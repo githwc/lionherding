@@ -104,7 +104,4 @@ public class SysDept implements Serializable {
      */
     private LocalDateTime updateTime;
 
-
-    /////////////////////////////// 非表字段 ///////////////////////////////
-
 }

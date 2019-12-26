@@ -1,8 +1,12 @@
 package com.lh.system.mapper;
 
+import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  *
  * 功能描述：
@@ -19,4 +23,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysDeptMapper extends BaseMapper<SysDept> {
 
+    List<TreeNode> queryTreeList2();
 }

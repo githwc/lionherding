@@ -4,6 +4,7 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
+import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.vo.DepartIdModel;
@@ -48,6 +49,11 @@ public class SysDeptController {
         }catch (Exception e){
             throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
+    }
+
+    @GetMapping("/queryTreeList2")
+    public List<TreeNode> queryTreeList2(){
+        return service.queryTreeList2();
     }
 
     @GetMapping(value = "/searchBy")
