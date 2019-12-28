@@ -3,7 +3,7 @@ package com.lh.system.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysPermission;
-import com.lh.system.vo.SysPermissionTree;
+import com.lh.system.model.vo.SysPermissionTree;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

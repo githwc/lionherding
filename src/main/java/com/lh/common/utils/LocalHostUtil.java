@@ -1,5 +1,7 @@
 package com.lh.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,13 +31,19 @@ public class LocalHostUtil {
      */
     public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if ( ip==null || ip.length()==0 || "unknown".equalsIgnoreCase(ip) ) {
+        if (StringUtils.isBlank(ip) || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if ( ip==null || ip.length()==0 || "unknown".equalsIgnoreCase(ip) ) {
+        if (StringUtils.isBlank(ip) || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if ( ip==null || ip.length()==0 || "unknown".equalsIgnoreCase(ip) ) {
+        if (StringUtils.isBlank(ip)  || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (StringUtils.isBlank(ip)  || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (StringUtils.isBlank(ip)  || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
@@ -75,9 +83,10 @@ public class LocalHostUtil {
                 BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
                 while ((line = br.readLine()) != null) {
-                    Pattern pat = Pattern.compile("\\b\\w+:\\w+:\\w+:\\w+:\\w+:\\w+\\b");
-                    Matcher mat = pat.matcher(line);
-                    if (mat.find()) mac = mat.group(0);
+                    Matcher mat = Pattern.compile("\\b\\w+:\\w+:\\w+:\\w+:\\w+:\\w+\\b").matcher(line);
+                    if (mat.find()){
+                        mac = mat.group(0);
+                    }
                 }
                 br.close();
             } catch (IOException e) {

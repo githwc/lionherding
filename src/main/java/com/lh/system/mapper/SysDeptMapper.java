@@ -1,8 +1,11 @@
 package com.lh.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.system.model.vo.SysDeptVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +26,15 @@ import java.util.List;
 @Repository
 public interface SysDeptMapper extends BaseMapper<SysDept> {
 
-    List<TreeNode> queryTreeList2();
+    /**
+     * 部门树
+     * @return tree
+     */
+    List<TreeNode> queryTreeList();
+
+    /**
+     * 子级部门
+     * @return dept list
+     */
+    Page<SysDept> childrenDept(@Param("page")Page<SysDeptVO> page,@Param("parentId")String parentId);
 }

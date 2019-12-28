@@ -1,12 +1,12 @@
 package com.lh.system.service;
 
-import com.lh.common.config.response.HttpResponseUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.lh.system.vo.DepartIdModel;
-import com.lh.system.vo.SysDeptTree;
-import org.springframework.http.HttpRequest;
+import com.lh.system.model.vo.DepartIdModel;
+import com.lh.system.model.vo.SysDeptTree;
+import com.lh.system.model.vo.SysDeptVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,12 +27,16 @@ public interface SysDeptService extends IService<SysDept> {
 
     /**
      * 查出所有部门,并以树结构格式返回前端
-     * @return
+     * @return tree
      */
-    List<SysDeptTree> queryTreeList();
+    List<TreeNode> queryTreeList();
 
-
-    List<TreeNode> queryTreeList2();
+    /**
+     * 查询子级部门
+     * @param parentId 父级部门ID
+     * @return deptList
+     */
+    Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId);
 
     /**
      * 部门搜索功能方法,根据关键字模糊搜索相关部门

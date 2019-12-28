@@ -1,21 +1,22 @@
 package com.lh.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
-import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
+import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
-import com.lh.system.vo.DepartIdModel;
-import com.lh.system.vo.SysDeptTree;
+import com.lh.system.model.vo.DepartIdModel;
+import com.lh.system.model.vo.SysDeptTree;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class SysDeptController {
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "加载部门树",notes = "加载所有部门树")
     @WriteLog(opPosition = "加载部门树" ,optype = CommonConstant.OPTYPE_READ)
-    public List<SysDeptTree> queryTreeList(){
+    public List<TreeNode> queryTreeList(){
         try {
             return service.queryTreeList();
         }catch (Exception e){
@@ -51,9 +52,11 @@ public class SysDeptController {
         }
     }
 
-    @GetMapping("/queryTreeList2")
-    public List<TreeNode> queryTreeList2(){
-        return service.queryTreeList2();
+    @GetMapping("/childrenDept")
+    @ApiOperation(value = "查询部门",notes = "查询子级部门")
+    @WriteLog(opPosition = "查询子级部门" ,optype = CommonConstant.OPTYPE_READ)
+    public Page<SysDept> childrenDept(Page<SysDeptVO> page, @RequestParam("parentId")String parentId){
+        return service.childrenDept(page,parentId);
     }
 
     @GetMapping(value = "/searchBy")

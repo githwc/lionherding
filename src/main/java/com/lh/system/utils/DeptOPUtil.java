@@ -2,8 +2,8 @@ package com.lh.system.utils;
 
 import com.alibaba.druid.util.StringUtils;
 import com.lh.system.entity.SysDept;
-import com.lh.system.vo.DepartIdModel;
-import com.lh.system.vo.SysDeptTree;
+import com.lh.system.model.vo.DepartIdModel;
+import com.lh.system.model.vo.SysDeptTree;
 
 import java.util.ArrayList;
 import java.util.List;

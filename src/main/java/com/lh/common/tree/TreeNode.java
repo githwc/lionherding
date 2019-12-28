@@ -2,6 +2,7 @@ package com.lh.common.tree;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,57 +17,66 @@ import java.util.List;
  * @Datetime: 2019-12-26 18:08
  * @Version: 1.0.0
  */
-public class TreeNode {
+public class TreeNode implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 树节点Id
+     * 对应业务表中的id字段,前端数据树中的key
      */
     @JSONField(ordinal = 1)
     private String id;
+
+    /**
+     * 对应业务表中的id字段,前端数据树中的value
+     */
+    @JSONField(ordinal = 2)
+    private String value;
+
     /**
      * 树节点Pid
      */
-    @JSONField(ordinal = 2)
-    private String pid;
+    @JSONField(ordinal = 3)
+    private String parentId;
     /**
      * 树节点名
      */
-    @JSONField(ordinal = 3)
-    private String name;
+    @JSONField(ordinal = 4)
+    private String title;
     /**
      * 树节点层级
      */
-    @JSONField(ordinal = 4)
+    @JSONField(ordinal = 5)
     private Integer level;
     /**
      * 树图标
      */
-    @JSONField(ordinal = 5)
+    @JSONField(ordinal = 6)
     private String icon;
     /**
      * 树地址
      */
-    @JSONField(ordinal = 6)
+    @JSONField(ordinal = 7)
     private String url;
     /**
      * 树节点排序号
      */
-    @JSONField(ordinal = 7)
+    @JSONField(ordinal = 8)
     private Integer orderNum;
     /**
      * 树节点是否选中
      */
-    @JSONField(ordinal = 8)
+    @JSONField(ordinal = 9)
     private Boolean checked;
     /**
      * 树节点是否显示
      */
-    @JSONField(ordinal = 9)
+    @JSONField(ordinal = 10)
     private Boolean showed;
     /**
      * 业务主键Id
      */
-    @JSONField(ordinal = 10)
+    @JSONField(ordinal = 11)
     private String rId;
     /**
      * 树节点父节点
@@ -103,10 +113,11 @@ public class TreeNode {
     public TreeNode() {
     }
 
-    public TreeNode(String id, String pid, String name, Integer orderNum, Boolean checked) {
+    public TreeNode(String id, String value,String parentId, String title, Integer orderNum, Boolean checked) {
         this.id = id;
-        this.pid = pid;
-        this.name = name;
+        this.value = value;
+        this.parentId = parentId;
+        this.title = title;
         this.orderNum = orderNum;
         this.checked = checked;
     }
@@ -121,20 +132,28 @@ public class TreeNode {
         this.id = id;
     }
 
-    public String getPid() {
-        return pid;
+    public String getValue() {
+        return value;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     public Integer getLevel() {

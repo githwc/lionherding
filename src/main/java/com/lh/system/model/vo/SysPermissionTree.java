@@ -1,4 +1,4 @@
-package com.lh.system.vo;
+package com.lh.system.model.vo;
 
 import com.lh.system.entity.SysPermission;
 import lombok.Data;

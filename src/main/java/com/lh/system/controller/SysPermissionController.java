@@ -2,16 +2,12 @@ package com.lh.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lh.common.config.exception.RunException.RunningException;
-import com.lh.common.config.response.HttpResponseUtil;
-import com.lh.common.config.response.ResponseBean;
-import com.lh.common.config.response.ResponseCode;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
-import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionOPUtil;
-import com.lh.system.vo.SysPermissionTree;
+import com.lh.system.model.vo.SysPermissionTree;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

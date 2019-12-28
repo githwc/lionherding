@@ -57,7 +57,7 @@ public class Tree {
         TreeNode rootNode = treeNodeMap.get(ROOT_NODE_CODE);
         TreeNode treeNode;
         if (rootNode == null || rootNode.getChildren().isEmpty()) {
-            treeNode = new TreeNode("0", "#", rootNodeName, 0, false);
+            treeNode = new TreeNode("0","0", "#", rootNodeName, 0, false);
         } else {
             boolean rootChecked = true;
             for (TreeNode child : rootNode.getChildren()) {
@@ -65,7 +65,7 @@ public class Tree {
                     rootChecked = false;
                 }
             }
-            treeNode = new TreeNode("0", "#", rootNodeName, 0, rootChecked);
+            treeNode = new TreeNode("0","0","#", rootNodeName, 0, rootChecked);
         }
         this.treeNodeMap.put("0", treeNode);
         return this;
@@ -102,10 +102,10 @@ public class Tree {
         }
 
         for (Map.Entry<String, TreeNode> entry : treeNodeMap.entrySet()) {
-            if (StringUtils.isBlank(entry.getValue().getPid())) {
+            if (StringUtils.isBlank(entry.getValue().getParentId())) {
                 continue;
             }
-            TreeNode treeNodeParent = treeNodeMap.get(entry.getValue().getPid());
+            TreeNode treeNodeParent = treeNodeMap.get(entry.getValue().getParentId());
             if (treeNodeParent != null) {
                 entry.getValue().setParent(treeNodeParent);
                 treeNodeParent.addChildren(entry.getValue());

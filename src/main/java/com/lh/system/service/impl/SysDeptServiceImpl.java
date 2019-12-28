@@ -1,20 +1,23 @@
 package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.exception.parameterException.ParameterException;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
+import com.lh.common.tree.Tree;
 import com.lh.common.tree.TreeNode;
 import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
+import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
 import com.lh.system.utils.DeptOPUtil;
-import com.lh.system.vo.DepartIdModel;
-import com.lh.system.vo.SysDeptTree;
+import com.lh.system.model.vo.DepartIdModel;
+import com.lh.system.model.vo.SysDeptTree;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -47,17 +50,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     private DaoApi daoApi;
 
     @Override
-    public List<SysDeptTree> queryTreeList() {
-        List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
-                .eq(SysDept::getDelFlag,CommonConstant.DEL_FLAG_0)
-                .orderByAsc(SysDept::getSort)
-        );
-        return DeptOPUtil.deptToTree(list);
+    public List<TreeNode> queryTreeList() {
+        List<TreeNode> list = this.baseMapper.queryTreeList();
+        Tree tree = new Tree(list).build();
+        return tree.getRootNodes();
     }
 
     @Override
-    public List<TreeNode> queryTreeList2() {
-        return this.baseMapper.queryTreeList2();
+    public Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId) {
+        return this.baseMapper.childrenDept(page,parentId);
     }
 
     @Override

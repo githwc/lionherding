@@ -87,7 +87,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             JSONObject jsonObject = new JSONObject();
             // 生成token
             String token = JwtUtil.sign(loginName, sysPassword);
-            //设置token缓存时间
+            //设置缓存token
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间
             redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME*2 / 1000);
