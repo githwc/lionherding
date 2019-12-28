@@ -30,8 +30,12 @@ import java.util.List;
 @RequestMapping("/test/excel")
 public class TestExcel {
 
+    private final TestService testService;
+
     @Autowired
-    private TestService testService;
+    public TestExcel(TestService testService) {
+        this.testService = testService;
+    }
 
     /**
      * 单表导出

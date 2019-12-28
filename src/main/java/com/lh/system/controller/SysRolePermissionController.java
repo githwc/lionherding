@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "系统(角色-权限)")
 public class SysRolePermissionController {
 
-    @Autowired
-    public SysRolePermissionService service;
+    public final SysRolePermissionService service;
 
+    @Autowired
+    public SysRolePermissionController(SysRolePermissionService service) {
+        this.service = service;
+    }
 }

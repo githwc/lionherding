@@ -38,11 +38,14 @@ import java.util.Map;
 @Api(tags = "系统角色")
 public class SysRoleController {
 
-    @Autowired
-    private SysRoleService service;
+    private final SysRoleService service;
+    private final DaoApi daoApi;
 
     @Autowired
-    private DaoApi daoApi;
+    public SysRoleController(SysRoleService service,DaoApi daoApi) {
+        this.service = service;
+        this.daoApi = daoApi;
+    }
 
     @PostMapping(value = "/queryPageAll")
     @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")

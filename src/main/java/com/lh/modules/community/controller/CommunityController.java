@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags="小区")
 public class CommunityController {
 
-    @Autowired
-    public CommunityService service;
+    public final CommunityService service;
 
+    @Autowired
+    public CommunityController(CommunityService service) {
+        this.service = service;
+    }
 }

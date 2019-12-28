@@ -4,7 +4,6 @@ import com.lh.modules.TestTemp.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -24,8 +23,12 @@ import java.time.LocalDateTime;
 @Slf4j
 public class TestScheduledController {
 
+    private final TestService testService;
+
     @Autowired
-    private TestService testService;
+    public TestScheduledController(TestService testService) {
+        this.testService = testService;
+    }
 
     // @Scheduled(cron="0 */1 * * * ?")
     public void first() throws InterruptedException {

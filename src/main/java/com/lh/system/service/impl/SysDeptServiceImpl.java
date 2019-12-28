@@ -50,8 +50,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     private DaoApi daoApi;
 
     @Override
-    public List<TreeNode> queryTreeList() {
-        List<TreeNode> list = this.baseMapper.queryTreeList();
+    public List<TreeNode> queryTreeList(String departName) {
+        List<TreeNode> list = this.baseMapper.queryTreeList(departName);
         Tree tree = new Tree(list).build();
         return tree.getRootNodes();
     }

@@ -26,6 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags="行政区划")
 public class RegionController {
 
+    private final RegionService service;
+
     @Autowired
-    public RegionService service;
+    public RegionController(RegionService service) {
+        this.service = service;
+    }
 }

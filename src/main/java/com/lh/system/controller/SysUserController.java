@@ -37,11 +37,14 @@ import java.util.List;
 @Api(tags="系统用户")
 public class SysUserController {
 
-    @Autowired
-    public SysUserService service;
+    private final SysUserService service;
+    private final SysUserRoleService sysUserRoleService;
 
     @Autowired
-    public SysUserRoleService sysUserRoleService;
+    public SysUserController(SysUserService service,SysUserRoleService sysUserRoleService) {
+        this.service = service;
+        this.sysUserRoleService = sysUserRoleService;
+    }
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录",notes = "用户登录")

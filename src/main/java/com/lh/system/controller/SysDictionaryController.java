@@ -2,7 +2,6 @@ package com.lh.system.controller;
 
 import com.lh.system.service.SysDictionaryService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "系统字典")
 public class SysDictionaryController {
 
-    @Autowired
-    public SysDictionaryService service;
+    private final SysDictionaryService service;
 
+    @Autowired
+    public SysDictionaryController(SysDictionaryService service) {
+        this.service = service;
+    }
 }

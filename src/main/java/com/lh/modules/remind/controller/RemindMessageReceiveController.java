@@ -2,9 +2,9 @@ package com.lh.modules.remind.controller;
 
 import com.lh.modules.remind.service.RemindMessageReceiveService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "消息提醒接收")
 public class RemindMessageReceiveController {
 
-    @Autowired
-    public RemindMessageReceiveService service;
+    private final RemindMessageReceiveService service;
 
+    @Autowired
+    public RemindMessageReceiveController(RemindMessageReceiveService service) {
+        this.service = service;
+    }
 }

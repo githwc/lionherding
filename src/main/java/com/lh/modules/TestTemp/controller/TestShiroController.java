@@ -39,14 +39,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class TestShiroController {
 
-    @Autowired
-    public SysUserService iSysUserService;
-
-    @Autowired
-    public SysLogService sysLogService;
-
-    @Autowired
+    private final SysUserService iSysUserService;
+    private SysLogService sysLogService;
     private RedisUtil redisUtil;
+
+    @Autowired
+    public TestShiroController(SysUserService iSysUserService,SysLogService sysLogService,RedisUtil redisUtil) {
+        this.iSysUserService = iSysUserService;
+        this.redisUtil = redisUtil;
+        this.sysLogService = sysLogService;
+    }
 
     @RequestMapping("/test2")
     @WriteLog(opPosition = "测试日志点" ,optype = CommonConstant.OPTYPE_READ)

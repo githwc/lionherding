@@ -29,7 +29,7 @@ public interface SysDeptService extends IService<SysDept> {
      * 查出所有部门,并以树结构格式返回前端
      * @return tree
      */
-    List<TreeNode> queryTreeList();
+    List<TreeNode> queryTreeList(String departName);
 
     /**
      * 查询子级部门

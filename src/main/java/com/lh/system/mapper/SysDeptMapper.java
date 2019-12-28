@@ -30,7 +30,7 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * 部门树
      * @return tree
      */
-    List<TreeNode> queryTreeList();
+    List<TreeNode> queryTreeList(@Param("departName") String departName);
 
     /**
      * 子级部门

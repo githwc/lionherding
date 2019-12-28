@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 /**
  *
  * 功能描述：系统日志
@@ -34,8 +32,12 @@ import java.util.Map;
 @Api(tags = "系统日志")
 public class SysLogController {
 
+    private final SysLogService service;
+
     @Autowired
-    public SysLogService service;
+    public SysLogController(SysLogService service) {
+        this.service = service;
+    }
 
     @GetMapping("/logInfo")
     @ApiOperation(value = "获取系统日志",notes = "获取系统日志")

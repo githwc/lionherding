@@ -32,8 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "消息提醒")
 public class RemindMessageController {
 
+    private final RemindMessageService iRemindMessageService;
+
     @Autowired
-    public RemindMessageService iRemindMessageService;
+    public RemindMessageController(RemindMessageService iRemindMessageService) {
+        this.iRemindMessageService = iRemindMessageService;
+    }
 
     @PostMapping("/sendUser")
     @ApiOperation(value = "发送消息(点对点)", notes = "发送消息给具体的某个人")

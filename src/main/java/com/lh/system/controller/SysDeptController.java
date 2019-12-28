@@ -38,15 +38,19 @@ import java.util.List;
 @Api(tags="系统部门")
 public class SysDeptController {
 
+    private final SysDeptService service;
+
     @Autowired
-    public SysDeptService service;
+    public SysDeptController(SysDeptService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "加载部门树",notes = "加载所有部门树")
     @WriteLog(opPosition = "加载部门树" ,optype = CommonConstant.OPTYPE_READ)
-    public List<TreeNode> queryTreeList(){
+    public List<TreeNode> queryTreeList(@RequestParam(value = "departName",required = false)String departName){
         try {
-            return service.queryTreeList();
+            return service.queryTreeList(departName);
         }catch (Exception e){
             throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
         }
@@ -59,16 +63,16 @@ public class SysDeptController {
         return service.childrenDept(page,parentId);
     }
 
-    @GetMapping(value = "/searchBy")
-    @ApiOperation(value = "部门搜索",notes = "部门搜索,根据部门名称模糊搜索")
-    @WriteLog(opPosition = "部门搜索" ,optype = CommonConstant.OPTYPE_READ)
-    public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
-        try {
-            return service.searchBy(keyWord);
-        } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
+    // @GetMapping(value = "/searchBy")
+    // @ApiOperation(value = "部门搜索",notes = "部门搜索,根据部门名称模糊搜索")
+    // @WriteLog(opPosition = "部门搜索" ,optype = CommonConstant.OPTYPE_READ)
+    // public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
+    //     try {
+    //         return service.searchBy(keyWord);
+    //     } catch (Exception e) {
+    //         throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+    //     }
+    // }
 
     @ApiOperation(value = "部门树信息",notes = "添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称")
     @GetMapping(value = "/queryIdTree")

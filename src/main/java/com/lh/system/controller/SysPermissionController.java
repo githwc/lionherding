@@ -5,9 +5,9 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysPermission;
+import com.lh.system.model.vo.SysPermissionTree;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.utils.PermissionOPUtil;
-import com.lh.system.model.vo.SysPermissionTree;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,12 @@ import java.util.Map;
 @Api(tags = "系统权限")
 public class SysPermissionController {
 
+    private final SysPermissionService service;
+
     @Autowired
-    private SysPermissionService service;
+    public SysPermissionController(SysPermissionService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "/getUserPermissionByToken")
     @ApiOperation(value = "获取用户权限",notes = "根据Token获取用户拥有的权限")

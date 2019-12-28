@@ -33,8 +33,12 @@ import java.util.Map;
 @Api(tags = "系统(用户-角色)")
 public class SysUserRoleController {
 
+    private final SysUserRoleService service;
+
     @Autowired
-    public SysUserRoleService service;
+    public SysUserRoleController(SysUserRoleService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "/queryUserRoleMap")
     @ApiOperation(value = "查询用户所对应的角色信息",notes = "查询用户所对应的角色信息")
