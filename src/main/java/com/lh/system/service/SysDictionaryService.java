@@ -1,7 +1,7 @@
 package com.lh.system.service;
 
-import com.lh.system.entity.SysDictionary;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lh.system.entity.SysDictionary;
 
 /**
  * 功能描述：
@@ -17,5 +17,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysDictionaryService extends IService<SysDictionary> {
 
-    void updateALl();
 }

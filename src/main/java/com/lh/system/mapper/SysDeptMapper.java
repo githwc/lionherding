@@ -28,12 +28,15 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     /**
      * 部门树
+     * @param departName 搜索条件
      * @return tree
      */
-    List<TreeNode> queryTreeList(@Param("departName") String departName);
+    List<TreeNode> departTree(@Param("departName") String departName);
 
     /**
      * 子级部门
+     * @param page 分页
+     * @param parentId 父级ID
      * @return dept list
      */
     Page<SysDept> childrenDept(@Param("page")Page<SysDeptVO> page,@Param("parentId")String parentId);

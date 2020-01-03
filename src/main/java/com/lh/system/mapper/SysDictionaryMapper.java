@@ -1,7 +1,7 @@
 package com.lh.system.mapper;
 
-import com.lh.system.entity.SysDictionary;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.system.entity.SysDictionary;
 import org.springframework.stereotype.Repository;
 /**
  *
@@ -19,5 +19,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysDictionaryMapper extends BaseMapper<SysDictionary> {
 
-    // void updateAll();
 }

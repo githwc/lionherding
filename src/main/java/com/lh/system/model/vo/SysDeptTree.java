@@ -92,7 +92,6 @@ public class SysDeptTree implements Serializable {
         this.id = dept.getSysDeptId();
         this.parentId = dept.getParentId();
         this.departName = dept.getDepartName();
-        this.shortName = dept.getShortName();
         this.sort = dept.getSort();
         this.description = dept.getDescription();
         this.orgType = dept.getOrgType();

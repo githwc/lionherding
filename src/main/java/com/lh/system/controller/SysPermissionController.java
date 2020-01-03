@@ -47,11 +47,11 @@ public class SysPermissionController {
     @GetMapping(value = "/getUserPermissionByToken")
     @ApiOperation(value = "获取用户权限",notes = "根据Token获取用户拥有的权限")
     @WriteLog(opPosition = "获取指定用户权限" ,optype = CommonConstant.OPTYPE_READ)
-    public JSONObject getUserPermissionByToken(@RequestParam(name = "token", required = true) String token, HttpServletResponse response) {
+    public JSONObject getUserPermissionByToken(@RequestParam("token") String token, HttpServletResponse response) {
         try {
             return service.getUserPermissionByToken(token,response);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class SysPermissionController {
         try {
             return service.permissionlist();
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ public class SysPermissionController {
         try{
             return service.queryTreeList();
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class SysPermissionController {
             permission = PermissionOPUtil.intelligentProcessData(permission);
             service.addPermission(permission);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -97,40 +97,40 @@ public class SysPermissionController {
             permission = PermissionOPUtil.intelligentProcessData(permission);
             service.editPermission(permission);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除菜单",notes = "删除菜单")
     @WriteLog(opPosition = "删除菜单" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void delete(@RequestParam(name = "sysPermissionId", required = true) String id) {
+    public void delete(@RequestParam("sysPermissionId") String id) {
         try {
             service.deletePermission(id);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除菜单" ,notes = "批量删除菜单")
     @WriteLog(opPosition = "批量删除菜单" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public void deleteBatch(@RequestParam("ids") String ids) {
         try {
             service.deleteBatch(ids);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @GetMapping(value = "/queryRolePermission")
     @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
     @WriteLog(opPosition = "查询角色授权" ,optype = CommonConstant.OPTYPE_READ)
-    public List<String> queryRolePermission(@RequestParam(name = "sysRoleId", required = true) String roleId) {
+    public List<String> queryRolePermission(@RequestParam("sysRoleId") String roleId) {
         try {
             return service.queryRolePermission(roleId);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -141,7 +141,7 @@ public class SysPermissionController {
         try {
             service.saveRolePermission(json);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

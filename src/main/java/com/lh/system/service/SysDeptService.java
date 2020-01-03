@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
-import com.lh.system.model.vo.DepartIdModel;
-import com.lh.system.model.vo.SysDeptTree;
 import com.lh.system.model.vo.SysDeptVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,29 +25,18 @@ public interface SysDeptService extends IService<SysDept> {
 
     /**
      * 查出所有部门,并以树结构格式返回前端
+     * @param departName [搜索条件] 部门名称
      * @return tree
      */
-    List<TreeNode> queryTreeList(String departName);
+    List<TreeNode> departTree(String departName);
 
     /**
      * 查询子级部门
+     * @param page 分页信息
      * @param parentId 父级部门ID
      * @return deptList
      */
     Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId);
-
-    /**
-     * 部门搜索功能方法,根据关键字模糊搜索相关部门
-     * @param keyWord
-     * @return
-     */
-    List<SysDeptTree> searchBy(String keyWord);
-
-    /**
-     * 添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称
-     * @return
-     */
-    List<DepartIdModel> queryDepartIdTreeList();
 
     /**
      * 根据部门Id修改

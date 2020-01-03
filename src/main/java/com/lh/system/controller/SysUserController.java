@@ -6,7 +6,6 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysUser;
-import com.lh.system.service.SysUserRoleService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,12 +37,10 @@ import java.util.List;
 public class SysUserController {
 
     private final SysUserService service;
-    private final SysUserRoleService sysUserRoleService;
 
     @Autowired
-    public SysUserController(SysUserService service,SysUserRoleService sysUserRoleService) {
+    public SysUserController(SysUserService service) {
         this.service = service;
-        this.sysUserRoleService = sysUserRoleService;
     }
 
     @PostMapping("/login")
@@ -52,7 +49,7 @@ public class SysUserController {
         try{
             return service.login(sysUser);
         }catch(Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -62,7 +59,7 @@ public class SysUserController {
         try{
             service.logout(request,response);
         }catch(Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -75,7 +72,7 @@ public class SysUserController {
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
             return service.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
         }catch (Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -86,7 +83,7 @@ public class SysUserController {
         try {
             service.addUserWithRole(jsonObject);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -97,7 +94,7 @@ public class SysUserController {
         try {
             service.editUserWithRole(jsonObject);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -108,40 +105,40 @@ public class SysUserController {
         try {
             service.checkIsOnly(loginName);
         }catch (Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除用户",notes = "删除用户")
     @WriteLog(opPosition = "删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void delete(@RequestParam(name = "sysUserId", required = true) String sysUserId) {
+    public void delete(@RequestParam("sysUserId") String sysUserId) {
         try {
             service.deleteUser(sysUserId);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "批量删除用户",notes = "批量删除用户")
     @WriteLog(opPosition = "批量删除用户" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void deleteBatch(@RequestParam(name = "sysUserIds", required = true) String ids) {
+    public void deleteBatch(@RequestParam("sysUserIds") String ids) {
         try {
             service.deleteBatch(ids);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @GetMapping(value = "/queryUserRole")
     @ApiOperation(value = "查询用户拥有角色",notes = "查询用户拥有角色")
     @WriteLog(opPosition = "查询用户拥有角色" ,optype = CommonConstant.OPTYPE_READ)
-    public List<String> queryUserRole(@RequestParam(name = "sysUserId", required = true) String userId) {
+    public List<String> queryUserRole(@RequestParam("sysUserId") String userId) {
         try{
             return service.queryUserRole(userId);
         }catch(Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 }

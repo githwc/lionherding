@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +55,7 @@ public class SysRoleController {
             int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
             return service.queryPageAll(new Page<>(pageNo, pageSize),jsonObject.getJSONObject("params"));
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -67,7 +66,7 @@ public class SysRoleController {
         try{
             return service.roleList();
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -79,7 +78,7 @@ public class SysRoleController {
             sysRole.setCreateUserId(daoApi.getCurrentUserId());
             service.save(sysRole);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -90,38 +89,38 @@ public class SysRoleController {
         try {
             service.updateById(role);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "角色删除",notes = "角色删除")
     @WriteLog(opPosition = "角色删除" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void delete(@RequestParam(name="sysRoleId",required=true) String id) {
+    public void delete(@RequestParam("sysRoleId") String id) {
         try {
             SysRole sysRole = new SysRole();
             sysRole.setSysRoleId(id);
             sysRole.setDelFlag(CommonConstant.DEL_FLAG_1);
             service.updateById(sysRole);
         }catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @DeleteMapping(value = "/deleteBatch")
     @ApiOperation(value = "角色批量删除",notes = "角色批量删除")
     @WriteLog(opPosition = "角色批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+    public void deleteBatch(@RequestParam("ids") String ids) {
         try {
-            List<String> list_id = Arrays.asList(ids.split(","));
-            list_id.forEach(curr->{
+            List<String> listIds = Arrays.asList(ids.split(","));
+            listIds.forEach(curr->{
                 SysRole sysRole = new SysRole();
                 sysRole.setSysRoleId(curr);
                 sysRole.setDelFlag(CommonConstant.DEL_FLAG_1);
                 service.updateById(sysRole);
             });
         }catch (Exception e) {
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
@@ -132,18 +131,18 @@ public class SysRoleController {
         try {
             service.duplicate(roleCode);
         }catch (Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @GetMapping(value = "/queryTreeList")
     @ApiOperation(value = "查看菜单权限树",notes = "查看菜单权限树")
     @WriteLog(opPosition = "查看菜单权限树" ,optype = CommonConstant.OPTYPE_READ)
-    public Map<String,Object> queryTreeList(HttpServletRequest request) {
+    public Map<String,Object> queryTreeList() {
         try {
             return service.queryTreeList();
         }catch (Exception e){
-            throw new RunningException(e.getMessage().equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 

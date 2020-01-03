@@ -15,13 +15,9 @@ import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
-import com.lh.system.utils.DeptOPUtil;
-import com.lh.system.model.vo.DepartIdModel;
-import com.lh.system.model.vo.SysDeptTree;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +46,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     private DaoApi daoApi;
 
     @Override
-    public List<TreeNode> queryTreeList(String departName) {
-        List<TreeNode> list = this.baseMapper.queryTreeList(departName);
+    public List<TreeNode> departTree(String departName) {
+        List<TreeNode> list = this.baseMapper.departTree(departName);
         Tree tree = new Tree(list).build();
         return tree.getRootNodes();
     }
@@ -59,36 +55,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId) {
         return this.baseMapper.childrenDept(page,parentId);
-    }
-
-    @Override
-    public List<SysDeptTree> searchBy(String keyWord) {
-        List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
-                .like(SysDept::getDepartName,keyWord)
-                .eq(SysDept::getDelFlag, CommonConstant.DEL_FLAG_0)
-                .orderByAsc(SysDept::getSort)
-        );
-        List<SysDeptTree> newList = new ArrayList<>();
-        if(list!= null && list.size()>0){
-            SysDeptTree model = null;
-            for(SysDept sysDept:list){
-                model = new SysDeptTree(sysDept);
-                model.setChildren(null);
-                newList.add(model);
-            }
-            return newList;
-        }
-        return null;
-    }
-
-    @Cacheable(value = CacheConstant.SYS_DEPART_IDS_CACHE)
-    @Override
-    public List<DepartIdModel> queryDepartIdTreeList() {
-        List<SysDept> list = this.list(new LambdaQueryWrapper<SysDept>()
-            .eq(SysDept::getDelFlag,CommonConstant.DEL_FLAG_0)
-                .orderByAsc(SysDept::getSort)
-        );
-        return DeptOPUtil.wrapTreeDataToDepartIdTreeList(list);
     }
 
     @Override
@@ -136,13 +102,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public void create(SysDept sysDept, HttpServletRequest request) {
         if (sysDept != null ) {
             if (sysDept.getParentId() == null) {
-                sysDept.setParentId("");
+                sysDept.setParentId("#");
             }
             String parentId = sysDept.getParentId();
-            String[] codeArray = generateOrgCode(parentId);
-            sysDept.setUniqueCoding(codeArray[0]);
-            String orgType = codeArray[1];
-            sysDept.setOrgType(String.valueOf(orgType));
+            String code = generateOrgCode(parentId);
+            sysDept.setUniqueCoding(code);
             sysDept.setCreateUserId(daoApi.getCurrentUserId());
             this.save(sysDept);
         }
@@ -172,16 +136,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      * @param parentId
      * @return
      */
-    private String[] generateOrgCode(String parentId) {
+    private String generateOrgCode(String parentId) {
         String[] strArray = new String[2];
         // 创建一个List集合,存储查询返回的所有SysDepart对象
         List<SysDept> departList = new ArrayList<>();
-        // 定义新编码字符串
+        // 新编码字符串
         String newOrgCode = "";
-        // 定义旧编码字符串
+        // 旧编码字符串
         String oldOrgCode = "";
-        // 定义部门类型
-        String orgType = "";
         // 如果是最高级,则查询出同级的org_code, 调用工具类生成编码并返回
         if (StringUtil.isNullOrEmpty(parentId)) {
             // 先判断数据库中的表是否为空,空则直接返回初始编码
@@ -190,13 +152,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                     .orderByDesc(SysDept::getUniqueCoding)
             );
             if(departList == null || departList.size() == 0) {
-                strArray[0] = YouBianCodeUtil.getNextYouBianCode(null);
-                strArray[1] = "1";
-                return strArray;
+                return YouBianCodeUtil.getNextYouBianCode(null);
             }else {
                 SysDept depart = departList.get(0);
                 oldOrgCode = depart.getUniqueCoding();
-                orgType = depart.getOrgType();
                 newOrgCode = YouBianCodeUtil.getNextYouBianCode(oldOrgCode);
             }
         } else { // 反之则查询出所有同级的部门,获取结果后有两种情况,有同级和没有同级
@@ -209,8 +168,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             SysDept depart = this.getById(parentId);
             // 获取父级部门的Code
             String parentCode = depart.getUniqueCoding();
-            // 根据父级部门类型算出当前部门的类型
-            orgType = String.valueOf(Integer.valueOf(depart.getOrgType()) + 1);
             // 处理同级部门为null的情况
             if (parentList == null || parentList.size() == 0) {
                 // 直接生成当前的部门编码并返回
@@ -222,9 +179,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, subCode);
             }
         }
-        // 返回最终封装了部门编码和部门类型的数组
-        strArray[0] = newOrgCode;
-        strArray[1] = orgType;
-        return strArray;
+        return newOrgCode;
     }
 }

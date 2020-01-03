@@ -8,8 +8,6 @@ import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
-import com.lh.system.model.vo.DepartIdModel;
-import com.lh.system.model.vo.SysDeptTree;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -45,77 +43,22 @@ public class SysDeptController {
         this.service = service;
     }
 
-    @GetMapping(value = "/queryTreeList")
+    @GetMapping(value = "/departTree")
     @ApiOperation(value = "加载部门树",notes = "加载所有部门树")
     @WriteLog(opPosition = "加载部门树" ,optype = CommonConstant.OPTYPE_READ)
-    public List<TreeNode> queryTreeList(@RequestParam(value = "departName",required = false)String departName){
+    public List<TreeNode> departTree(@RequestParam(value = "departName",required = false)String departName){
         try {
-            return service.queryTreeList(departName);
+            return service.departTree(departName);
         }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
     @GetMapping("/childrenDept")
-    @ApiOperation(value = "查询部门",notes = "查询子级部门")
+    @ApiOperation(value = "查询子级部门",notes = "查询子级部门")
     @WriteLog(opPosition = "查询子级部门" ,optype = CommonConstant.OPTYPE_READ)
     public Page<SysDept> childrenDept(Page<SysDeptVO> page, @RequestParam("parentId")String parentId){
         return service.childrenDept(page,parentId);
-    }
-
-    // @GetMapping(value = "/searchBy")
-    // @ApiOperation(value = "部门搜索",notes = "部门搜索,根据部门名称模糊搜索")
-    // @WriteLog(opPosition = "部门搜索" ,optype = CommonConstant.OPTYPE_READ)
-    // public List<SysDeptTree> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
-    //     try {
-    //         return service.searchBy(keyWord);
-    //     } catch (Exception e) {
-    //         throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-    //     }
-    // }
-
-    @ApiOperation(value = "部门树信息",notes = "添加或编辑页面时对该方法发起请求,以树结构形式加载所有部门的名称")
-    @GetMapping(value = "/queryIdTree")
-    @WriteLog(opPosition = "部门树信息" ,optype = CommonConstant.OPTYPE_READ)
-    public List<DepartIdModel> queryIdTree() {
-        try {
-           return service.queryDepartIdTreeList();
-        } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
-    @PutMapping(value = "/edit")
-    @ApiOperation(value = "部门修改",notes = "部门修改")
-    @WriteLog(opPosition = "部门修改" ,optype = CommonConstant.OPTYPE_UPDATE)
-    public void edit(@RequestBody SysDept sysDept, HttpServletRequest request) {
-        try{
-            service.editByDeptId(sysDept);
-        }catch (Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
-    @DeleteMapping(value = "/delete")
-    @ApiOperation(value = "部门删除",notes = "部门删除")
-    @WriteLog(opPosition = "部门删除" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void delete(@RequestParam(name="sysDeptId",required=true) String id) {
-        try{
-            service.deleteById(id);
-        }catch(Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
-    @DeleteMapping(value = "/deleteBatch")
-    @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
-    @WriteLog(opPosition = "部门批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
-    public void deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        try{
-            service.deleteBatch(ids);
-        }catch(Exception e){
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
     }
 
     @ApiOperation(value = "部门添加",notes = "部门添加")
@@ -125,8 +68,43 @@ public class SysDeptController {
         try {
             service.create(sysDept,request);
         } catch (Exception e) {
-            throw new RunningException(e.getMessage() .equals("") ?  "系统错误,请联系管理员！" : e.getMessage());
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
+
+    @PutMapping(value = "/edit")
+    @ApiOperation(value = "部门修改",notes = "部门修改")
+    @WriteLog(opPosition = "部门修改" ,optype = CommonConstant.OPTYPE_UPDATE)
+    public void edit(@RequestBody SysDept sysDept) {
+        try{
+            service.editByDeptId(sysDept);
+        }catch (Exception e){
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/delete")
+    @ApiOperation(value = "部门删除",notes = "部门删除")
+    @WriteLog(opPosition = "部门删除" ,optype = CommonConstant.OPTYPE_DELETE)
+    public void delete(@RequestParam("sysDeptId") String sysDeptId) {
+        try{
+            service.deleteById(sysDeptId);
+        }catch(Exception e){
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/deleteBatch")
+    @ApiOperation(value = "部门批量删除",notes = "部门批量删除")
+    @WriteLog(opPosition = "部门批量删除" ,optype = CommonConstant.OPTYPE_DELETE)
+    public void deleteBatch(@RequestParam("ids") String ids) {
+        try{
+            service.deleteBatch(ids);
+        }catch(Exception e){
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
+
+
 
 }

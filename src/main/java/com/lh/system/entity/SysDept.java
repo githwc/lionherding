@@ -36,14 +36,6 @@ public class SysDept implements Serializable {
      */
     private String departName;
     /**
-     * 简称
-     */
-    private String shortName;
-    /**
-     * 负责人
-     */
-    private String managerId;
-    /**
      * 固话
      */
     private String telephone;

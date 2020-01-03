@@ -16,10 +16,7 @@ package com.lh.common.utils;
  */
 public class YouBianCodeUtil {
 
-	// 数字位数(默认生成3位的数字)
 	private static final int numLength = 2;
-
-	public static final int zhanweiLength = 1+numLength;
 
 	/**
 	 * 根据前一个code，获取同级下一个code
