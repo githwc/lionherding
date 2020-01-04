@@ -113,9 +113,8 @@ public class TreeNode implements Serializable {
     public TreeNode() {
     }
 
-    public TreeNode(String id, String value,String parentId, String title, Integer orderNum, Boolean checked) {
+    public TreeNode(String id,String parentId,String title,Integer orderNum, Boolean checked) {
         this.id = id;
-        this.value = value;
         this.parentId = parentId;
         this.title = title;
         this.orderNum = orderNum;

@@ -6,6 +6,7 @@ import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
+import com.lh.system.model.query.DeptQuery;
 import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
 import io.swagger.annotations.Api;
@@ -57,12 +58,12 @@ public class SysDeptController {
     @GetMapping("/childrenDept")
     @ApiOperation(value = "查询子级部门",notes = "查询子级部门")
     @WriteLog(opPosition = "查询子级部门" ,optype = CommonConstant.OPTYPE_READ)
-    public Page<SysDept> childrenDept(Page<SysDeptVO> page, @RequestParam("parentId")String parentId){
-        return service.childrenDept(page,parentId);
+    public Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery){
+        return service.childrenDept(page,deptQuery);
     }
 
     @ApiOperation(value = "部门添加",notes = "部门添加")
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     @WriteLog(opPosition = "部门添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody SysDept sysDept, HttpServletRequest request) {
         try {
@@ -88,7 +89,7 @@ public class SysDeptController {
     @WriteLog(opPosition = "部门删除" ,optype = CommonConstant.OPTYPE_DELETE)
     public void delete(@RequestParam("sysDeptId") String sysDeptId) {
         try{
-            service.deleteById(sysDeptId);
+            service.deleteAlone(sysDeptId);
         }catch(Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,9 +14,11 @@ import com.lh.common.tree.TreeNode;
 import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
+import com.lh.system.model.query.DeptQuery;
 import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
 import io.netty.util.internal.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -42,19 +45,23 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
+    private final DaoApi daoApi;
+
     @Autowired
-    private DaoApi daoApi;
+    public SysDeptServiceImpl(DaoApi daoApi) {
+        this.daoApi = daoApi;
+    }
 
     @Override
     public List<TreeNode> departTree(String departName) {
         List<TreeNode> list = this.baseMapper.departTree(departName);
-        Tree tree = new Tree(list).build();
+        Tree tree = new Tree(list).setRoot("部门管理").build();
         return tree.getRootNodes();
     }
 
     @Override
-    public Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId) {
-        return this.baseMapper.childrenDept(page,parentId);
+    public Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery) {
+        return this.baseMapper.childrenDept(page,deptQuery);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
-    public void deleteById(String id) {
+    public void deleteAlone(String id) {
         List<String> idList = new ArrayList<String>();
         SysDept sysDept = this.getById(id);
         if(sysDept == null) {
@@ -91,9 +98,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             throw new ParameterException("参数不识别！");
         } else {
             List<String> list = Arrays.asList(ids.split(","));
-            list.forEach(curr->{
-                this.deleteById(curr);
-            });
+            list.forEach(this::deleteAlone);
         }
     }
 
@@ -101,21 +106,21 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
     public void create(SysDept sysDept, HttpServletRequest request) {
         if (sysDept != null ) {
-            if (sysDept.getParentId() == null) {
+            String[] codeAndLevel = this.generateOrgCode(sysDept.getParentId());
+            sysDept.setUniqueCoding(codeAndLevel[0]);
+            sysDept.setAdminLevel(Integer.parseInt(codeAndLevel[1]));
+            sysDept.setCreateUserId(daoApi.getCurrentUserId());
+            if (StringUtils.isBlank(sysDept.getParentId())) {
                 sysDept.setParentId("#");
             }
-            String parentId = sysDept.getParentId();
-            String code = generateOrgCode(parentId);
-            sysDept.setUniqueCoding(code);
-            sysDept.setCreateUserId(daoApi.getCurrentUserId());
             this.save(sysDept);
         }
     }
 
     /**
-     * 查找子部门
-     * @param id
-     * @param idList
+     *  查询子级部门  ====== deleteAlone 子方法 =======
+     * @param id 部门ID
+     * @param idList idList
      */
     private void checkChildrenExists(String id, List<String> idList) {
         List<SysDept> departList = this.list(new LambdaQueryWrapper<SysDept>()
@@ -131,54 +136,47 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     /**
-     * 生成部门编码和部门类型
-     *
-     * @param parentId
-     * @return
+     * 生成部门编码及部门级别 ==== create 子方法 =======
+     * @param parentId 父级编码
+     * @return [部门编码,级别]
      */
-    private String generateOrgCode(String parentId) {
+    private String[] generateOrgCode(String parentId) {
         String[] strArray = new String[2];
         // 创建一个List集合,存储查询返回的所有SysDepart对象
-        List<SysDept> departList = new ArrayList<>();
-        // 新编码字符串
-        String newOrgCode = "";
-        // 旧编码字符串
-        String oldOrgCode = "";
+        List<SysDept> departList;
         // 如果是最高级,则查询出同级的org_code, 调用工具类生成编码并返回
         if (StringUtil.isNullOrEmpty(parentId)) {
+            strArray[1] = "1";
             // 先判断数据库中的表是否为空,空则直接返回初始编码
             departList = this.list(new LambdaQueryWrapper<SysDept>()
-                    .eq(SysDept::getParentId, "").or().isNull(SysDept::getParentId)
-                    .orderByDesc(SysDept::getUniqueCoding)
+                    .eq(SysDept::getParentId, "#")
+                    .or()
+                    .isNull(SysDept::getParentId)
             );
-            if(departList == null || departList.size() == 0) {
-                return YouBianCodeUtil.getNextYouBianCode(null);
+            if(ObjectUtil.isNull(departList)) {
+                strArray[0] = YouBianCodeUtil.getNextYouBianCode(null);
+                return strArray;
             }else {
                 SysDept depart = departList.get(0);
-                oldOrgCode = depart.getUniqueCoding();
-                newOrgCode = YouBianCodeUtil.getNextYouBianCode(oldOrgCode);
+                strArray[0] = YouBianCodeUtil.getNextYouBianCode(depart.getUniqueCoding());
             }
         } else { // 反之则查询出所有同级的部门,获取结果后有两种情况,有同级和没有同级
-            // 查询出同级部门的集合
             List<SysDept> parentList = this.list(new LambdaQueryWrapper<SysDept>()
                 .eq(SysDept::getParentId,parentId)
                     .orderByDesc(SysDept::getUniqueCoding)
             );
-            // 查询出父级部门
+            // 父级部门
             SysDept depart = this.getById(parentId);
-            // 获取父级部门的Code
-            String parentCode = depart.getUniqueCoding();
+            strArray[1] = String.valueOf(depart.getAdminLevel() + 1);
             // 处理同级部门为null的情况
             if (parentList == null || parentList.size() == 0) {
                 // 直接生成当前的部门编码并返回
-                newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, null);
+                strArray[0] = YouBianCodeUtil.getSubYouBianCode(depart.getUniqueCoding(), null);
             } else { //处理有同级部门的情况
-                // 获取同级部门的编码,利用工具类
-                String subCode = parentList.get(0).getUniqueCoding();
                 // 返回生成的当前部门编码
-                newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, subCode);
+                strArray[0] = YouBianCodeUtil.getSubYouBianCode(depart.getUniqueCoding(), parentList.get(0).getUniqueCoding());
             }
         }
-        return newOrgCode;
+        return strArray;
     }
 }

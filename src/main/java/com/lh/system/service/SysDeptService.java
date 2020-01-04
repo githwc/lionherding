@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
+import com.lh.system.model.query.DeptQuery;
 import com.lh.system.model.vo.SysDeptVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +34,10 @@ public interface SysDeptService extends IService<SysDept> {
     /**
      * 查询子级部门
      * @param page 分页信息
-     * @param parentId 父级部门ID
+     * @param deptQuery 父级部门ID
      * @return deptList
      */
-    Page<SysDept> childrenDept(Page<SysDeptVO> page, String parentId);
+    Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery);
 
     /**
      * 根据部门Id修改
@@ -48,7 +49,7 @@ public interface SysDeptService extends IService<SysDept> {
      * 根据部门ID删除
      * @param id
      */
-    void deleteById(String id);
+    void deleteAlone(String id);
 
     /**
      * 部门批量删除

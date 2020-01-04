@@ -26,7 +26,7 @@ public class YouBianCodeUtil {
 	 * @return
 	 */
 	public static synchronized String getNextYouBianCode(String code) {
-		String newcode = "";
+		String newcode;
 		if (code == null || code =="") {
 			String zimu = "A";
 			String num = getStrNum(1);
@@ -37,7 +37,7 @@ public class YouBianCodeUtil {
 			char after_code_zimu = after_code.substring(0, 1).charAt(0);
 			Integer after_code_num = Integer.parseInt(after_code.substring(1));
 
-			String nextNum = "";
+			String nextNum;
 			char nextZimu = 'A';
 			// 先判断数字等于999*，则计数从1重新开始，递增
 			if (after_code_num == getMaxNumByLength(numLength)) {
@@ -51,7 +51,6 @@ public class YouBianCodeUtil {
 			}else{
 				nextZimu = after_code_zimu;
 			}
-
 			// 例如Z99，下一个code就是Z99A01
 			if ('Z' == after_code_zimu && getMaxNumByLength(numLength) == after_code_num) {
 				newcode = code + (nextZimu + nextNum);
@@ -60,7 +59,6 @@ public class YouBianCodeUtil {
 			}
 		}
 		return newcode;
-
 	}
 
 	/**

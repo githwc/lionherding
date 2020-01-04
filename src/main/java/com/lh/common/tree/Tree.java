@@ -26,7 +26,7 @@ public class Tree {
     /**
      * 根节点编码
      */
-    public static final String ROOT_NODE_CODE = "0";
+    public static final String ROOT_NODE_CODE = "#";
 
     /**
      * 初始化树对象
@@ -57,7 +57,7 @@ public class Tree {
         TreeNode rootNode = treeNodeMap.get(ROOT_NODE_CODE);
         TreeNode treeNode;
         if (rootNode == null || rootNode.getChildren().isEmpty()) {
-            treeNode = new TreeNode("0","0", "#", rootNodeName, 0, false);
+            treeNode = new TreeNode("#","root", rootNodeName, 0, false);
         } else {
             boolean rootChecked = true;
             for (TreeNode child : rootNode.getChildren()) {
@@ -65,9 +65,9 @@ public class Tree {
                     rootChecked = false;
                 }
             }
-            treeNode = new TreeNode("0","0","#", rootNodeName, 0, rootChecked);
+            treeNode = new TreeNode("#","root", rootNodeName, 0, rootChecked);
         }
-        this.treeNodeMap.put("0", treeNode);
+        this.treeNodeMap.put(ROOT_NODE_CODE, treeNode);
         return this;
     }
 

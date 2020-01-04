@@ -48,10 +48,6 @@ public class SysDept implements Serializable {
      */
     private String address;
     /**
-     * 机构类型(1.公司 2.部门 3 岗位)
-     */
-    private String orgType;
-    /**
      * 唯一编码
      */
     private String uniqueCoding;
