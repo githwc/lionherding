@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysRole;
+import com.lh.system.model.query.RoleQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,11 @@ import java.util.Set;
  */
 public interface SysRoleService extends IService<SysRole> {
 
+    /**
+     * 获取用户权限
+     * @param loginName 登录名称
+     * @return
+     */
     Set<String> getUserRoles(String loginName);
 
     /**
@@ -34,10 +40,10 @@ public interface SysRoleService extends IService<SysRole> {
     /**
      * 分页查询所有角色
      * @param page
-     * @param jsonObject
+     * @param roleQuery
      * @return
      */
-    Page<SysRole> queryPageAll(Page<SysRole> page, JSONObject jsonObject);
+    Page<SysRole> roleList(Page<SysRole> page, RoleQuery roleQuery);
 
     /**
      * 角色代码唯一性校验

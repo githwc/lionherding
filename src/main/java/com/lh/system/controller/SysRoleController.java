@@ -1,12 +1,12 @@
 package com.lh.system.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
 import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysRole;
+import com.lh.system.model.query.RoleQuery;
 import com.lh.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,14 +46,12 @@ public class SysRoleController {
         this.daoApi = daoApi;
     }
 
-    @PostMapping(value = "/queryPageAll")
+    @GetMapping(value = "/roleList")
     @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")
     @WriteLog(opPosition = "查询所有角色" ,optype = CommonConstant.OPTYPE_READ)
-    public Page<SysRole> queryPageAll(@RequestBody JSONObject jsonObject) {
+    public Page<SysRole> roleList(Page<SysRole> page, RoleQuery roleQuery) {
         try{
-            int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
-            int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            return service.queryPageAll(new Page<>(pageNo, pageSize),jsonObject.getJSONObject("params"));
+            return service.roleList(page,roleQuery);
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

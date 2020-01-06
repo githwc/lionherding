@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.model.query.DeptQuery;
-import com.lh.system.model.vo.SysDeptVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 public interface SysDeptService extends IService<SysDept> {
 
     /**
-     * 查出所有部门,并以树结构格式返回前端
+     * 查询所有部门,并以树结构格式返回前端
      * @param departName [搜索条件] 部门名称
      * @return tree
      */
@@ -37,7 +36,7 @@ public interface SysDeptService extends IService<SysDept> {
      * @param deptQuery 父级部门ID
      * @return deptList
      */
-    Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery);
+    Page<SysDept> childrenDept(Page<SysDept> page, DeptQuery deptQuery);
 
     /**
      * 根据部门Id修改
@@ -60,7 +59,6 @@ public interface SysDeptService extends IService<SysDept> {
     /**
      * 创建部门
      * @param sysDept
-     * @param request
      */
-    void create(SysDept sysDept, HttpServletRequest request);
+    void create(SysDept sysDept);
 }

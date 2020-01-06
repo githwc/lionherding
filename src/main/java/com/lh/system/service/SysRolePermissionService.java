@@ -24,5 +24,5 @@ public interface SysRolePermissionService extends IService<SysRolePermission> {
      * @param permissionIds 最新权限集
      * @param lastPermissionIds 上次权限集
      */
-    public void saveRolePermission(String roleId,String permissionIds,String lastPermissionIds);
+    void saveRolePermission(String roleId,String permissionIds,String lastPermissionIds);
 }

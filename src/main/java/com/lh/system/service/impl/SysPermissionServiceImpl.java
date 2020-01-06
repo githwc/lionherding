@@ -16,11 +16,11 @@ import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysPermissionMapper;
+import com.lh.system.model.vo.SysPermissionTree;
+import com.lh.system.model.vo.TreeModel;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.service.SysRolePermissionService;
 import com.lh.system.utils.PermissionOPUtil;
-import com.lh.system.model.vo.SysPermissionTree;
-import com.lh.system.model.vo.TreeModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +49,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
 
-    @Autowired
-    private SysRolePermissionService sysRolePermissionService;
+    private final SysRolePermissionService sysRolePermissionService;
+    private DaoApi daoApi;
 
     @Autowired
-    private DaoApi daoApi;
+    public SysPermissionServiceImpl(SysRolePermissionService sysRolePermissionService,DaoApi daoApi) {
+        this.sysRolePermissionService = sysRolePermissionService;
+        this.daoApi = daoApi;
+    }
 
     @Override
     public Set<String> getUserPermCodes(String loginName) {

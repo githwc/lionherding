@@ -1,12 +1,12 @@
 package com.lh.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.system.entity.SysRole;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.service.SysRoleService;
 import com.lh.system.service.SysUserRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,14 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 
-    @Autowired
-    private SysUserService userService;
+    private final SysUserService userService;
+    private SysRoleService roleService;
 
     @Autowired
-    private SysRoleService roleService;
+    public SysUserRoleServiceImpl(SysUserService userService,SysRoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @Override
     public Map<String, String> queryUserRole() {

@@ -1,9 +1,9 @@
 package com.lh.system.mapper;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.system.entity.SysRole;
+import com.lh.system.model.query.RoleQuery;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +25,18 @@ import java.util.List;
 @Repository
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    /**
+     * 查询用户角色
+     * @param loginName
+     * @return
+     */
     List<SysRole> getUserRoles (@Param("loginName")String loginName);
 
-    Page<SysRole> queryPageAll(@Param("page")Page<SysRole> page,@Param("params") JSONObject jsonObject);
+    /**
+     * 角色查询
+     * @param page
+     * @param roleQuery
+     * @return
+     */
+    Page<SysRole> roleList(@Param("page")Page<SysRole> page,@Param("query") RoleQuery roleQuery);
 }

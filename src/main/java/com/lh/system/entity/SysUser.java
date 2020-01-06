@@ -46,10 +46,6 @@ public class SysUser implements Serializable {
      */
     private String userName;
     /**
-     * 昵称
-     */
-    private String nickName;
-    /**
      * 登录名称
      */
     private String loginName;
@@ -86,21 +82,9 @@ public class SysUser implements Serializable {
      */
     private String cardId;
     /**
-     * 移动电话
+     * 手机
      */
-    private String mobilePhone;
-    /**
-     * 固话
-     */
-    private String telephone;
-    /**
-     * 短号
-     */
-    private String shortTel;
-    /**
-     * 传真
-     */
-    private String fax;
+    private String phone;
     /**
      * 住址
      */

@@ -15,7 +15,6 @@ import com.lh.common.utils.YouBianCodeUtil;
 import com.lh.system.entity.SysDept;
 import com.lh.system.mapper.SysDeptMapper;
 import com.lh.system.model.query.DeptQuery;
-import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
 import io.netty.util.internal.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +23,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +58,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery) {
+    public Page<SysDept> childrenDept(Page<SysDept> page, DeptQuery deptQuery) {
         return this.baseMapper.childrenDept(page,deptQuery);
     }
 
@@ -104,7 +102,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     @CacheEvict(value= {CacheConstant.SYS_DEPARTS_CACHE,CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries=true)
-    public void create(SysDept sysDept, HttpServletRequest request) {
+    public void create(SysDept sysDept) {
         if (sysDept != null ) {
             String[] codeAndLevel = this.generateOrgCode(sysDept.getParentId());
             sysDept.setUniqueCoding(codeAndLevel[0]);

@@ -18,6 +18,7 @@ import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.mapper.SysUserRoleMapper;
+import com.lh.system.model.query.UserQuery;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -51,17 +52,18 @@ import java.util.List;
 @Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
     private SysLogService sysLogService;
+    private final SysUserRoleMapper sysUserRoleMapper;
+    private final DaoApi daoApi;
 
     @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
-
-    @Autowired
-    private DaoApi daoApi;
+    public SysUserServiceImpl(DaoApi daoApi,SysUserRoleMapper sysUserRoleMapper,RedisUtil redisUtil,SysLogService sysLogService) {
+        this.daoApi = daoApi;
+        this.sysUserRoleMapper = sysUserRoleMapper;
+        this.redisUtil = redisUtil;
+        this.sysLogService = sysLogService;
+    }
 
     @Override
     public JSONObject login(SysUser sysUser) {
@@ -142,8 +144,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Page<SysUser> departUserList(Page<SysUser> page, JSONObject params) {
-        return this.baseMapper.departUserList(page,params);
+    public Page<SysUser> userList(Page<SysUser> page, UserQuery userQuery) {
+        return this.baseMapper.userList(page,userQuery);
     }
 
     @Override

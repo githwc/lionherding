@@ -1,6 +1,5 @@
 package com.lh.system.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,9 +8,10 @@ import com.lh.common.constant.CommonConstant;
 import com.lh.system.entity.SysPermission;
 import com.lh.system.entity.SysRole;
 import com.lh.system.mapper.SysRoleMapper;
+import com.lh.system.model.query.RoleQuery;
+import com.lh.system.model.vo.TreeModel;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.service.SysRoleService;
-import com.lh.system.model.vo.TreeModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +34,12 @@ import java.util.*;
 @Transactional(rollbackFor = Exception.class)
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
+    private final SysPermissionService sysPermissionService;
+
     @Autowired
-    private SysPermissionService sysPermissionService;
+    public SysRoleServiceImpl(SysPermissionService sysPermissionService) {
+        this.sysPermissionService = sysPermissionService;
+    }
 
     @Override
     public Set<String> getUserRoles(String loginName) {
@@ -58,8 +62,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public Page<SysRole> queryPageAll(Page<SysRole> page, JSONObject jsonObject) {
-        return this.baseMapper.queryPageAll(page,jsonObject);
+    public Page<SysRole> roleList(Page<SysRole> page, RoleQuery roleQuery) {
+        return this.baseMapper.roleList(page,roleQuery);
     }
 
     @Override

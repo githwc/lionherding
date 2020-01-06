@@ -1,0 +1,43 @@
+package com.lh.system.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lh.common.tree.TreeNode;
+import com.lh.system.entity.SysDict;
+import com.lh.system.model.query.DictQuery;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ *
+ * 功能描述：
+ *
+ *  <p>版权所有：</p>
+ *  未经本人许可，不得以任何方式复制或使用本程序任何部分
+ *
+ * @Company: 紫色年华
+ * @Author xieyc
+ * @Date 2019-09-20
+ * @Version: 1.0.0
+ *
+ */
+@Repository
+public interface SysDictMapper extends BaseMapper<SysDict> {
+
+    /**
+     * 字典树
+     * @param keyWord 搜索条件
+     * @return tree
+     */
+    List<TreeNode> dictTree(@Param("keyWord") String keyWord);
+
+    /**
+     * 子级字典
+     * @param page 分页
+     * @param dictQuery 父级ID
+     * @return dept list
+     */
+    Page<SysDict> childrenDict(@Param("page")Page<SysDict> page, @Param("query") DictQuery dictQuery);
+}

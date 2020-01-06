@@ -33,8 +33,12 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
+    private final DaoApi daoApi;
+
     @Autowired
-    private DaoApi daoApi;
+    public SysLogServiceImpl(DaoApi daoApi) {
+        this.daoApi = daoApi;
+    }
 
     @Override
     public void addLog(String LogContent, Integer logType, String requestMethod,String requestParams) {

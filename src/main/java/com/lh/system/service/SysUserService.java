@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUser;
+import com.lh.system.model.query.UserQuery;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,8 @@ public interface SysUserService extends IService<SysUser> {
 
     /**
      * 登录
+     * @param sysUser
+     * @return
      */
     JSONObject login(SysUser sysUser);
 
@@ -50,13 +53,14 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 加载用户数据
      * @param page
-     * @param param
+     * @param userQuery
      * @return
      */
-    Page<SysUser> departUserList(Page<SysUser> page, JSONObject param);
+    Page<SysUser> userList(Page<SysUser> page, UserQuery userQuery);
 
     /**
      * 添加用户
+     * @param jsonObject
      */
     void addUserWithRole(JSONObject jsonObject);
 

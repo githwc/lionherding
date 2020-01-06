@@ -6,6 +6,7 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.system.entity.SysUser;
+import com.lh.system.model.query.UserQuery;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,14 +64,12 @@ public class SysUserController {
         }
     }
 
-    @PostMapping(value = "/departUserList")
-    @ApiOperation(value = "加载用户",notes = "查询某个部门下的有效用户")
-    @WriteLog(opPosition = "加载用户" ,optype = CommonConstant.OPTYPE_READ)
-    public Page<SysUser> departUserList(@RequestBody JSONObject jsonObject) {
+    @GetMapping(value = "/userList")
+    @ApiOperation(value = "查询用户",notes = "查询某个部门下的有效用户")
+    @WriteLog(opPosition = "查询用户" ,optype = CommonConstant.OPTYPE_READ)
+    public Page<SysUser> userList(Page<SysUser> page, UserQuery userQuery) {
         try {
-            int pageNo = jsonObject.getJSONObject("page").getIntValue("pageNo");
-            int pageSize = jsonObject.getJSONObject("page").getIntValue("pageSize");
-            return service.departUserList(new Page<>(pageNo, pageSize), jsonObject.getJSONObject("params"));
+            return service.userList(page, userQuery);
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

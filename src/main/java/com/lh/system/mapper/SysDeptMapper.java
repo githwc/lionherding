@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.model.query.DeptQuery;
-import com.lh.system.model.vo.SysDeptVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -40,5 +39,5 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * @param deptQuery 父级ID
      * @return dept list
      */
-    Page<SysDept> childrenDept(@Param("page")Page<SysDeptVO> page,@Param("query") DeptQuery deptQuery);
+    Page<SysDept> childrenDept(@Param("page")Page<SysDept> page,@Param("query") DeptQuery deptQuery);
 }

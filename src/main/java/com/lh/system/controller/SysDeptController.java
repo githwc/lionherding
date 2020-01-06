@@ -7,7 +7,6 @@ import com.lh.common.log.WriteLog;
 import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.model.query.DeptQuery;
-import com.lh.system.model.vo.SysDeptVO;
 import com.lh.system.service.SysDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -58,16 +56,16 @@ public class SysDeptController {
     @GetMapping("/childrenDept")
     @ApiOperation(value = "查询子级部门",notes = "查询子级部门")
     @WriteLog(opPosition = "查询子级部门" ,optype = CommonConstant.OPTYPE_READ)
-    public Page<SysDept> childrenDept(Page<SysDeptVO> page, DeptQuery deptQuery){
+    public Page<SysDept> childrenDept(Page<SysDept> page, DeptQuery deptQuery){
         return service.childrenDept(page,deptQuery);
     }
 
     @ApiOperation(value = "部门添加",notes = "部门添加")
     @PostMapping(value = "/add")
     @WriteLog(opPosition = "部门添加" ,optype = CommonConstant.OPTYPE_CREATE)
-    public void add(@RequestBody SysDept sysDept, HttpServletRequest request) {
+    public void add(@RequestBody SysDept sysDept) {
         try {
-            service.create(sysDept,request);
+            service.create(sysDept);
         } catch (Exception e) {
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
