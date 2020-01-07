@@ -2,7 +2,6 @@ package com.lh.common.log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lh.common.dao.DaoApi;
-import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.LocalHostUtil;
 import com.lh.system.entity.SysLog;
 import com.lh.system.entity.SysUser;
@@ -78,7 +77,6 @@ public class SystemLogService {
     public boolean write(SysUser sysUser, int opType, int logType, String requestMethod,String requestUrl,String requestType,String requestParams, String... describe) {
         sysUser = sysUser!=null ? sysUser : new SysUser();
         SysLog log = new SysLog();
-        log.setSysLogId(BasisUtil.getUUID());
         log.setRequestMethod(requestMethod);
         log.setRequestUrl(requestUrl);
         log.setRequestType(requestType);

@@ -11,8 +11,9 @@ import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
-import com.lh.common.utils.BasisUtil;
 import com.lh.common.utils.EncoderUtil;
+import com.lh.common.utils.IdcardUtils;
+import com.lh.common.utils.RandomUtils;
 import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,14 +151,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public void addUserWithRole(JSONObject jsonObject) {
+    public void add(JSONObject jsonObject) {
         SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
-        String salt = BasisUtil.randomGen(8);
+        String salt = RandomUtils.getRandomNumbersAndLetters(8);
         user.setSalt(salt);
         String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
         user.setPassword(passwordEncode);
         user.setCreateUserId(daoApi.getCurrentUserId());
-        user.setDepartId(jsonObject.getString("selecteddeparts"));
+        user.setAge(IdcardUtils.getAgeByIdCard(user.getIdCard()));
+        user.setSex(IdcardUtils.getSexByIdCard(user.getIdCard()));
+        user.setBirthday(LocalDate.parse(IdcardUtils.getBirthByIdCard(user.getIdCard())));
         this.save(user);
         String roles = jsonObject.getString("selectedroles");
         if(StringUtils.isNotEmpty(roles)) {
@@ -169,7 +173,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public void editUserWithRole(JSONObject jsonObject) throws RunningException{
+    public void edit(JSONObject jsonObject) throws RunningException{
         SysUser sysUser = this.getById(jsonObject.getString("sysUserId"));
         if(sysUser==null) {
             throw new RunningException("未找到对应实体");

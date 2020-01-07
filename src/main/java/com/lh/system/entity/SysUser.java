@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -72,7 +73,7 @@ public class SysUser implements Serializable {
     /**
      * 生日
      */
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     /**
      * 头像
      */
@@ -80,7 +81,7 @@ public class SysUser implements Serializable {
     /**
      * 身份证
      */
-    private String cardId;
+    private String idCard;
     /**
      * 手机
      */

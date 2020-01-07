@@ -80,7 +80,7 @@ public class SysUserController {
     @WriteLog(opPosition = "用户添加" ,optype = CommonConstant.OPTYPE_CREATE)
     public void add(@RequestBody JSONObject jsonObject) {
         try {
-            service.addUserWithRole(jsonObject);
+            service.add(jsonObject);
         } catch (Exception e) {
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
@@ -91,7 +91,7 @@ public class SysUserController {
     @WriteLog(opPosition = "用户修改" ,optype = CommonConstant.OPTYPE_UPDATE)
     public void edit(@RequestBody JSONObject jsonObject) {
         try {
-            service.editUserWithRole(jsonObject);
+            service.edit(jsonObject);
         } catch (Exception e) {
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

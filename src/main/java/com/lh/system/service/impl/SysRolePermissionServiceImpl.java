@@ -2,7 +2,6 @@ package com.lh.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lh.common.utils.BasisUtil;
 import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysRolePermissionMapper;
 import com.lh.system.service.SysRolePermissionService;

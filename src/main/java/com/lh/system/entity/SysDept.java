@@ -68,10 +68,6 @@ public class SysDept implements Serializable {
      */
     private Integer sort;
     /**
-     * 描述
-     */
-    private String description;
-    /**
      * 备注
      */
     private String remark;

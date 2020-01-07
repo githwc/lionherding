@@ -62,13 +62,13 @@ public interface SysUserService extends IService<SysUser> {
      * 添加用户
      * @param jsonObject
      */
-    void addUserWithRole(JSONObject jsonObject);
+    void add(JSONObject jsonObject);
 
     /**
      * 修改用户
      * @param jsonObject
      */
-    void editUserWithRole(JSONObject jsonObject);
+    void edit(JSONObject jsonObject);
 
     /**
      * 登录账号唯一性检测
