@@ -6,7 +6,6 @@ import com.lh.common.tree.TreeNode;
 import com.lh.system.entity.SysDept;
 import com.lh.system.model.query.DeptQuery;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

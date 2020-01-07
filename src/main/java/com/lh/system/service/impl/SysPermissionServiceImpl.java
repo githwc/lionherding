@@ -424,6 +424,26 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         this.sysRolePermissionService.saveRolePermission(roleId, permissionIds, lastPermissionIds);
     }
 
+    @Override
+    public Map<String,Object> permissionTree() {
+        List<String> ids = new ArrayList<>();
+        List<SysPermission> list = this.list(new LambdaQueryWrapper<SysPermission>()
+                .eq(SysPermission::getDelFlag, CommonConstant.DEL_FLAG_0)
+                .orderByAsc(SysPermission::getSort)
+        );
+        for(SysPermission sysPer : list) {
+            ids.add(sysPer.getSysPermissionId());
+        }
+        List<TreeModel> treeList = new ArrayList<>();
+        getTreeModelList(treeList, list, null);
+        Map<String,Object> resMap = new HashMap<String,Object>();
+        //全部树节点数据
+        resMap.put("treeList", treeList);
+        //全部树ids
+        resMap.put("ids", ids);
+        return resMap;
+    }
+
     /**
      *  组装菜单树
      * @param treeList

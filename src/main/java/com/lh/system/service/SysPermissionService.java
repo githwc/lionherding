@@ -91,4 +91,10 @@ public interface SysPermissionService extends IService<SysPermission> {
      */
     void saveRolePermission(JSONObject json);
 
+    /**
+     * 菜单权限树
+     * @return
+     */
+    Map<String,Object> permissionTree();
+
 }

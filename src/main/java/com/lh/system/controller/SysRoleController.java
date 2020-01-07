@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -46,21 +45,21 @@ public class SysRoleController {
         this.daoApi = daoApi;
     }
 
-    @GetMapping(value = "/roleList")
+    @GetMapping(value = "/rolePage")
     @ApiOperation(value = "查询所有角色",notes = "加载所有角色(分页)")
     @WriteLog(opPosition = "查询所有角色" ,optype = CommonConstant.OPTYPE_READ)
-    public Page<SysRole> roleList(Page<SysRole> page, RoleQuery roleQuery) {
+    public Page<SysRole> rolePage(Page<SysRole> page, RoleQuery roleQuery) {
         try{
-            return service.roleList(page,roleQuery);
+            return service.rolePage(page,roleQuery);
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
 
-    @GetMapping(value = "/queryall")
+    @GetMapping(value = "/roleList")
     @ApiOperation(value = "查询所有角色",notes = "查询所有角色(新增用户时调用)")
     @WriteLog(opPosition = "查询所有角色" ,optype = CommonConstant.OPTYPE_READ)
-    public List<SysRole> queryall() {
+    public List<SysRole> roleList() {
         try{
             return service.roleList();
         }catch (Exception e){
@@ -128,17 +127,6 @@ public class SysRoleController {
     public void duplicate(@RequestParam("roleCode") String roleCode){
         try {
             service.duplicate(roleCode);
-        }catch (Exception e){
-            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
-    @GetMapping(value = "/queryTreeList")
-    @ApiOperation(value = "查看菜单权限树",notes = "查看菜单权限树")
-    @WriteLog(opPosition = "查看菜单权限树" ,optype = CommonConstant.OPTYPE_READ)
-    public Map<String,Object> queryTreeList() {
-        try {
-            return service.queryTreeList();
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

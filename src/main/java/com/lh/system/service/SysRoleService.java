@@ -1,13 +1,11 @@
 package com.lh.system.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysRole;
 import com.lh.system.model.query.RoleQuery;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -43,7 +41,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param roleQuery
      * @return
      */
-    Page<SysRole> roleList(Page<SysRole> page, RoleQuery roleQuery);
+    Page<SysRole> rolePage(Page<SysRole> page, RoleQuery roleQuery);
 
     /**
      * 角色代码唯一性校验
@@ -51,9 +49,4 @@ public interface SysRoleService extends IService<SysRole> {
      */
     void duplicate(String roleCode);
 
-    /**
-     * 查看菜单权限树
-     * @return
-     */
-    Map<String,Object> queryTreeList();
 }

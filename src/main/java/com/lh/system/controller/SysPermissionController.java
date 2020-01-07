@@ -145,4 +145,15 @@ public class SysPermissionController {
         }
     }
 
+    @GetMapping(value = "/permissionMapTree")
+    @ApiOperation(value = "菜单权限树",notes = "菜单权限树")
+    @WriteLog(opPosition = "查看菜单权限树" ,optype = CommonConstant.OPTYPE_READ)
+    public Map<String,Object> permissionTree() {
+        try {
+            return service.permissionTree();
+        }catch (Exception e){
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
+
 }
