@@ -78,23 +78,9 @@ public interface SysPermissionService extends IService<SysPermission> {
     void deleteBatch(String ids);
 
     /**
-     * 查询角色拥有的权限
-     * @param roleId
-     * @return
-     */
-    List<String> queryRolePermission(String roleId);
-
-    /**
-     * 保存角色授权
-     *
-     * @return
-     */
-    void saveRolePermission(JSONObject json);
-
-    /**
      * 菜单权限树
      * @return
      */
-    Map<String,Object> permissionTree();
+    Map<String,Object> permissionMapTree();
 
 }

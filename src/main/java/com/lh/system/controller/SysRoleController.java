@@ -1,5 +1,6 @@
 package com.lh.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
@@ -19,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * 功能描述：
+ * 功能描述：角色前端控制器
  *
  *  <p>版权所有：</p>
  *  未经本人许可，不得以任何方式复制或使用本程序任何部分
@@ -132,4 +133,25 @@ public class SysRoleController {
         }
     }
 
+    @GetMapping(value = "/rolePermission")
+    @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
+    @WriteLog(opPosition = "查询角色授权" ,optype = CommonConstant.OPTYPE_READ)
+    public List<String> queryRolePermission(@RequestParam("sysRoleId") String roleId) {
+        try {
+            return service.queryRolePermission(roleId);
+        } catch (Exception e) {
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/rolePermission")
+    @ApiOperation(value = "保存角色授权", notes = "保存角色拥有的权限")
+    @WriteLog(opPosition = "保存角色授权" ,optype = CommonConstant.OPTYPE_CREATE)
+    public void saveRolePermission(@RequestBody JSONObject json) {
+        try {
+            service.saveRolePermission(json);
+        } catch (Exception e) {
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
+    }
 }

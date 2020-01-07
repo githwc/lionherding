@@ -14,12 +14,10 @@ import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.EncoderUtil;
 import com.lh.system.entity.SysPermission;
-import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysPermissionMapper;
 import com.lh.system.model.vo.SysPermissionTree;
 import com.lh.system.model.vo.TreeModel;
 import com.lh.system.service.SysPermissionService;
-import com.lh.system.service.SysRolePermissionService;
 import com.lh.system.utils.PermissionOPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
 * 功能描述：
@@ -49,12 +46,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
 
-    private final SysRolePermissionService sysRolePermissionService;
     private DaoApi daoApi;
 
     @Autowired
-    public SysPermissionServiceImpl(SysRolePermissionService sysRolePermissionService,DaoApi daoApi) {
-        this.sysRolePermissionService = sysRolePermissionService;
+    public SysPermissionServiceImpl(DaoApi daoApi) {
         this.daoApi = daoApi;
     }
 
@@ -244,7 +239,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      * @param allList
      */
     private void getAllAuthJsonArray(JSONArray jsonArray,List<SysPermission> allList) {
-        JSONObject json = null;
+        JSONObject json;
         for (SysPermission permission : allList) {
             json = new JSONObject();
             json.put("action", permission.getPermsCode());
@@ -298,7 +293,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                 .orderByAsc(SysPermission::getSort)
         );
         List<SysPermissionTree> treeList = new ArrayList<>();
-        getTreeList(treeList, list, null);
+        this.getTreeList(treeList, list, null);
         return treeList;
     }
 
@@ -409,23 +404,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    public List<String> queryRolePermission(String roleId) {
-        List<SysRolePermission> list = sysRolePermissionService.list(new LambdaQueryWrapper<SysRolePermission>()
-                .eq(SysRolePermission::getRoleId, roleId));
-        return list.stream().map(SysRolePermission ->
-                String.valueOf(SysRolePermission.getPermissionId())).collect(Collectors.toList());
-    }
-
-    @Override
-    public void saveRolePermission(JSONObject json) {
-        String roleId = json.getString("sysRoleId");
-        String permissionIds = json.getString("permissionIds");
-        String lastPermissionIds = json.getString("lastPermissionIds");
-        this.sysRolePermissionService.saveRolePermission(roleId, permissionIds, lastPermissionIds);
-    }
-
-    @Override
-    public Map<String,Object> permissionTree() {
+    public Map<String,Object> permissionMapTree() {
         List<String> ids = new ArrayList<>();
         List<SysPermission> list = this.list(new LambdaQueryWrapper<SysPermission>()
                 .eq(SysPermission::getDelFlag, CommonConstant.DEL_FLAG_0)
@@ -435,7 +414,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             ids.add(sysPer.getSysPermissionId());
         }
         List<TreeModel> treeList = new ArrayList<>();
-        getTreeModelList(treeList, list, null);
+        this.getTreeModelList(treeList, list, null);
         Map<String,Object> resMap = new HashMap<String,Object>();
         //全部树节点数据
         resMap.put("treeList", treeList);
@@ -445,7 +424,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     /**
-     *  组装菜单树
+     *  组装菜单树 ====== permissionlist 子方法 ========
      * @param treeList
      * @param metaList
      * @param temp
@@ -468,6 +447,12 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         }
     }
 
+    /**
+     * ======= permissionMapTree 子方法 =======
+     * @param treeList
+     * @param metaList
+     * @param temp
+     */
     private void getTreeModelList(List<TreeModel> treeList, List<SysPermission> metaList, TreeModel temp) {
         for (SysPermission permission : metaList) {
             String tempPid = permission.getParentId();
@@ -487,11 +472,11 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     /**
-     * 根据父id删除其关联的子节点数据
+     * 根据父id删除其关联的子节点数据 ====== deletePermission 子方法 =========
      *
      * @return
      */
-    public void removeChildrenBy(String parentId) {
+    private void removeChildrenBy(String parentId) {
         // 查出该主键下的所有子级
         List<SysPermission> permissionList = this.list(new LambdaQueryWrapper<SysPermission>()
             .eq(SysPermission::getParentId,parentId)
@@ -499,8 +484,8 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         if (permissionList != null && permissionList.size() > 0) {
             SysPermission sysPermission = new SysPermission();
             sysPermission.setDelFlag(CommonConstant.DEL_FLAG_1);
-            String id = ""; // id
-            int num = 0; // 查出的子级数量
+            String id ; // id
+            int num ; // 查出的子级数量
             // 如果查出的集合不为空, 则先删除所有
             this.update(sysPermission,new LambdaQueryWrapper<SysPermission>()
                     .eq(SysPermission::getParentId,parentId)

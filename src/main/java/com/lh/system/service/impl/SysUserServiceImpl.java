@@ -234,7 +234,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<String> list = new ArrayList<String>();
         List<SysUserRole> userRole = sysUserRoleMapper.selectList(new LambdaQueryWrapper<SysUserRole>()
                 .eq(SysUserRole::getUserId, userId));
-        if (userRole == null || userRole.size() <= 0) {
+        if (ObjectUtil.isNull(userRole)) {
             throw new RunningException("未找到用户相关角色信息");
         } else {
             for (SysUserRole sysUserRole : userRole) {

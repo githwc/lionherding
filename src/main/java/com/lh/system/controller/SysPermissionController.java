@@ -123,34 +123,12 @@ public class SysPermissionController {
         }
     }
 
-    @GetMapping(value = "/queryRolePermission")
-    @ApiOperation(value = "查询角色授权", notes = "查询角色拥有的权限")
-    @WriteLog(opPosition = "查询角色授权" ,optype = CommonConstant.OPTYPE_READ)
-    public List<String> queryRolePermission(@RequestParam("sysRoleId") String roleId) {
-        try {
-            return service.queryRolePermission(roleId);
-        } catch (Exception e) {
-            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
-    @PostMapping(value = "/saveRolePermission")
-    @ApiOperation(value = "保存角色授权", notes = "保存角色拥有的权限")
-    @WriteLog(opPosition = "保存角色授权" ,optype = CommonConstant.OPTYPE_CREATE)
-    public void saveRolePermission(@RequestBody JSONObject json) {
-        try {
-            service.saveRolePermission(json);
-        } catch (Exception e) {
-            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
-        }
-    }
-
     @GetMapping(value = "/permissionMapTree")
     @ApiOperation(value = "菜单权限树",notes = "菜单权限树")
     @WriteLog(opPosition = "查看菜单权限树" ,optype = CommonConstant.OPTYPE_READ)
-    public Map<String,Object> permissionTree() {
+    public Map<String,Object> permissionMapTree() {
         try {
-            return service.permissionTree();
+            return service.permissionMapTree();
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

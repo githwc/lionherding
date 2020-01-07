@@ -1,5 +1,6 @@
 package com.lh.system.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysRole;
@@ -48,5 +49,19 @@ public interface SysRoleService extends IService<SysRole> {
      * @param roleCode
      */
     void duplicate(String roleCode);
+
+    /**
+     * 查询角色拥有的权限
+     * @param roleId
+     * @return
+     */
+    List<String> queryRolePermission(String roleId);
+
+    /**
+     * 保存角色授权
+     *
+     * @return
+     */
+    void saveRolePermission(JSONObject json);
 
 }

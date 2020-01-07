@@ -1,5 +1,6 @@
 package com.lh.system.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,6 +8,7 @@ import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
 import com.lh.system.entity.SysRole;
+import com.lh.system.entity.SysRolePermission;
 import com.lh.system.mapper.SysRoleMapper;
 import com.lh.system.model.query.RoleQuery;
 import com.lh.system.service.SysRolePermissionService;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 功能描述：
@@ -76,6 +79,22 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if(list != null && list.size() >0){
             throw new RunningException("该角色码已存在！");
         }
+    }
+
+    @Override
+    public List<String> queryRolePermission(String roleId) {
+        List<SysRolePermission> list = sysRolePermissionService.list(new LambdaQueryWrapper<SysRolePermission>()
+                .eq(SysRolePermission::getRoleId, roleId));
+        return list.stream().map(SysRolePermission ->
+                String.valueOf(SysRolePermission.getPermissionId())).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveRolePermission(JSONObject json) {
+        String roleId = json.getString("sysRoleId");
+        String permissionIds = json.getString("permissionIds");
+        String lastPermissionIds = json.getString("lastPermissionIds");
+        this.sysRolePermissionService.saveRolePermission(roleId, permissionIds, lastPermissionIds);
     }
 
 }
