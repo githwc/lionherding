@@ -57,7 +57,7 @@ public class Tree {
         TreeNode rootNode = treeNodeMap.get(ROOT_NODE_CODE);
         TreeNode treeNode;
         if (rootNode == null || rootNode.getChildren().isEmpty()) {
-            treeNode = new TreeNode("#","root", rootNodeName, 0, false);
+            treeNode = new TreeNode("#","root", rootNodeName, 0, true);
         } else {
             boolean rootChecked = true;
             for (TreeNode child : rootNode.getChildren()) {

@@ -69,13 +69,9 @@ public class SysLog implements Serializable {
      */
     private String remark;
     /**
-     * 操作人
-     */
-    private String createUserId;
-    /**
      * 创建人
      */
-    private String createUserName;
+    private String createUserId;
     /**
      * 创建时间
      */

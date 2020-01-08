@@ -6,13 +6,13 @@
         select
             sys_dict_id as id,
             parent_id as parentId,
-            key_word as title,
+            name as title,
             sort as order_num
         from sys_dict
         where
             del_flag = 0
-        <if test="keyWord != null and keyWord != '' ">
-            and key_word like concat ('%',#{keyWord},'%')
+        <if test="name != null and name != '' ">
+            and name like concat ('%',#{name},'%')
         </if>
         order by sort
     </select>
@@ -24,8 +24,8 @@
         where
             sd.del_flag = 0
         and sd.parent_id = #{query.parentId}
-        <if test="query.keyWord != null and query.keyWord != '' ">
-            and sd.key_word like concat ('%',#{query.keyWord},'%')
+        <if test="query.name != null and query.name != '' ">
+            and sd.name like concat ('%',#{query.name},'%')
         </if>
         order by sd.sort,sd.create_time desc
     </select>

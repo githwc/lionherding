@@ -81,7 +81,6 @@ public class SystemLogService {
         log.setRequestUrl(requestUrl);
         log.setRequestType(requestType);
         log.setRequestParam(requestParams);
-        log.setCreateUserName(sysUser.getUserName());
         log.setCreateTime(LocalDateTime.now());
         log.setCreateUserId(sysUser.getSysUserId());
         log.setIpAdress(LocalHostUtil.getIpAddress());

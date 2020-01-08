@@ -1,7 +1,11 @@
 package com.lh.system.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.system.entity.SysLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lh.system.model.query.LogQuery;
+import com.lh.system.model.vo.SysLogVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 /**
  *
@@ -19,4 +23,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
+    Page<SysLogVO> logPage(@Param("param") Page<SysLogVO> page, @Param("query") LogQuery logQuery);
 }

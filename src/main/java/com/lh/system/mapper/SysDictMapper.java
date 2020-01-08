@@ -28,10 +28,10 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
 
     /**
      * 字典树
-     * @param keyWord 搜索条件
+     * @param name 搜索条件
      * @return tree
      */
-    List<TreeNode> dictTree(@Param("keyWord") String keyWord);
+    List<TreeNode> dictTree(@Param("name") String name);
 
     /**
      * 子级字典

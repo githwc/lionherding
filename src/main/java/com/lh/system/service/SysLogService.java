@@ -1,8 +1,12 @@
 package com.lh.system.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysLog;
+import com.lh.system.model.query.LogQuery;
+import com.lh.system.model.vo.SysLogVO;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Map;
 
@@ -34,5 +38,13 @@ public interface SysLogService extends IService<SysLog> {
      * @return
      */
     JSONObject logInfo();
+
+    /**
+     * 分页查询系统日志
+     * @param page 分页信息
+     * @param logQuery 查询条件
+     * @return
+     */
+    Page<SysLogVO> logPage(Page<SysLogVO> page, LogQuery logQuery);
 
 }

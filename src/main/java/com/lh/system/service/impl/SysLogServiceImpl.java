@@ -1,6 +1,7 @@
 package com.lh.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.dao.DaoApi;
 import com.lh.common.utils.LocalHostUtil;
@@ -8,6 +9,8 @@ import com.lh.common.utils.SpringContextUtils;
 import com.lh.system.entity.SysLog;
 import com.lh.system.entity.SysUser;
 import com.lh.system.mapper.SysLogMapper;
+import com.lh.system.model.query.LogQuery;
+import com.lh.system.model.vo.SysLogVO;
 import com.lh.system.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,8 +58,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         }
         SysUser currUser = daoApi.getCurrentUser();
         sysLog.setCreateUserId(currUser == null ? "" : currUser.getSysUserId());
-        sysLog.setCreateUserName(currUser == null ? "" : currUser.getUserName());
-        //保存系统日志
         this.baseMapper.insert(sysLog);
     }
 
@@ -70,5 +71,11 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         jsonObject.put("logInfo",map);
         return jsonObject;
     }
+
+    @Override
+    public Page<SysLogVO> logPage(Page<SysLogVO> page, LogQuery logQuery) {
+        return null;
+    }
+
 
 }

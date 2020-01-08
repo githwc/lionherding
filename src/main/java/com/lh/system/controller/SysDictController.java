@@ -45,9 +45,9 @@ public class SysDictController {
     @GetMapping(value = "/dictTree")
     @ApiOperation(value = "加载字典树",notes = "加载所有字典")
     @WriteLog(opPosition = "加载字典树" ,optype = CommonConstant.OPTYPE_READ)
-    public List<TreeNode> dictTree(@RequestParam(value = "keyWord",required = false)String keyWord){
+    public List<TreeNode> dictTree(@RequestParam(value = "name",required = false)String name){
         try {
-            return service.dictTree(keyWord);
+            return service.dictTree(name);
         }catch (Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }

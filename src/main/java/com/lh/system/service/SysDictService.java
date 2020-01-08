@@ -24,10 +24,10 @@ public interface SysDictService extends IService<SysDict> {
 
     /**
      * 查询所有字典,并以树结构格式返回前端
-     * @param keyWord [搜索条件] 字典名称
+     * @param name [搜索条件] 字典名称
      * @return tree
      */
-    List<TreeNode> dictTree(String keyWord);
+    List<TreeNode> dictTree(String name);
 
     /**
      * 查询子级字典

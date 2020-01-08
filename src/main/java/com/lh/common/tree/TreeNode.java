@@ -74,20 +74,32 @@ public class TreeNode implements Serializable {
     @JSONField(ordinal = 10)
     private Boolean showed;
     /**
-     * 业务主键Id
+     * 树节点是否禁用
      */
     @JSONField(ordinal = 11)
+    private Boolean disabled;
+    /**
+     * 树节点是否禁用checkBox
+     */
+    @JSONField(ordinal = 12)
+    private Boolean disableCheckbox;
+
+    /**
+     * 业务主键Id
+     */
+    @JSONField(ordinal = 13)
     private String rId;
+    /**
+     * 树节点的子节点
+     */
+    @JSONField(ordinal = 14)
+    private List<TreeNode> children = new ArrayList<>();
+
     /**
      * 树节点父节点
      */
     @JSONField(serialize = false)
     private TreeNode parent;
-    /**
-     * 树节点的子节点
-     */
-    @JSONField(ordinal = 11)
-    private List<TreeNode> children = new ArrayList<>();
 
     // =============== 类方法 START =============
 
@@ -113,12 +125,12 @@ public class TreeNode implements Serializable {
     public TreeNode() {
     }
 
-    public TreeNode(String id,String parentId,String title,Integer orderNum, Boolean checked) {
+    public TreeNode(String id,String parentId,String title,Integer orderNum, Boolean disableCheckbox) {
         this.id = id;
         this.parentId = parentId;
         this.title = title;
         this.orderNum = orderNum;
-        this.checked = checked;
+        this.disableCheckbox = disableCheckbox;
     }
     // =============== 类方法 END =============
 
@@ -203,12 +215,20 @@ public class TreeNode implements Serializable {
         this.showed = showed;
     }
 
-    public String getrId() {
-        return rId;
+    public Boolean getDisabled() {
+        return disabled;
     }
 
-    public void setrId(String rId) {
-        this.rId = rId;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Boolean getDisableCheckbox() {
+        return disableCheckbox;
+    }
+
+    public void setDisableCheckbox(Boolean disableCheckbox) {
+        this.disableCheckbox = disableCheckbox;
     }
 
     public TreeNode getParent() {
@@ -217,6 +237,14 @@ public class TreeNode implements Serializable {
 
     public void setParent(TreeNode parent) {
         this.parent = parent;
+    }
+
+    public String getrId() {
+        return rId;
+    }
+
+    public void setrId(String rId) {
+        this.rId = rId;
     }
 
     public void setChildren(List<TreeNode> children) {

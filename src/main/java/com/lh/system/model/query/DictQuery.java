@@ -28,6 +28,6 @@ public class DictQuery implements Serializable {
     /**
      * 字典名称
      */
-    private String keyWord;
+    private String name;
 
 }

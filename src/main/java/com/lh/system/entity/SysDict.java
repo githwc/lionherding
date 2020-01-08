@@ -34,7 +34,7 @@ public class SysDict implements Serializable {
     /**
      * 字典项文本
      */
-    private String keyWord;
+    private String name;
     /**
      * 字典项值
      */
