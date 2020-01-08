@@ -40,9 +40,9 @@ public class SysDict implements Serializable {
      */
     private String value;
     /**
-     * 描述
+     * 备注
      */
-    private String description;
+    private String remark;
     /**
      * 状态(0启用 1不启用)
      */

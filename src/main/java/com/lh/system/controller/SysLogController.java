@@ -40,7 +40,7 @@ public class SysLogController {
     }
 
     @GetMapping("/logInfo")
-    @ApiOperation(value = "获取系统日志",notes = "获取系统日志")
+    @ApiOperation(value = "首页获取系统日志",notes = "首页获取系统日志")
     @WriteLog(opPosition = "获取系统日志" ,optype = CommonConstant.OPTYPE_READ)
     public JSONObject logInfo(){
         try{

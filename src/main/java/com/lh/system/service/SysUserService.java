@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUser;
 import com.lh.system.model.query.UserQuery;
+import com.lh.system.model.vo.SysUserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +57,7 @@ public interface SysUserService extends IService<SysUser> {
      * @param userQuery
      * @return
      */
-    Page<SysUser> userList(Page<SysUser> page, UserQuery userQuery);
+    Page<SysUserVO> userList(Page<SysUserVO> page, UserQuery userQuery);
 
     /**
      * 添加用户

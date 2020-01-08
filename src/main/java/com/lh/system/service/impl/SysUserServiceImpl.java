@@ -20,6 +20,7 @@ import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.model.query.UserQuery;
+import com.lh.system.model.vo.SysUserVO;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +98,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME*2 / 1000);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
-            this.dealUser(sysUser);  // 记录登录数据
+            // 记录登录数据
+            this.dealUser(sysUser);
             sysLogService.addLog("用户名: " + loginName + ",登录成功！", CommonConstant.LOG_TYPE_1, "sysUser/login", "loginName:" + loginName + ",password:" + password);
             return jsonObject;
         }
@@ -146,7 +148,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Page<SysUser> userList(Page<SysUser> page, UserQuery userQuery) {
+    public Page<SysUserVO> userList(Page<SysUserVO> page, UserQuery userQuery) {
         return this.baseMapper.userList(page,userQuery);
     }
 

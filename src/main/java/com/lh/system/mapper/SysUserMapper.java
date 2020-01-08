@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.system.entity.SysUser;
 import com.lh.system.model.query.UserQuery;
+import com.lh.system.model.vo.SysUserVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param userQuery
      * @return
      */
-    Page<SysUser> userList(@Param("page")Page<SysUser> page, @Param("query")UserQuery userQuery);
+    Page<SysUserVO> userList(@Param("page")Page<SysUserVO> page, @Param("query")UserQuery userQuery);
 
 }
