@@ -142,10 +142,14 @@ public class SysUserController {
         }
     }
 
-    @PutMapping("/resetPassword")
+    @GetMapping(value = "/resetPassword")
     @ApiOperation(value = "重置密码",notes = "重置密码")
     @WriteLog(opPosition = "重置密码" ,optype = CommonConstant.OPTYPE_UPDATE)
-    public void resetPassword(@RequestParam("sysUserId")String sysUserId){
-
+    public void resetPassword(@RequestParam("sysUserId") String sysUserId){
+        try{
+            service.resetPassword(sysUserId);
+        }catch(Exception e){
+            throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
+        }
     }
 }
