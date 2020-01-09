@@ -83,7 +83,7 @@ public class SystemLogService {
         log.setRequestParam(requestParams);
         log.setCreateTime(LocalDateTime.now());
         log.setCreateUserId(sysUser.getSysUserId());
-        log.setIpAdress(LocalHostUtil.getIpAddress());
+        log.setIpAddress(LocalHostUtil.getIpAddress());
         log.setOpType(opType);
         log.setLogType(logType);
         String tmpDesc = "";

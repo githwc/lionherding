@@ -60,7 +60,7 @@ public class SysLogController {
      * @return
      */
     @GetMapping("/logPage")
-    public Page<SysLogVO> logPage(Page<SysLogVO> page, LogQuery logQuery){
+    public Page<SysLogVO> logPage(Page<SysLogVO> page,LogQuery logQuery){
         return service.logPage(page,logQuery);
     }
 

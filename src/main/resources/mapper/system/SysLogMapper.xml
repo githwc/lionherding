@@ -8,6 +8,14 @@
             su.login_name,su.user_name
         from sys_log sl
         left join sys_user su on su.sys_user_id = sl.create_user_id
+        <where>
+            <if test="query.loginName != null and query.loginName != '' ">
+                and su.login_name like concat ('%',#{query.loginName},'%')
+            </if>
+            <if test="query.userName != null and query.userName != '' ">
+                and su.user_name like concat ('%',#{query.userName},'%')
+            </if>
+        </where>
         order by sl.create_time desc
     </select>
 </mapper>

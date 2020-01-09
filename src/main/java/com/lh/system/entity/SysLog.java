@@ -59,7 +59,7 @@ public class SysLog implements Serializable {
     /**
      * IP地址
      */
-    private String ipAdress;
+    private String ipAddress;
     /**
      * 耗时
      */

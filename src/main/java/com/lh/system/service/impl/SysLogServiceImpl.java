@@ -52,9 +52,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         sysLog.setRequestParam(requestParams);
         try {
             HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
-            sysLog.setIpAdress(LocalHostUtil.getIpAddress(request));
+            sysLog.setIpAddress(LocalHostUtil.getIpAddress(request));
         } catch (Exception e) {
-            sysLog.setIpAdress("异常地址");
+            sysLog.setIpAddress("异常地址");
         }
         SysUser currUser = daoApi.getCurrentUser();
         sysLog.setCreateUserId(currUser == null ? "" : currUser.getSysUserId());
@@ -74,7 +74,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 
     @Override
     public Page<SysLogVO> logPage(Page<SysLogVO> page, LogQuery logQuery) {
-        return null;
+        return this.baseMapper.logPage(page,logQuery);
     }
 
 

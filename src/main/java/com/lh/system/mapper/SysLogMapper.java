@@ -23,5 +23,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
+    /**
+     * 查询系统日志
+     * @param page 分页信息
+     * @param logQuery 查询条件
+     * @return
+     */
     Page<SysLogVO> logPage(@Param("param") Page<SysLogVO> page, @Param("query") LogQuery logQuery);
 }
