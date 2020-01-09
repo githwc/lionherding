@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.system.entity.SysUser;
 import com.lh.system.model.query.UserQuery;
 import com.lh.system.model.vo.SysUserVO;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,4 +96,10 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     List<String> queryUserRole(String userId);
+
+    /**
+     * 重置密码
+     * @param sysUserId 用户ID
+     */
+    void resetPassword(String sysUserId);
 }

@@ -141,4 +141,11 @@ public class SysUserController {
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
     }
+
+    @PutMapping("/resetPassword")
+    @ApiOperation(value = "重置密码",notes = "重置密码")
+    @WriteLog(opPosition = "重置密码" ,optype = CommonConstant.OPTYPE_UPDATE)
+    public void resetPassword(@RequestParam("sysUserId")String sysUserId){
+
+    }
 }

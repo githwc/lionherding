@@ -28,11 +28,14 @@ import java.time.LocalDateTime;
 @Slf4j
 public class SystemLogService {
 
-    @Autowired
-    private SysLogMapper sysLogMapper;
+    private final SysLogMapper sysLogMapper;
+    private DaoApi daoApi;
 
     @Autowired
-    private DaoApi daoApi;
+    public SystemLogService(SysLogMapper sysLogMapper,DaoApi daoApi) {
+        this.sysLogMapper = sysLogMapper;
+        this.daoApi = daoApi;
+    }
 
     /**
      * @Description:方法重写：仅仅记录用户系统操作日志，不进行系统文件日志写入
@@ -43,7 +46,7 @@ public class SystemLogService {
      * @param opResult	: 操作执行情况
      * @return 是否成功
      */
-    public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult) {
+    boolean write(HttpServletRequest request, String opPosition, int opType, int logType, String requestMehtod, int opResult) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
         String requestParams = JSONObject.toJSONString(request.getParameterMap());
         return write(daoApi.getCurrentUser(), opType,logType, requestMehtod,request.getRequestURI(),request.getMethod(),requestParams, message);
@@ -58,7 +61,7 @@ public class SystemLogService {
      * @param ex	: 异常对象
      * @return 是否成功
      */
-    public boolean write(HttpServletRequest request, String opPosition, int opType,int logType, String requestMehtod, int opResult, Exception ex) {
+    boolean write(HttpServletRequest request, String opPosition, int opType, int logType, String requestMehtod, int opResult, Exception ex) {
         String message = new String[] { "创建", "删除", "更新", "读取" }[opType] + "位置(" + opPosition + ")" + (opResult != 1 ? "成功" : "失败");
         //将系统异常信息在全局异常拦截中写入日志文件后，写用户系统操作日志，返回日志操作状态
         String requestParams = JSONObject.toJSONString(request.getParameterMap());
@@ -74,13 +77,13 @@ public class SystemLogService {
      *      String...:String类型的可变长度的数组,固定长度的数组是String[] str={};这样写,可变的就String... str.
      * @return 是否成功
      */
-    public boolean write(SysUser sysUser, int opType, int logType, String requestMethod,String requestUrl,String requestType,String requestParams, String... describe) {
-        sysUser = sysUser!=null ? sysUser : new SysUser();
+    private boolean write(SysUser sysUser, int opType, int logType, String requestMethod, String requestUrl, String requestType, String requestParams, String... describe) {
+        sysUser = sysUser !=null ? sysUser : new SysUser();
         SysLog log = new SysLog();
         log.setRequestMethod(requestMethod);
         log.setRequestUrl(requestUrl);
         log.setRequestType(requestType);
-        log.setRequestParam(requestParams);
+        log.setRequestParam(requestParams.trim());
         log.setCreateTime(LocalDateTime.now());
         log.setCreateUserId(sysUser.getSysUserId());
         log.setIpAddress(LocalHostUtil.getIpAddress());

@@ -15,6 +15,15 @@
             <if test="query.userName != null and query.userName != '' ">
                 and su.user_name like concat ('%',#{query.userName},'%')
             </if>
+            <if test="query.opType != null and query.opType != '' ">
+                and sl.op_type like concat ('%',#{query.opType},'%')
+            </if>
+            <if test="query.logType != null and query.logType != '' ">
+                and sl.log_type like concat ('%',#{query.logType},'%')
+            </if>
+            <if test="query.beginTime != null and query.endTime != null and query.beginTime != '' and query.endTime != '' ">
+                and sl.create_time between #{query.beginTime} and #{query.endTime}
+            </if>
         </where>
         order by sl.create_time desc
     </select>

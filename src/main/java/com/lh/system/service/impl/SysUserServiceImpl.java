@@ -24,6 +24,7 @@ import com.lh.system.model.vo.SysUserVO;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -244,5 +245,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             }
         }
         return list;
+    }
+
+    @Override
+    public void resetPassword(String sysUserId) {
+        SysUser user = this.baseMapper.selectById(sysUserId);
+        String salt = RandomUtils.getRandomNumbersAndLetters(8);
+        user.setSalt(salt);
+        String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
+        user.setPassword(passwordEncode);
+        this.baseMapper.updateById(user);
     }
 }
