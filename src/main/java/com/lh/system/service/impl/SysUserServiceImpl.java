@@ -11,10 +11,7 @@ import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
-import com.lh.common.utils.EncoderUtil;
-import com.lh.common.utils.IdcardUtils;
-import com.lh.common.utils.RandomUtils;
-import com.lh.common.utils.RedisUtil;
+import com.lh.common.utils.*;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserMapper;
@@ -24,7 +21,6 @@ import com.lh.system.model.vo.SysUserVO;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -38,7 +34,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 功能描述：
@@ -255,5 +253,27 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String passwordEncode = EncoderUtil.encrypt(user.getLoginName(), "123456", salt);
         user.setPassword(passwordEncode);
         this.baseMapper.updateById(user);
+    }
+
+    @Override
+    public void export(HttpServletResponse response) {
+        Map<String,Object> map = this.dealExportData();
+        try{
+            WordUtils.exportWord(response,map,"企业信息","companyInfo.ftl");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 处理导出数据  ========== export 子方法 ==========
+     * @return map
+     */
+    private Map<String,Object> dealExportData(){
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("comunityName","园区名称[蓝海软件园]");
+        map.put("rentAddr","蓝海路1号蓝海软件园D座10层1001");
+        map.put("rentTimeLimit","2019-01-01至2020-10-10");
+        return map;
     }
 }

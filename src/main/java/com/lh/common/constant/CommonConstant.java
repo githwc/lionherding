@@ -77,6 +77,10 @@ public class CommonConstant {
     /** XML编码 */
     public static String XML_CODE = "text/xml;charset=UTF-8";
 
+    /**
+     * 默认编码
+     */
+    public static final String DEFAULT_CHARSET = "UTF-8";
 
     // ================== 状态码 ===========================
 

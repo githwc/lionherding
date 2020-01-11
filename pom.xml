@@ -27,7 +27,7 @@
         <zxing-core.version>3.4.0</zxing-core.version>
         <fastjson.version>1.2.58</fastjson.version>
         <json-lib.version>1.0.2</json-lib.version>
-        <jeecg-poi.version>1.0.2</jeecg-poi.version>
+        <freemarker.version>2.3.29</freemarker.version>
         <jwt.version>3.7.0</jwt.version>
         <hutool.version>5.0.0</hutool.version>
     </properties>
@@ -150,6 +150,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
@@ -159,13 +165,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <!-- POI -->
-        <dependency>
-            <groupId>org.jeecgframework</groupId>
-            <artifactId>autopoi-web</artifactId>
-            <version>${jeecg-poi.version}</version>
         </dependency>
 
         <!--commons-codec jar 是Apache开源组织提供的用于摘要运算、编码解码的包。
