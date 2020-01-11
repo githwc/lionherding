@@ -3,6 +3,7 @@ package com.lh.system.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.common.config.exception.RunException.RunningException;
@@ -21,7 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * 功能描述：
@@ -39,6 +43,9 @@ import java.util.*;
 @Slf4j
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements SysDictService {
 
+    private final static int MODE_KEY_VALUE = 0;
+    private final static int MODE_VALUE_KEY = 1;
+
     private final DaoApi daoApi;
 
     @Autowired
@@ -55,6 +62,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Override
     public Page<SysDict> childrenDict(Page<SysDict> page, DictQuery dictQuery) {
+        this.get("图书借阅>订单状态",1);
         return this.baseMapper.childrenDict(page, dictQuery);
     }
 
@@ -100,6 +108,15 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             sysDict.setCreateUserId(daoApi.getCurrentUserId());
             if (StringUtils.isBlank(sysDict.getParentId())) {
                 sysDict.setParentId("#");
+            }else{
+                QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("parent_id",sysDict.getParentId());
+                queryWrapper.eq("del_flag",0);
+                queryWrapper.and(wrapper-> wrapper.eq("name",sysDict.getName()).or().eq("value",sysDict.getValue()));
+                List<SysDict> sysDicts = this.baseMapper.selectList(queryWrapper);
+                if(ObjectUtil.isNotEmpty(sysDicts)){
+                    throw new RuntimeException("存在重复字典项,请重新填写！");
+                }
             }
             this.save(sysDict);
         }
@@ -125,16 +142,121 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     //  =============== 核心方法 START ===============
-    // private final static int MODE_KEY_VALUE = 0;
-    // private final static int MODE_VALUE_KEY = 1;
-    //
-    // /**
-    //  * 核心方法，根据字典路径读取字典
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @param mode : 字典模式
-    //  * @return 字典
-    //  */
+
+    /**
+     * 核心方法，根据字典路径读取字典
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @param mode : 字典模式
+     * @return 字典
+     */
+    private LinkedHashMap<String, Object> get(String sKey, int mode) {
+        // 字典路径检查
+        Object[] keys = sKey.replaceAll(" ", "").split(">");
+        if (keys.length <= 0) {
+            throw new RunningException("字典路径不能为空，禁止读取根字典信息!");
+        }
+        if(keys.length != 2){
+            throw new RunningException("字典路径格式有误！");
+        }
+        List<SysDict> dictList = this.baseMapper.getDictByRoute(keys[0],keys[1]);
+        if(ObjectUtil.isNull(dictList)){
+            throw new RunningException("字典不存在或字典路径格式有误！");
+        }
+        SysDict dic;
+        LinkedHashMap<String, Object> dics = new LinkedHashMap<String, Object>();
+        switch (mode) {
+            case MODE_KEY_VALUE:
+                for (int i = 0; i < dictList.size(); i++) {
+                    dic = dictList.get(i);
+                    dics.put(dic.getName(), dic.getValue());
+                }
+                break;
+            case MODE_VALUE_KEY:
+                for (int i = 0; i < dictList.size(); i++) {
+                    dic = dictList.get(i);
+                    dics.put(dic.getValue(), dic.getName());
+                }
+                break;
+            default:
+                throw new ParameterException("参数错误!");
+        }
+        return dics;
+    }
+
+
+    /**
+     * 读取字典，返回字典集合
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @param mode : 字典模式 0,1
+     * @return LinkedHashMap&gt;String, Object&lt;
+     */
+    public LinkedHashMap<String, Object> getDict(String sKey, int mode) {
+        return this.get(sKey, mode);
+    }
+
+    /**
+     * 读取字典，返回字典字符串
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @param mode : 字典模式
+     * @return String
+     */
+    public String getDictString(String sKey, int mode) {
+        return JSONObject.toJSONString(this.get(sKey, mode));
+    }
+
+    /**
+     * 读取字典(Key-Value)
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @return LinkedHashMap&gt;String, Object&lt;
+     */
+    public LinkedHashMap<String, Object> getKeyValue(String sKey) {
+        return this.getDict(sKey, MODE_KEY_VALUE);
+    }
+
+    /**
+     * 读取字典(Key-Value)
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @return String
+     */
+    public String getKeyValueString(String sKey) {
+        return this.getDictString(sKey, MODE_KEY_VALUE);
+    }
+
+    /**
+     * 读取字典(Value-Key)
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @return LinkedHashMap&gt;String, Object&lt;
+     */
+    public LinkedHashMap<String, Object> getValueKey(String sKey) {
+        return this.getDict(sKey, MODE_VALUE_KEY);
+    }
+
+    /**
+     * 读取字典(Value-Key)
+     *
+     * @param sKey : 字典路径，分隔符">"
+     * @return String
+     */
+    public String getValueKeyString(String sKey) {
+        return this.getDictString(sKey, MODE_VALUE_KEY);
+    }
+
+    //  =============== 核心方法 END ===============
+
+    // TODO: 2020/1/11 查询存在问题 待后期处理
+    /**
+     * 核心方法，根据字典路径读取字典
+     *  sql:根据字典路径(skey)锁定最后一级id,并将此sql作为参数传入到最终查询方法中
+     * @param sKey : 字典路径，分隔符">"
+     * @param mode : 字典模式
+     * @return 字典
+     */
     // private LinkedHashMap<String, Object> get(String sKey, int mode) {
     //     // 字典路径检查
     //     Object[] keys = sKey.replaceAll(" ", "").split(">");
@@ -143,21 +265,18 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     //     }
     //     SysDict sysDict = this.baseMapper.selectOne(new LambdaQueryWrapper<SysDict>()
     //         .eq(SysDict::getName,keys[0])
-    //         .eq(SysDict::getParentId,"root")
+    //         .eq(SysDict::getParentId,"#")
     //         .eq(SysDict::getDelFlag,0)
     //     );
     //     if(ObjectUtil.isNull(sysDict)){
     //         throw new RunningException("字典不存在或字典路径格式有误！");
     //     }
-    //
-    //
-    //
     //     List<String> hqlsList = new ArrayList<String>();
     //     for (int i = 0; i < keys.length; i++) {
     //         if (i == 0) {
-    //             hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId = 'root' and dic$" + i + ".key = ?" + i);
+    //             hqlsList.add("select dic$" + i + ".sys_dict_id from sys_dict dic$" + i + " where dic$" + i + ".parent_id = '#' and dic$" + i + ".name = '" +  keys[i] + "'");
     //         } else {
-    //             hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId = (tb$" + (i - 1) + ") and dic$" + i + ".key = ?" + i);
+    //             hqlsList.add("select dic$" + i + ".sys_dict_id from sys_dict dic$" + i + " where dic$" + i + ".parent_id = (tb$" + (i - 1) + ") and dic$" + i + ".name = '" + keys[i] + "'");
     //         }
     //     }
     //     String hqls = "";
@@ -173,159 +292,25 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     //     } else if (size == 1) {
     //         hqls = hqlsList.get(0);
     //     }
-    //     List<Dictionary> dicList = dao.queryHql("select dic from Dictionary dic where dic.parentId = (" + hqls + ") order by dic.sort asc", keys);
-    //
-    //     Dictionary dic = null;
+    //     List<SysDict> dictList = this.baseMapper.getDict(hqls);
+    //     SysDict dic;
     //     LinkedHashMap<String, Object> dics = new LinkedHashMap<String, Object>();
     //     switch (mode) {
     //         case MODE_KEY_VALUE:
-    //             for (int i = 0; i < dicList.size(); i++) {
-    //                 dic = dicList.get(i);
-    //                 dics.put(dic.getKey(), dic.getValue());
+    //             for (int i = 0; i < dictList.size(); i++) {
+    //                 dic = dictList.get(i);
+    //                 dics.put(dic.getName(), dic.getValue());
     //             }
     //             break;
     //         case MODE_VALUE_KEY:
-    //             for (int i = 0; i < dicList.size(); i++) {
-    //                 dic = dicList.get(i);
-    //                 dics.put(dic.getValue(), dic.getKey());
+    //             for (int i = 0; i < dictList.size(); i++) {
+    //                 dic = dictList.get(i);
+    //                 dics.put(dic.getValue(), dic.getName());
     //             }
     //             break;
+    //             default:
+    //                 throw new ParameterException("参数错误!");
     //     }
     //     return dics;
     // }
-    //
-    // /**
-    //  * 读取字典，返回字典集合
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @param mode : 字典模式
-    //  * @return LinkedHashMap&gt;String, Object&lt;
-    //  */
-    // public LinkedHashMap<String, Object> getDictionary(String sKey, int mode) {
-    //     return this.get(sKey, mode);
-    // }
-    //
-    // /**
-    //  * 读取字典，返回字典字符串
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @param mode : 字典模式
-    //  * @return String
-    //  */
-    // public String getDictionaryString(String sKey, int mode) {
-    //     return JSONObject.obj2json(this.get(sKey, mode));
-    // }
-    //
-    // /**
-    //  * 读取字典(Key-Value)
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @return LinkedHashMap&gt;String, Object&lt;
-    //  */
-    // public LinkedHashMap<String, Object> getKeyValue(String sKey) {
-    //     return this.getDictionary(sKey, MODE_KEY_VALUE);
-    // }
-    //
-    // /**
-    //  * 读取字典(Key-Value)
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @return String
-    //  */
-    // public String getKeyValueString(String sKey) {
-    //     return this.getDictionaryString(sKey, MODE_KEY_VALUE);
-    // }
-    //
-    // /**
-    //  * 读取字典(Value-Key)
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @return LinkedHashMap&gt;String, Object&lt;
-    //  */
-    // public LinkedHashMap<String, Object> getValueKey(String sKey) {
-    //     return this.getDictionary(sKey, MODE_VALUE_KEY);
-    // }
-    //
-    // /**
-    //  * 读取字典(Value-Key)
-    //  *
-    //  * @param sKey : 字典路径，分隔符">"
-    //  * @return String
-    //  */
-    // public String getValueKeyString(String sKey) {
-    //     return this.getDictionaryString(sKey, MODE_VALUE_KEY);
-    // }
-    //
-    // /**
-    //  * 根据key查询该字典及所有的子节点
-    //  *
-    //  * @param sKey
-    //  * @return
-    //  */
-    // public HashMap<String, Object> findAllDictionaryByKey(String sKey) {
-    //
-    //     //字典路径检查
-    //     Object[] keys = sKey.replaceAll(" ", "").split(">");
-    //     if (keys.length <= 0) {
-    //         System.err.println("错误：字典路径不能为空，禁止读取根字典信息！");
-    //     }
-    //
-    //     List<String> hqlsList = new ArrayList<String>();
-    //     for (int i = 0; i < keys.length; i++) {
-    //         if (i == 0) {
-    //             hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId='root' and dic$" + i + ".key=?0");
-    //         } else {
-    //             hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId=(tb$" + (i - 1) + ") and dic$" + i + ".key=?" + i);
-    //         }
-    //     }
-    //
-    //     String hqls = "";
-    //     int size = hqlsList.size();
-    //     if (size > 1) {
-    //         for (int i = size - 1; i > 0; i--) {
-    //             if (i == size - 1) {
-    //                 hqls = hqlsList.get(i).replace("tb$" + (i - 1), hqlsList.get(i - 1));
-    //             } else {
-    //                 hqls = hqls.replace("tb$" + (i - 1), hqlsList.get(i - 1));
-    //             }
-    //         }
-    //     } else if (size == 1) {
-    //         hqls = hqlsList.get(0);
-    //     }
-    //
-    //     Dictionary dic = dao.queryHqlRow("select dic from Dictionary dic where dic.id = (" + hqls + ") order by dic.sort asc", keys);
-    //
-    //     String currentId = dic.getId();
-    //     String filterSQL = "select t.id, t.parentId, t.keyword, t.value,t.sort from table@children t where t.id != '" + currentId + "'";
-    //     List<HashMap<String, Object>> dics = CommonUtil.FindChildren(dao, "SYS_Dictionary", "parentId", currentId, filterSQL);
-    //
-    //     HashMap<String, Object> pNode = new HashMap<String, Object>();
-    //     pNode.put("id", currentId);
-    //     pNode.put("text", dic.getKey());
-    //     pNode.put("value", dic.getValue());
-    //     return assembly(pNode, dics);
-    // }
-    //
-    // // 递归组装数据
-    // public HashMap<String, Object> assembly(HashMap<String, Object> pNode, List<HashMap<String, Object>> cNodes) {
-    //     List<HashMap<String, Object>> children = new ArrayList<HashMap<String, Object>>();
-    //     HashMap<String, Object> node;
-    //     for (int i = 0; i < cNodes.size(); i++) {
-    //         if (pNode.get("id").equals(cNodes.get(i).get("parentid"))) {
-    //             node = cNodes.remove(i);
-    //             HashMap<String, Object> object = new HashMap<String, Object>();
-    //             object.put("id", node.get("id"));
-    //             object.put("text", node.get("keyword"));
-    //             object.put("value", node.get("value"));
-    //             object.put("sort", node.get("sort"));
-    //             children.add(assembly(object, cNodes));
-    //             i--;
-    //         }
-    //     }
-    //     pNode.put("children", children);
-    //     return pNode;
-    // }
-
-    //  =============== 核心方法 END ===============
-
 }

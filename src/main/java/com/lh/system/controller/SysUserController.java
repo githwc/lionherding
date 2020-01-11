@@ -142,12 +142,51 @@ public class SysUserController {
         }
     }
 
-    @GetMapping(value = "/resetPassword")
+    @PostMapping(value = "/resetPassword")
     @ApiOperation(value = "重置密码",notes = "重置密码")
     @WriteLog(opPosition = "重置密码" ,optype = CommonConstant.OPTYPE_UPDATE)
-    public void resetPassword(@RequestParam("sysUserId") String sysUserId){
+    public void resetPassword(@RequestBody SysUser sysUser){
         try{
-            service.resetPassword(sysUserId);
+            // ===================
+            // //字典路径检查
+            // Object[] keys = "用车>派车>状态".replaceAll(" ", "").split(">");
+            // if ( keys.length <= 0 ) {
+            //     System.err.println("错误：字典路径不能为空，禁止读取根字典信息！");
+            // }
+            //
+            // List<String> hqlsList = new ArrayList<String>();
+            // for (int i = 0; i < keys.length; i++) {
+            //     if( i == 0 ){
+            //         hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId = 'root' and dic$" + i + ".key = ?" + i);
+            //     } else {
+            //         hqlsList.add("select dic$" + i + ".id from Dictionary dic$" + i + " where dic$" + i + ".parentId = (tb$" + (i-1) + ") and dic$" + i + ".key = ?" + i);
+            //     }
+            // }
+            // String hqls = "";
+            // int size = hqlsList.size();
+            // if( size > 1 ) {
+            //     for (int i = size - 1; i > 0; i--) {
+            //         if( i == size - 1 ) {
+            //             hqls = hqlsList.get(i).replace("tb$" + (i - 1), hqlsList.get(i - 1));
+            //         } else {
+            //             hqls = hqls.replace("tb$" + (i - 1), hqlsList.get(i - 1));
+            //         }
+            //     }
+            // } else if( size == 1 ) {
+            //     hqls = hqlsList.get(0);
+            // }
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // System.out.println("select dic from Dictionary dic where dic.parentId = (" + hqls + ") order by dic.sort asc");
+            // System.out.println(keys);
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // System.out.println("===================");
+            // ===============
+            service.resetPassword(sysUser.getSysUserId());
         }catch(Exception e){
             throw new RunningException("".equals(e.getMessage()) ?  "系统错误,请联系管理员！" : e.getMessage());
         }
