@@ -104,4 +104,12 @@ public class SysDictController {
         }
     }
 
+    /**
+     * 查询指定字典
+     * @return
+     */
+    @GetMapping("/getDict")
+    public List<SysDict> getDict(@RequestParam("skey")String skeys,@RequestParam("mode")String mode){
+        return service.getDict(skeys);
+    }
 }

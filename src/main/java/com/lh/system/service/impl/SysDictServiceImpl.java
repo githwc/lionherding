@@ -43,8 +43,8 @@ import java.util.List;
 @Slf4j
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements SysDictService {
 
-    private final static int MODE_KEY_VALUE = 0;
-    private final static int MODE_VALUE_KEY = 1;
+    private final static String MODE_KEY_VALUE = "0";
+    private final static String MODE_VALUE_KEY = "1";
 
     private final DaoApi daoApi;
 
@@ -62,12 +62,20 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Override
     public Page<SysDict> childrenDict(Page<SysDict> page, DictQuery dictQuery) {
-        this.get("图书借阅>订单状态",1);
         return this.baseMapper.childrenDict(page, dictQuery);
     }
 
     @Override
     public void editByDictId(SysDict sysDict) {
+        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("parent_id",sysDict.getParentId());
+        queryWrapper.eq("del_flag",0);
+        queryWrapper.ne("sys_dict_id",sysDict.getSysDictId());
+        queryWrapper.and(wrapper-> wrapper.eq("name",sysDict.getName()).or().eq("value",sysDict.getValue()));
+        List<SysDict> sysDicts = this.baseMapper.selectList(queryWrapper);
+        if(ObjectUtil.isNotEmpty(sysDicts)){
+            throw new RuntimeException("存在重复字典项,请重新填写！");
+        }
         sysDict.setUpdateUserId(daoApi.getCurrentUserId());
         this.updateById(sysDict);
     }
@@ -150,7 +158,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * @param mode : 字典模式
      * @return 字典
      */
-    private LinkedHashMap<String, Object> get(String sKey, int mode) {
+    private LinkedHashMap<String, Object> get(String sKey, String mode) {
         // 字典路径检查
         Object[] keys = sKey.replaceAll(" ", "").split(">");
         if (keys.length <= 0) {
@@ -185,66 +193,47 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
 
-    /**
-     * 读取字典，返回字典集合
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @param mode : 字典模式 0,1
-     * @return LinkedHashMap&gt;String, Object&lt;
-     */
-    public LinkedHashMap<String, Object> getDict(String sKey, int mode) {
+    @Override
+    public LinkedHashMap<String, Object> getDict(String sKey, String mode) {
         return this.get(sKey, mode);
     }
 
-    /**
-     * 读取字典，返回字典字符串
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @param mode : 字典模式
-     * @return String
-     */
-    public String getDictString(String sKey, int mode) {
+    @Override
+    public String getDictString(String sKey, String mode) {
         return JSONObject.toJSONString(this.get(sKey, mode));
     }
 
-    /**
-     * 读取字典(Key-Value)
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @return LinkedHashMap&gt;String, Object&lt;
-     */
+    @Override
     public LinkedHashMap<String, Object> getKeyValue(String sKey) {
         return this.getDict(sKey, MODE_KEY_VALUE);
     }
 
-    /**
-     * 读取字典(Key-Value)
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @return String
-     */
+    @Override
     public String getKeyValueString(String sKey) {
         return this.getDictString(sKey, MODE_KEY_VALUE);
     }
 
-    /**
-     * 读取字典(Value-Key)
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @return LinkedHashMap&gt;String, Object&lt;
-     */
+    @Override
     public LinkedHashMap<String, Object> getValueKey(String sKey) {
         return this.getDict(sKey, MODE_VALUE_KEY);
     }
 
-    /**
-     * 读取字典(Value-Key)
-     *
-     * @param sKey : 字典路径，分隔符">"
-     * @return String
-     */
+    @Override
     public String getValueKeyString(String sKey) {
         return this.getDictString(sKey, MODE_VALUE_KEY);
+    }
+
+    @Override
+    public List<SysDict> getDict(String sKey) {
+        // 字典路径检查
+        Object[] keys = sKey.replaceAll(" ", "").split(">");
+        if (keys.length <= 0) {
+            throw new RunningException("字典路径不能为空，禁止读取根字典信息!");
+        }
+        if(keys.length != 2){
+            throw new RunningException("字典路径格式有误！");
+        }
+        return this.baseMapper.getDictByRoute(keys[0],keys[1]);
     }
 
     //  =============== 核心方法 END ===============

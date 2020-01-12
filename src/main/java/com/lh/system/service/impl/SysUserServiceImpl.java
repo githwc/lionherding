@@ -18,6 +18,7 @@ import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.model.query.UserQuery;
 import com.lh.system.model.vo.SysUserVO;
+import com.lh.system.service.SysDictService;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -54,14 +55,19 @@ import java.util.Map;
 @Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    private RedisUtil redisUtil;
-    private SysLogService sysLogService;
+    private final static String DICT_SEX = "通用字典>性别";
+
+    private final RedisUtil redisUtil;
+    private final SysLogService sysLogService;
     private final SysUserRoleMapper sysUserRoleMapper;
     private final DaoApi daoApi;
+    private final SysDictService sysDictService;
 
     @Autowired
-    public SysUserServiceImpl(DaoApi daoApi,SysUserRoleMapper sysUserRoleMapper,RedisUtil redisUtil,SysLogService sysLogService) {
+    public SysUserServiceImpl(DaoApi daoApi,SysUserRoleMapper sysUserRoleMapper,RedisUtil redisUtil,
+                              SysLogService sysLogService,SysDictService sysDictService) {
         this.daoApi = daoApi;
+        this.sysDictService = sysDictService;
         this.sysUserRoleMapper = sysUserRoleMapper;
         this.redisUtil = redisUtil;
         this.sysLogService = sysLogService;

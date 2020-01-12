@@ -142,6 +142,7 @@ public class SysUserController {
         }
     }
 
+
     @PostMapping(value = "/resetPassword")
     @ApiOperation(value = "重置密码",notes = "重置密码")
     @WriteLog(opPosition = "重置密码" ,optype = CommonConstant.OPTYPE_UPDATE)
@@ -162,4 +163,6 @@ public class SysUserController {
     public void export(HttpServletResponse response) {
         service.export(response);
     }
+
+
 }
