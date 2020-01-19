@@ -1,7 +1,9 @@
 package com.lh.modules.redisPractice.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.redisPractice.entity.RedisUser;
+import com.lh.modules.redisPractice.model.RedisUserQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,7 @@ public interface RedisUserService extends IService<RedisUser> {
      * 获取所有用户信息
      * @return
      */
-    List<RedisUser> queryAll();
+    Page<RedisUser> userPage(Page<RedisUser> page, RedisUserQuery query);
 
     /**
      * 根据用户ID 查询

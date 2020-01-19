@@ -2,10 +2,12 @@ package com.lh.modules.redisPractice.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lh.modules.redisPractice.constant.RedisConstant;
 import com.lh.modules.redisPractice.entity.RedisUser;
 import com.lh.modules.redisPractice.mapper.RedisUserMapper;
+import com.lh.modules.redisPractice.model.RedisUserQuery;
 import com.lh.modules.redisPractice.service.RedisUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,8 +41,8 @@ public class RedisUserServiceImpl extends ServiceImpl<RedisUserMapper, RedisUser
     }
 
     @Override
-    public List<RedisUser> queryAll() {
-        return null;
+    public Page<RedisUser> userPage(Page<RedisUser> page, RedisUserQuery query) {
+        return this.baseMapper.userPage(page,query);
     }
 
     /**

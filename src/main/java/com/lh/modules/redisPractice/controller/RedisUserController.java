@@ -1,6 +1,8 @@
 package com.lh.modules.redisPractice.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lh.modules.redisPractice.entity.RedisUser;
+import com.lh.modules.redisPractice.model.RedisUserQuery;
 import com.lh.modules.redisPractice.service.RedisUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,10 @@ public class RedisUserController {
         this.iRedisUserService = iRedisUserService;
     }
 
-    @GetMapping("/queryAll")
-    public List<RedisUser> queryAll(){
-        return iRedisUserService.queryAll();
+    @GetMapping("/userPage")
+    public Page<RedisUser> userPage(Page<RedisUser> page, RedisUserQuery query){
+        System.out.println(iRedisUserService.userPage(page,query));
+        return iRedisUserService.userPage(page,query);
     }
 
     @GetMapping("/findUserById")
