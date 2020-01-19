@@ -54,18 +54,6 @@ public class CommonConstant {
      */
     public final static int OPTYPE_READ   = 3;
 
-    // ================== 凭证相关 START ===========================
-
-    public static String PREFIX_USER_TOKEN  = "PREFIX_USER_TOKEN_";
-
-    public static String X_ACCESS_TOKEN = "X-Access-Token";
-
-    /** 登录用户拥有角色缓存KEY前缀 */
-    public static String LOGIN_USER_CACHERULES_ROLE = "loginUser_cacheRules::Roles_";
-
-    /** 登录用户拥有权限缓存KEY前缀 */
-    public static String LOGIN_USER_CACHERULES_PERMISSION  = "loginUser_cacheRules::Permissions_";
-
     // ================== 编码格式 ===========================
 
     /** 文本编码 */
@@ -107,4 +95,8 @@ public class CommonConstant {
      *  2：按钮权限
      */
     public static final Integer MENU_TYPE_2  = 2;
+
+    // =============== 凭证相关 ==================
+
+    public static String X_ACCESS_TOKEN = "X-Access-Token";
 }

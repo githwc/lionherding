@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +27,15 @@ import java.util.Map;
  */
 public class MyBatisGenerator {
 
-    private static final String BASE_PATH = "D:\\idea_work\\lionherding";   //生成文件所在项目路径
-    private static final String BASE_PACKAGE = "com.lh.modules";      //基本包名
-    private static final String MODEL_NAME = "remind";                         //文件夹名
-    private static final String AUTHOR = "xieyc";                    //作者
-    private static final String[] TABLES = {"remind_message_receive"};             //要生成的表名
+    //生成文件所在项目路径
+    private static final String BASE_PATH = "E:\\workSpace_home\\lionherding";
+    //基本包名
+    private static final String BASE_PACKAGE = "com.lh.modules";
+    //文件夹名
+    private static final String MODEL_NAME = "redisPractice";
+    private static final String AUTHOR = "xieyc";
+    //要生成的表名
+    private static final String[] TABLES = {"redis_user"};
 
     //数据库配置四要素
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
@@ -42,20 +47,26 @@ public class MyBatisGenerator {
     public static void main(String[] args) {
         //代码生成器
         AutoGenerator gen = new AutoGenerator();
-
-        /**
-         * 全局配置
-         */
+        // 全局配置
         gen.setGlobalConfig(new GlobalConfig()
-                .setIdType(IdType.UUID)                         // 主键自增
-                .setFileOverride(true)                          // 是否覆盖文件
-                .setOutputDir( BASE_PATH + "/src/main/java")    // 输出目录
-                .setAuthor(AUTHOR)                              // 作者
-                .setOpen(false)                                 // 生成后打开文件夹
-                // .setActiveRecord(true)                          // 开启 activeRecord 模式
-                .setEnableCache(false)                          // XML 二级缓存
-                .setBaseResultMap(false)                         // XML 生成基本的resultMap
-                .setBaseColumnList(false)                        // XML 生成基本的sql片段
+                // 主键自增
+                .setIdType(IdType.UUID)
+                // 是否覆盖文件
+                .setFileOverride(true)
+                // 输出目录
+                .setOutputDir( BASE_PATH + "/src/main/java")
+                // 作者
+                .setAuthor(AUTHOR)
+                // 生成后打开文件夹
+                .setOpen(false)
+                // 开启 activeRecord 模式
+                // .setActiveRecord(true)
+                // XML 二级缓存
+                .setEnableCache(false)
+                // XML 生成基本的resultMap
+                .setBaseResultMap(false)
+                // XML 生成基本的sql片段
+                .setBaseColumnList(false)
                 // 自定义文件命名,%s会自动填充表实体属性！默认IXXXService
                 .setMapperName("%sMapper")
                 .setXmlName("%sMapper")
@@ -64,9 +75,7 @@ public class MyBatisGenerator {
                 .setControllerName("%sController")
         );
 
-        /**
-         * 数据库配置
-         */
+         // 数据库配置
         gen.setDataSource(new DataSourceConfig()
                 .setUrl(URL)
                 .setDriverName(DRIVER_NAME)
@@ -75,13 +84,13 @@ public class MyBatisGenerator {
                 .setDbType(DbType.MYSQL)
         );
 
-        /**
-         * 包配置
-         */
+        // 包配置
         gen.setPackageInfo(new PackageConfig()
                 .setModuleName(MODEL_NAME)
-                .setParent(BASE_PACKAGE)        // 自定义包路径
-                .setController("controller")    // 这里是控制器包名，默认 web
+                // 自定义包路径
+                .setParent(BASE_PACKAGE)
+                // 这里是控制器包名，默认 web
+                .setController("controller")
                 .setEntity("entity")
                 .setMapper("mapper")
                 .setService("service")
@@ -89,19 +98,17 @@ public class MyBatisGenerator {
                 .setXml("resource")
         );
 
-        /**
-         * 注入自定义配置 可以在 VM 中使用 cfg.abc 设置的值
-         */
+        // 注入自定义配置 可以在 VM 中使用 cfg.abc 设置的值
         InjectionConfig abc = new InjectionConfig() {
             @Override
             public void initMap() {
-                Map<String, Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new HashMap<>();
                 map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
                 this.setMap(map);
             }
         };
         //自定义文件输出位置（非必须）
-        List<FileOutConfig> fileOutList = new ArrayList<FileOutConfig>();
+        List<FileOutConfig> fileOutList = new ArrayList<>();
         fileOutList.add(new FileOutConfig("/templates/mapper.xml.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -110,14 +117,9 @@ public class MyBatisGenerator {
         });
         abc.setFileOutConfigList(fileOutList);
         gen.setCfg(abc);
-        /**
-         * 指定模板引擎 默认是VelocityTemplateEngine ，需要引入相关引擎依赖
-         */
+        // 指定模板引擎 默认是VelocityTemplateEngine ，需要引入相关引擎依赖
         gen.setTemplateEngine(new FreemarkerTemplateEngine());
-
-        /**
-         * 模板配置 关闭默认 xml 生成，调整生成 至 根目录
-         */
+        // 模板配置 关闭默认 xml 生成，调整生成 至 根目录
         gen.setTemplate(new TemplateConfig()
                 .setXml(null)
                 .setService("/mybatis/service.java")
@@ -127,23 +129,23 @@ public class MyBatisGenerator {
                 .setEntity("/mybatis/model.java")
         );
 
-
-        /**
-         * 策略配置
-         */
+        // 策略配置
         gen.setStrategy(new StrategyConfig()
-                .setNaming(NamingStrategy.underline_to_camel)       // 表名生成策略
+                        // 表名生成策略
+                .setNaming(NamingStrategy.underline_to_camel)
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 .setEntityLombokModel(true)
                 .setRestControllerStyle(true)
-                .setInclude(TABLES)                                 // 需要生成的表
-                .setSuperEntityColumns("id")                        // 自定义实体，公共字段
+                        // 需要生成的表
+                .setInclude(TABLES)
+                        // 自定义实体，公共字段
+                .setSuperEntityColumns("id")
                 .setControllerMappingHyphenStyle(true)
 
                 // 自定义 mapper 父类 默认BaseMapper
                 //.setSuperMapperClass("com.baomidou.mybatisplus.mapper.BaseMapper")
                 // 自定义 service 父类 默认IService
-                // .setSuperServiceClass("com.baomidou.demo.TestService")
+                // .setSuperServiceClass("com.baomidou.demo.ScheduledService")
                 // 自定义 service 实现类父类 默认ServiceImpl
                 // .setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl")
                 // 自定义 controller 父类
@@ -158,7 +160,6 @@ public class MyBatisGenerator {
                 // Boolean类型字段是否移除is前缀处理
                 // .setEntityBooleanColumnRemoveIsPrefix(true)
         );
-
         // 执行生成
         gen.execute();
     }

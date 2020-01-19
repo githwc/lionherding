@@ -1,4 +1,4 @@
-package com.lh.modules.TestTemp.service;
+package com.lh.modules.scheduled.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.TestTemp.entity.Test;
@@ -15,8 +15,10 @@ import com.lh.modules.TestTemp.entity.Test;
  * @Version: 1.0.0
  *
  */
-public interface TestService extends IService<Test> {
+public interface ScheduledService extends IService<Test> {
 
-    void updateAll();
-
+    /**
+     * 定时推送消息
+     */
+    void pushMessage();
 }

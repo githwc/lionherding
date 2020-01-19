@@ -1,6 +1,7 @@
-package com.lh.modules.TestTemp.controller;
+package com.lh.modules.scheduled.controller;
 
 import com.lh.modules.TestTemp.service.TestService;
+import com.lh.modules.scheduled.service.ScheduledService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -23,11 +24,11 @@ import java.time.LocalDateTime;
 @Slf4j
 public class TestScheduledController {
 
-    private final TestService testService;
+    private final ScheduledService scheduledService;
 
     @Autowired
-    public TestScheduledController(TestService testService) {
-        this.testService = testService;
+    public TestScheduledController(ScheduledService scheduledService) {
+        this.scheduledService = scheduledService;
     }
 
     // @Scheduled(cron="0 */1 * * * ?")
@@ -35,7 +36,7 @@ public class TestScheduledController {
         log.info("第一个定时任务开始 : " + LocalDateTime.now().toLocalTime() + "\r\n线程 : " + Thread.currentThread().getName());
         // Thread.sleep(1000 * 10);
         // 定向推送消息
-        testService.tempApi();
+        scheduledService.pushMessage();
     }
 
     // @Async

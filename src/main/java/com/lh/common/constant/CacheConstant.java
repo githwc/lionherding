@@ -1,7 +1,8 @@
 package com.lh.common.constant;
 
 /**
- * 功能描述：
+ * 功能描述: 缓存key /key前缀
+ *
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
@@ -10,42 +11,41 @@ package com.lh.common.constant;
  * @Datetime: 2019-10-27
  * @Version: 1.0.0
  */
-public interface CacheConstant {
+public class CacheConstant {
 
-	// /**
-	//  * 字典信息缓存
-	//  */
-    // public static final String SYS_DICT_CACHE = "sys:cache:dict";
-	// /**
-	//  * 表字典信息缓存
-	//  */
-    // public static final String SYS_DICT_TABLE_CACHE = "sys:cache:dictTable";
-    //
-	/**
-	 * 数据权限配置缓存
-	 */
-    public static final String SYS_DATA_PERMISSIONS_CACHE = "sys:cache:permission:datarules";
+    /**
+     * 用户信息
+     */
+    public final static  String SYS_USERS_CACHE = "SYS_USERS_CACHE";
+
+    /**
+     * 用户权限
+     */
+    public static final String SYS_PERMISSIONS_CACHE = "SYS_PERMISSIONS_CACHE";
 
 	/**
-	 * 缓存用户信息
+	 * 部门信息
 	 */
-	public static final String SYS_USERS_CACHE = "sys:cache:user";
-
-	/**
-	 * 全部部门信息缓存
-	 */
-	public static final String SYS_DEPARTS_CACHE = "sys:cache:depart:alldata";
-
+	public static final String SYS_DEPARTS_CACHE = "SYS_DEPARTS_CACHE";
 
 	/**
 	 * 全部部门ids缓存
 	 */
-	public static final String SYS_DEPART_IDS_CACHE = "sys:cache:depart:allids";
+	public static final String SYS_DEPART_IDS_CACHE = "SYS_DEPART_IDS_CACHE";
 
-    //
-	// /**
-	//  * 测试缓存key
-	//  */
-	// public static final String TEST_DEMO_CACHE = "test:demo";
+    /**
+     * 登录用户TOKEN
+     */
+    public static String LOGIN_USER_TOKEN_  = "LOGIN_USER_TOKEN_";
+
+    /**
+     * 登录用户角色缓存
+     */
+    public static String LOGIN_USER_ROLES_ = "LOGIN_USER_ROLES_";
+
+    /**
+     * 登录用户权限缓存KEY
+     */
+    public static String LOGIN_USER_PERMISSION_  = "LOGIN_USER_PERMISSION_";
 
 }

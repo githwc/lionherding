@@ -319,7 +319,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
 
     @Override
-    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    @CacheEvict(value = CacheConstant.SYS_PERMISSIONS_CACHE,allEntries=true)
     public void addPermission(SysPermission sysPermission) throws ApiException {
         //判断是否是一级菜单，是的话清空父菜单
         if(CommonConstant.MENU_TYPE_0.equals(sysPermission.getMenuType())) {
@@ -336,7 +336,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    @CacheEvict(value = CacheConstant.SYS_PERMISSIONS_CACHE,allEntries=true)
     public void editPermission(SysPermission sysPermission) {
         SysPermission oldPer = this.getById(sysPermission.getSysPermissionId());
         if(oldPer==null) {
@@ -372,7 +372,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true)
+    @CacheEvict(value = CacheConstant.SYS_PERMISSIONS_CACHE,allEntries=true)
     public void deletePermission(String id) throws RunningException{
         SysPermission sysPermission = this.getById(id);
         if(sysPermission==null) {

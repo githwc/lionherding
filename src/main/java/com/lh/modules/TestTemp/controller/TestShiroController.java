@@ -3,12 +3,11 @@ package com.lh.modules.TestTemp.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtUtil;
+import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.log.WriteLog;
 import com.lh.common.utils.EncoderUtil;
-import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
-import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +17,14 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述：
@@ -40,14 +43,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestShiroController {
 
     private final SysUserService iSysUserService;
-    private SysLogService sysLogService;
-    private RedisUtil redisUtil;
+    private RedisTemplate redisTemplate;
 
     @Autowired
-    public TestShiroController(SysUserService iSysUserService,SysLogService sysLogService,RedisUtil redisUtil) {
+    public TestShiroController(SysUserService iSysUserService,RedisTemplate redisTemplate) {
         this.iSysUserService = iSysUserService;
-        this.redisUtil = redisUtil;
-        this.sysLogService = sysLogService;
+        this.redisTemplate = redisTemplate;
     }
 
     @RequestMapping("/test2")
@@ -122,12 +123,11 @@ public class TestShiroController {
             JSONObject jsonObject = new JSONObject();
             //生成token
             String token = JwtUtil.sign(name, syspassword);
-            redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
-            //设置超时时间
-            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME/1000);
+            ValueOperations operations = redisTemplate.opsForValue();
+            // 放入缓存并设置超时时间
+            operations.set(CacheConstant.LOGIN_USER_TOKEN_ + token, token,30,TimeUnit.MINUTES);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
-
             return jsonObject;
         }
     }

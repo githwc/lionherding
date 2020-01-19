@@ -11,14 +11,16 @@ import com.lh.common.config.filter.JwtUtil;
 import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
 import com.lh.common.dao.DaoApi;
-import com.lh.common.utils.*;
+import com.lh.common.utils.EncoderUtil;
+import com.lh.common.utils.IdcardUtils;
+import com.lh.common.utils.RandomUtils;
+import com.lh.common.utils.WordUtils;
 import com.lh.system.entity.SysUser;
 import com.lh.system.entity.SysUserRole;
 import com.lh.system.mapper.SysUserMapper;
 import com.lh.system.mapper.SysUserRoleMapper;
 import com.lh.system.model.query.UserQuery;
 import com.lh.system.model.vo.SysUserVO;
-import com.lh.system.service.SysDictService;
 import com.lh.system.service.SysLogService;
 import com.lh.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述：
@@ -55,21 +60,17 @@ import java.util.Map;
 @Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    private final static String DICT_SEX = "通用字典>性别";
-
-    private final RedisUtil redisUtil;
     private final SysLogService sysLogService;
     private final SysUserRoleMapper sysUserRoleMapper;
     private final DaoApi daoApi;
-    private final SysDictService sysDictService;
+    private RedisTemplate redisTemplate;
 
     @Autowired
-    public SysUserServiceImpl(DaoApi daoApi,SysUserRoleMapper sysUserRoleMapper,RedisUtil redisUtil,
-                              SysLogService sysLogService,SysDictService sysDictService) {
+    public SysUserServiceImpl(DaoApi daoApi,SysUserRoleMapper sysUserRoleMapper,
+                              SysLogService sysLogService,RedisTemplate redisTemplate) {
         this.daoApi = daoApi;
-        this.sysDictService = sysDictService;
         this.sysUserRoleMapper = sysUserRoleMapper;
-        this.redisUtil = redisUtil;
+        this.redisTemplate = redisTemplate;
         this.sysLogService = sysLogService;
     }
 
@@ -83,7 +84,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new RunningException("该用户不存在！");
         } else {
             // 是否冻结
-            if(sysUser.getDelFlag() == CommonConstant.DEL_FLAG_1){
+            if(CommonConstant.DEL_FLAG_1.equals(sysUser.getDelFlag())){
                 sysLogService.addLog("登录失败，用户名:" + loginName + "已被冻结！", CommonConstant.LOG_TYPE_1, "sysUser/login", "loginName:" + loginName + ",password:" + password);
                 throw new RunningException("账号已被锁定,请联系管理员！");
             }
@@ -97,10 +98,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             JSONObject jsonObject = new JSONObject();
             // 生成token
             String token = JwtUtil.sign(loginName, sysPassword);
-            //设置缓存token
-            redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
-            // 设置超时时间
-            redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME*2 / 1000);
+            ValueOperations operations = redisTemplate.opsForValue();
+            // 放入缓存并设置超时时间
+            operations.set(CacheConstant.LOGIN_USER_TOKEN_ + token, token,30, TimeUnit.MINUTES);
             jsonObject.put("token", token);
             jsonObject.put("userInfo", sysUser);
             // 记录登录数据
@@ -116,13 +116,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = (SysUser)subject.getPrincipal();
         sysLogService.addLog("用户名: "+sysUser.getLoginName()+",退出成功！", CommonConstant.LOG_TYPE_1, "sysUser/logout","");
         subject.logout();
-
         String token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
         //清空用户Token缓存
-        redisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
+        redisTemplate.delete(CacheConstant.LOGIN_USER_TOKEN_ + token);
         //清空用户权限缓存：权限Perms和角色集合
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_ROLE + sysUser.getLoginName());
-        redisUtil.del(CommonConstant.LOGIN_USER_CACHERULES_PERMISSION + sysUser.getLoginName());
+        redisTemplate.delete(CacheConstant.LOGIN_USER_ROLES_+ sysUser.getLoginName());
+        redisTemplate.delete(CacheConstant.LOGIN_USER_PERMISSION_+ sysUser.getLoginName());
     }
 
     @Override

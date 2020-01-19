@@ -3,8 +3,8 @@ package com.lh.common.config.shiro;
 import com.lh.common.config.exception.RunException.RunningException;
 import com.lh.common.config.filter.JwtToken;
 import com.lh.common.config.filter.JwtUtil;
+import com.lh.common.constant.CacheConstant;
 import com.lh.common.constant.CommonConstant;
-import com.lh.common.utils.RedisUtil;
 import com.lh.system.entity.SysUser;
 import com.lh.system.service.SysPermissionService;
 import com.lh.system.service.SysRoleService;
@@ -21,8 +21,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述：自定义Realm
@@ -51,7 +54,7 @@ public class ShiroRealm extends AuthorizingRealm {
     private SysPermissionService sysPermissionService;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisTemplate redisTemplate;
 
     /**
      * 必须重写此方法，不然Shiro会报错
@@ -108,7 +111,7 @@ public class ShiroRealm extends AuthorizingRealm {
      *
      * @param token
      */
-    public SysUser checkUserTokenIsEffect(String token) throws AuthenticationException {
+    private SysUser checkUserTokenIsEffect(String token) throws AuthenticationException {
         String loginName = JwtUtil.getUsername(token);
         if (loginName == null) {
             throw new RunningException("Token非法无效!");
@@ -121,7 +124,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 是否冻结
-        if(sysUser.getDelFlag() == CommonConstant.DEL_FLAG_1){
+        if(CommonConstant.DEL_FLAG_1.equals(sysUser.getDelFlag())){
             throw new RunningException("账号已被锁定,请联系管理员！");
         }
 
@@ -149,18 +152,16 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return
      */
     public boolean jwtTokenRefresh(String token, String loginName, String passWord) {
-        String cacheToken = String.valueOf(redisUtil.get(CommonConstant.PREFIX_USER_TOKEN + token));
+        ValueOperations operations = redisTemplate.opsForValue();
+        String cacheToken = String.valueOf(operations.get(CacheConstant.LOGIN_USER_TOKEN_+ token));
         if (StringUtils.isNotEmpty(cacheToken)) {
             // 校验token有效性
             if (!JwtUtil.verifyToken(token, loginName, passWord)) {
                 String newAuthorization = JwtUtil.sign(loginName, passWord);
-                redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, newAuthorization);
-                // 设置超时时间
-                redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
+                // 放入缓存并设置超时时间
+                operations.set(CacheConstant.LOGIN_USER_TOKEN_ + token, newAuthorization,30, TimeUnit.MINUTES);
             } else {
-                redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, cacheToken);
-                // 设置超时时间
-                redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME / 1000);
+                operations.set(CacheConstant.LOGIN_USER_TOKEN_ + token, cacheToken,30, TimeUnit.MINUTES);
             }
             return true;
         }
