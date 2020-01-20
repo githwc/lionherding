@@ -15,8 +15,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
 * 功能描述：
 *
@@ -66,19 +64,37 @@ public class RedisUserServiceImpl extends ServiceImpl<RedisUserMapper, RedisUser
         }
     }
 
+
+    /**
+     * 增加信息策略:先增加数据,成功后,存入缓存
+     * @param redisUser 用户信息
+     */
     @Override
-    public void updateUser(String id) {
-        // 更新信息策略:先更新数据表，成功之后，删除原来的缓存，再更新缓存
-        int result = this.baseMapper.updateById(new RedisUser().setRedisUserId(id));
+    public void add(RedisUser redisUser) {
+        redisUser.setDelFlag(0);
+        int result = this.baseMapper.insert(redisUser);
         if(result > 0){
             ValueOperations operations = redisTemplate.opsForValue();
-            String key = RedisConstant.USER_BY_ID_ + id;
+            operations.set(RedisConstant.USER_BY_ID_ + redisUser.getRedisUserId(),this.baseMapper.selectById(redisUser.getRedisUserId()));
+        }
+    }
+
+    /**
+     * 更新信息策略:先更新数据表，成功之后，删除原来的缓存，再更新缓存
+     * @param redisUser 用户信息
+     */
+    @Override
+    public void updateUser(RedisUser redisUser) {
+        int result = this.baseMapper.updateById(redisUser);
+        if(result > 0){
+            ValueOperations operations = redisTemplate.opsForValue();
+            String key = RedisConstant.USER_BY_ID_ + redisUser.getRedisUserId();
             if(redisTemplate.hasKey(key)){
                 redisTemplate.delete(key);
             }
-            RedisUser redisUser = this.baseMapper.selectById(id);
-            if(ObjectUtil.isNotNull(redisUser)){
-                operations.set(key,redisUser);
+            RedisUser redisUser_cache = this.baseMapper.selectById(redisUser.getRedisUserId());
+            if(ObjectUtil.isNotNull(redisUser_cache)){
+                operations.set(key,redisUser_cache);
             }
         }
     }

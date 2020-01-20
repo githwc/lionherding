@@ -8,9 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  *
  * 功能描述:redis Practice API 暴露接口
@@ -36,6 +33,7 @@ public class RedisUserController {
         this.iRedisUserService = iRedisUserService;
     }
 
+    // ========= Redis Cache 1.0 START ===========
     @GetMapping("/userPage")
     public Page<RedisUser> userPage(Page<RedisUser> page, RedisUserQuery query){
         System.out.println(iRedisUserService.userPage(page,query));
@@ -47,13 +45,22 @@ public class RedisUserController {
         return iRedisUserService.findUserById(id);
     }
 
+    @PostMapping("/add")
+    public void add(@RequestBody RedisUser redisUser){
+        iRedisUserService.add(redisUser);
+    }
+
     @PutMapping("/updateUser")
-    public void updateUser(@RequestParam("redisUserId") String id){
-        iRedisUserService.updateUser(id);
+    public void updateUser(@RequestBody RedisUser redisUser){
+        iRedisUserService.updateUser(redisUser);
     }
 
     @DeleteMapping("/deleteUserById")
     public void deleteUserById(@RequestParam("redisUserId") String id){
         iRedisUserService.deleteUserById(id);
     }
+
+    // ========= Redis Cache 2.0 (注解缓存) START ===========
+
+
 }

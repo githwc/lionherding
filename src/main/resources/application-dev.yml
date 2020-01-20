@@ -36,6 +36,7 @@ spring:
     port: 6379
     password:
     database: 0
+    timeout: 10000ms    # 指定超时时间
     jedis:
       pool:
         min-idle: 1     # 连接池最小空闲连接

@@ -5,9 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.redisPractice.entity.RedisUser;
 import com.lh.modules.redisPractice.model.RedisUserQuery;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * 功能描述：
  *
@@ -36,11 +33,18 @@ public interface RedisUserService extends IService<RedisUser> {
     RedisUser findUserById(String id);
 
     /**
-     * 修改用户
-     * @param id 用户ID
+     * 新增用户
+     * @param redisUser 用户信息
      * @return
      */
-    void updateUser(String id);
+    void add(RedisUser redisUser);
+
+    /**
+     * 修改用户
+     * @param redisUser 用户信息
+    * @return
+     */
+    void updateUser(RedisUser redisUser);
 
     /**
      * 删除用户

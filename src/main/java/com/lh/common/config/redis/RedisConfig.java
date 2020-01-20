@@ -25,6 +25,8 @@ import java.time.Duration;
 /**
  * 功能描述：Redis配置类
  *          自定义RedisTemplate
+ *
+ *          @EnableCaching: 开启基于注解的缓存
  * <p>版权所有：</p>
  * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
