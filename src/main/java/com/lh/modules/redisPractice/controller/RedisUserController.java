@@ -36,7 +36,6 @@ public class RedisUserController {
     // ========= Redis Cache 1.0 START ===========
     @GetMapping("/userPage")
     public Page<RedisUser> userPage(Page<RedisUser> page, RedisUserQuery query){
-        System.out.println(iRedisUserService.userPage(page,query));
         return iRedisUserService.userPage(page,query);
     }
 
