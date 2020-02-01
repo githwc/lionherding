@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.redisPractice.entity.RedisUser;
 import com.lh.modules.redisPractice.model.RedisUserQuery;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 功能描述：
@@ -52,4 +54,21 @@ public interface RedisUserService extends IService<RedisUser> {
      * @return
      */
     void deleteUserById(String id);
+
+    /**
+     * 设置过期时间
+     * @param redisUser 用户信息
+     * @return
+     */
+    void setExpireTime(RedisUser redisUser);
+
+    /**
+     * 查看该数据缓存是否过期
+     * @param redisUserId 主键
+     * @return boolean true: 过期 false: 有效
+     */
+    boolean expireState(@RequestParam("redisUserId") String redisUserId);
+
+
+
 }

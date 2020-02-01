@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  * 功能描述：订阅频道的消息
  *
  * <p>版权所有：</p>
- * 未经本公司许可，不得以任何方式复制或使用本程序任何部分
+ * 未经本人许可，不得以任何方式复制或使用本程序任何部分
  *
  * @Company: 紫色年华
  * @Author: xieyc

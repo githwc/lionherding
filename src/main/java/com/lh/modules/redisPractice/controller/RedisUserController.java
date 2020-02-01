@@ -59,7 +59,27 @@ public class RedisUserController {
         iRedisUserService.deleteUserById(id);
     }
 
-    // ========= Redis Cache 2.0 (注解缓存) START ===========
+    // ========= Redis Cache 2.0 (缓存过期时间) START ===========
+
+    /**
+     * 设置缓存过期时间
+     * @param redisUser
+     */
+    @PostMapping("/setExpireTime")
+    public void setExpireTime(@RequestBody RedisUser redisUser){
+        iRedisUserService.setExpireTime(redisUser);
+    }
+
+    /**
+     * 查看该数据缓存是否过期
+     * @param redisUserId 主键
+     * @return boolean true: 过期 false: 有效
+     */
+    @GetMapping("/expireState")
+    public boolean expireState(@RequestParam("redisUserId") String redisUserId){
+       return iRedisUserService.expireState(redisUserId);
+    }
+    // ========= Redis Cache 3.0 (注解缓存) START ===========
 
 
 }

@@ -18,5 +18,10 @@ public class RedisConstant {
      */
     public final static String USER_BY_ID_ = "USER_BY_ID_";
 
+    /**
+     * 排名
+     */
+    public final static String SCORE_BANK = "SCORE_BANK";
+
 
 }

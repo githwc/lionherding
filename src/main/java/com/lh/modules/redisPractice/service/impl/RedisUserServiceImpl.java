@@ -15,6 +15,8 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.TimeUnit;
+
 /**
 * 功能描述：
 *
@@ -113,6 +115,32 @@ public class RedisUserServiceImpl extends ServiceImpl<RedisUserMapper, RedisUser
                 redisTemplate.delete(key);
             }
         }
+    }
+
+    @Override
+    public void setExpireTime(RedisUser redisUser) {
+        int result = this.baseMapper.updateById(redisUser);
+        if(result > 0){
+            ValueOperations operations = redisTemplate.opsForValue();
+            String key = RedisConstant.USER_BY_ID_ + redisUser.getRedisUserId();
+            if(redisTemplate.hasKey(key)){
+                redisTemplate.delete(key);
+            }
+            RedisUser redisUser_cache = this.baseMapper.selectById(redisUser.getRedisUserId());
+            if(ObjectUtil.isNotNull(redisUser_cache)){
+                // 放入缓存并设置超时时间
+                operations.set(key, redisUser_cache,1, TimeUnit.MINUTES);
+            }
+        }
+    }
+
+    @Override
+    public boolean expireState(String redisUserId) {
+        String key = RedisConstant.USER_BY_ID_ + redisUserId;
+        if(redisTemplate.hasKey(key)){
+            return true;
+        }
+        return false;
     }
 
 

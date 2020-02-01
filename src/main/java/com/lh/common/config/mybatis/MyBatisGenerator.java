@@ -28,20 +28,20 @@ import java.util.Map;
 public class MyBatisGenerator {
 
     //生成文件所在项目路径
-    private static final String BASE_PATH = "E:\\workSpace_home\\lionherding";
+    private static final String BASE_PATH = "D:\\workSpace\\lionherding";
     //基本包名
     private static final String BASE_PACKAGE = "com.lh.modules";
     //文件夹名
     private static final String MODEL_NAME = "redisPractice";
     private static final String AUTHOR = "xieyc";
     //要生成的表名
-    private static final String[] TABLES = {"redis_user"};
+    private static final String[] TABLES = {"redis_rank"};
 
     //数据库配置四要素
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/lionherding?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "xieyc@mysql";
 
 
     public static void main(String[] args) {
