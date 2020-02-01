@@ -1,11 +1,11 @@
 package com.lh.modules.redisPractice.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lh.modules.redisPractice.entity.RedisRank;
-import com.baomidou.mybatisplus.extension.service.IService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 功能描述：
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @Version: 1.0.0
  *
  */
-public interface RedisRankService extends IService<RedisRank> {
+public interface RedisRankService {
 
     /**
      * 初始化数据
@@ -27,16 +27,40 @@ public interface RedisRankService extends IService<RedisRank> {
     void init();
 
     /**
-     * 分页获取数据
+     * 获取数据
      * @return
      */
-    Page<RedisRank> rankPage(Page<RedisRank> page);
+    Set initRank();
 
     /**
      * 获取排行榜top10
      * @return
      */
-    JSONObject top10();
+    Set top10(String type);
 
+    /**
+     * 新增学生成绩
+     */
+    void add();
+
+    /**
+     * 查询指定人的排名和分数
+     * @return
+     */
+    Map userInfo();
+
+    /**
+     * .统计分数区间人数
+     * @return
+     */
+    Long scopeCount();
+
+    /**
+     * 使用加法操作分数
+     *  直接在原有的score上使用加法;
+     *  如果没有这个元素，则会创建，并且score初始为0.再使用加法
+     * @return
+     */
+    void addScore();
 
 }

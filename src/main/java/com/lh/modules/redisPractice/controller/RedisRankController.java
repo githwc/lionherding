@@ -1,15 +1,12 @@
 package com.lh.modules.redisPractice.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lh.modules.redisPractice.entity.RedisRank;
 import com.lh.modules.redisPractice.service.RedisRankService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -45,22 +42,58 @@ public class RedisRankController {
     }
 
     /**
-     * 分页获取数据
+     * 获取数据
      * @return
      */
-    @GetMapping("/rankPage")
-    public Page<RedisRank> rankPage(Page<RedisRank> page){
-        return iRedisRankService.rankPage(page);
+    @GetMapping("/initRank")
+    public Set initRank(){
+        return iRedisRankService.initRank();
     }
 
     /**
-     * 获取排行榜top10
+     * 获取总成绩排行榜top10
      * @return
      */
-    @GetMapping("/top10")
-    public JSONObject top10(){
-        return iRedisRankService.top10();
+    @GetMapping("/scoreTop10")
+    public Set top10(@RequestParam("type")String type){
+        return iRedisRankService.top10(type);
     }
 
+    /**
+     * 新增一名学生的成绩到排行榜中
+     */
+    @PostMapping("/add")
+    public void add(){
+        iRedisRankService.add();
+    }
+
+    /**
+     * 查询指定人的排名和分数
+     * @return
+     */
+    @GetMapping("/userInfo")
+    public Map userInfo(){
+       return iRedisRankService.userInfo();
+    }
+
+    /**
+     * .统计分数区间人数
+     * @return
+     */
+    @GetMapping("/scopeCount")
+    public Long scopeCount(){
+        return iRedisRankService.scopeCount();
+    }
+
+    /**
+     * 使用加法操作分数
+     *  直接在原有的score上使用加法;
+     *  如果没有这个元素，则会创建，并且score初始为0.再使用加法
+     * @return
+     */
+    @PostMapping("/addScore")
+    public void addScore(){
+        iRedisRankService.addScore();
+    }
 
 }
