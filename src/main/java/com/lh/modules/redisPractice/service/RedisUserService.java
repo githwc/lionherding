@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lh.modules.redisPractice.entity.RedisUser;
 import com.lh.modules.redisPractice.model.RedisUserQuery;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -68,7 +67,5 @@ public interface RedisUserService extends IService<RedisUser> {
      * @return boolean true: 过期 false: 有效
      */
     boolean expireState(@RequestParam("redisUserId") String redisUserId);
-
-
 
 }

@@ -17,6 +17,7 @@
 	4.【其他】
 		ctrl + O 重写父类方法    
 三、Redis
+    Springboot2以后，底层访问redis已经不再是jedis，而是lettuce。
     1.基础部分
         基于注解的方法
         五种类型的使用

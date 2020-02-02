@@ -79,7 +79,5 @@ public class RedisUserController {
     public boolean expireState(@RequestParam("redisUserId") String redisUserId){
        return iRedisUserService.expireState(redisUserId);
     }
-    // ========= Redis Cache 3.0 (注解缓存) START ===========
-
 
 }

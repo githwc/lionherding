@@ -33,4 +33,11 @@ public class RedisConstant {
      */
     public final static String MATH_SCORE_BANK = "MATH_SCORE_BANK";
 
+    /**
+     * 设备号
+     */
+    public final static String DEVICE_REPAIR = "DEVICE_REPAIR";
+
+
+
 }
