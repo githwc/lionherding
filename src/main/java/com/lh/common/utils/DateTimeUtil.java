@@ -1,6 +1,8 @@
 package com.lh.common.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,30 +26,21 @@ public class DateTimeUtil {
     public static final String HHmmss = "HH:mm:ss";
 
     /**
-     * 计算2个日期之间相差多少年月日
+     * 计算2个日期之间相差多少年月日 ===== dealExportData 子方法 =====
      *
      * @param beginDate 开始时间
      * @param endDate 结束时间
-     * @return 1年10个月零10天
+     * @return 0,2,13
      */
-    public static String dayCompareStr(Date beginDate,Date endDate){
-        Calendar from = Calendar.getInstance();
-        from.setTime(beginDate);
-        Calendar to = Calendar.getInstance();
-        to.setTime(endDate);
-
-        int fromYear = from.get(Calendar.YEAR);
-        int fromMonth = from.get(Calendar.MONTH);
-        int fromDay = from.get(Calendar.DAY_OF_MONTH);
-
-        int toYear = to.get(Calendar.YEAR);
-        int toMonth = to.get(Calendar.MONTH);
-        int toDay = to.get(Calendar.DAY_OF_MONTH);
-        int year = toYear - fromYear;
-        int month = toMonth - fromMonth;
-        int day = toDay - fromDay;
-        return year+","+month+","+day;
+    private String dayCompareStr(String beginDate,String endDate){
+        Period period = Period.between(LocalDate.parse(beginDate), LocalDate.parse(endDate));
+        StringBuffer sb = new StringBuffer();
+        sb.append(period.getYears()).append(",")
+                .append(period.getMonths()).append(",")
+                .append(period.getDays());
+        return sb.toString();
     }
+
 
     /**
      * 以年、月、日为单位计算2个日期之间相差

@@ -17,9 +17,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -130,26 +128,18 @@ public class ApplicationTest {
         System.out.println(date.toString());//Tue Mar 27 14:17:17 CST 2018
     }
 
-    /**
-     * @param beforeDate 格式:2019-06-20
-     * @param afterDate  格式:2019-06-21
-     * @Description:计算两个日期相隔的日子
-     * @Date: 11:30 2019/5/10
-     * @Return:
-     */
-    public int dayDiff(String beforeDate, String afterDate) {
-        int result = 0;
-        try {
-            String[] tt = beforeDate.split("-");
-            Date firstDate = new Date(Integer.parseInt(tt[0]), Integer.parseInt(tt[1]) - 1, Integer.parseInt(tt[2]));
+    @Test
+    public void dayCompareStr(){
+        String beginDate = "2020-01-20";
+        String endDate = "2020-02-12";
 
-            tt = afterDate.split("-");
-            Date nextDate = new Date(Integer.parseInt(tt[0]), Integer.parseInt(tt[1]) - 1, Integer.parseInt(tt[2]));
-            result = (int) (nextDate.getTime() - firstDate.getTime()) / (24 * 60 * 60 * 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+        Period period = Period.between(LocalDate.parse(beginDate), LocalDate.parse(endDate));
+        StringBuffer sb = new StringBuffer();
+        sb.append(period.getYears()).append(",")
+                .append(period.getMonths()).append(",")
+                .append(period.getDays());
+        System.out.println(sb.toString());
+
     }
 
 }
